@@ -13,6 +13,10 @@ export default new Router({
     path: '/home',
     name: 'Home',
     component: () => import(`@/views/Home/Home`)
+  }, {
+    path: '/adminUsers',
+    name: 'AdminUsers',
+    component: () => import(`@/views/AdminUsers/AdminUsers`)
   }
   ]
 })

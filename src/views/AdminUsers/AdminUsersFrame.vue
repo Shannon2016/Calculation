@@ -14,7 +14,7 @@
 </template>
 <script>
 export default {
-  name: 'HomeFrame',
+  name: 'AdminUsersFrame',
   components: {},
   data () {
     return {}
@@ -38,8 +38,6 @@ export default {
   .contentBox {
     height: 100%;
     flex-grow: 1;
-    padding: 0 50px;
-    text-align: left;
     background-color: #f9f9f9;
   }
 </style>
