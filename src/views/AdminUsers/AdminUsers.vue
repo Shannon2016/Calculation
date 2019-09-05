@@ -45,7 +45,7 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="addUser">确 认</el-button>
+          <el-button class="darkbutton" @click="addUser">确 认</el-button>
         </div>
       </el-dialog>
       <el-table class="table" :data='currentData'>
@@ -242,11 +242,13 @@ export default {
       text-align: center;
       font-family: Roboto;
       border: 0ch;
+      font-size: 18px;
     }
     .darkbutton:focus, .darkbutton:hover{
-      background-color:rgba(88, 130, 145, 1) !important;
+      background-color:rgba(98, 140, 155, 1) !important;
       border: 0ch;
       color:white;
+      font-size: 18px;
     }
     .lightbutton{
           border-radius: 1px;
@@ -263,6 +265,26 @@ export default {
       border: 1px solid rgba(58, 100, 115, 1);
       color:navy;
     }
-    
-    
+    .el-dialog__title{
+      color:rgba(3, 43, 72, 1);
+      font-size: 22px;
+    }
+    .el-form-item__label{
+      color:rgba(3, 43, 72, 1);
+      font-size: 18px;
+    }
+    .el-radio__label{
+      color:rgba(3, 43, 72, 1);
+      font-size: 16px;
+    }
+  .el-radio__inner
+  {
+    border-color: black;
+  }
+  .el-radio__input.is-checked .el-radio__inner{
+      color:rgb(16, 7, 47);
+  }
+  .el-radio__input.is-checked+.el-radio__label {
+    color:rgb(16, 7, 47);
+  }
 </style>
