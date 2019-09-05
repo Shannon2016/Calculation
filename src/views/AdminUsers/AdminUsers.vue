@@ -4,15 +4,15 @@
         <el-col :span='5'>用户管理</el-col>
       </el-row>
       <el-divider></el-divider>
-      <el-row :gutter='20'>
-        <el-col :span='9'>
+      <el-row class="search"   :gutter='20'>
+        <el-col  :span='16'>
           <el-input v-model='searchWord'><i slot="suffix" class="el-input__icon el-icon-search"></i></el-input>
         </el-col>
-        <el-col :span='3'>
-          <el-button @click='onSearch'>搜索</el-button>
+        <el-col   :span='3'>
+          <el-button class="lightbutton" @click='onSearch'>搜索</el-button>
         </el-col>
-        <el-col :push='8' :span='4'>
-          <el-button @click='addDialog=true'>添加新用户</el-button>
+        <el-col   :span='4'>
+          <el-button class="darkbutton"  @click='addDialog=true'>添加新用户</el-button>
         </el-col>
       </el-row>
       <el-dialog title="添加新用户" :visible.sync="addDialog">
@@ -39,10 +39,10 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="addUser">确 认</el-button>
+          <el-button class="darkbutton" @click="addUser">确 认</el-button>
         </div>
       </el-dialog>
-      <el-table :data='currentData'>
+      <el-table class="table" :data='currentData'>
           <el-table-column
             prop="username"
             label="用户名">
@@ -53,9 +53,9 @@
             header-align="center"
             width="250">
             <template slot-scope="scope">
-              <el-button
+              <el-button class="darkbutton"
                 @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-              <el-button
+              <el-button class="lightbutton"
                 @click="handleEdit(scope.$index, scope.row)">修改</el-button>
             </template>
           </el-table-column>
@@ -65,7 +65,8 @@
         :current-page.sync="currentPage"
         :page-size="10"
         layout="prev, pager, next, jumper"
-        :total="totalSize">
+        :total="totalSize"
+        style="justify-content:center; display:flex">
       </el-pagination>
     </div>
 </template>
@@ -189,11 +190,100 @@ export default {
         margin: 3%;
     }
     .menubar .el-menu-item{
-      font-size: 16px;
+      font-size: 18px;
       font-family: 'Microsoft YaHei';
     }
-    .contentTitle{
-        font-size: x-large;
-        line-height: 75px;
+     .contentTitle{
+        font-size: 30px;
+        line-height: 70px;
+        color: rgba(2, 43, 72, 1);
     }
+
+    .el-divider--horizontal{
+    margin: 0%;
+    }
+    .search{
+      margin-top:2% !important;
+    }
+    .search .el-button{
+      font-size: 18px;
+    }
+    .search .el-input{
+        line-height: 44px;
+        height: 44px;;
+    }
+    .contentStyle{
+      line-height:70px;
+      font-size: 22px;
+      color: rgba(2, 43, 72, 1);
+    }
+     .el-table{
+      margin-top:1%;
+      width:88%;
+    }
+    .el-table .cell{
+      line-height: 25px;
+      color: rgba(2, 43, 72, 1);
+      font-size: 18px;
+    }
+    .table .el-button{
+      font-size: 18px;
+    }
+    .darkbutton{
+      border-radius: 1px;
+      background-color: rgba(58, 100, 115, 1);
+      color: rgba(255, 255, 255, 1);
+      text-align: center;
+      font-family: Roboto;
+      border: 0ch;
+      font-size: 18px;
+    }
+    .darkbutton:focus, .darkbutton:hover{
+      background-color:rgba(98, 140, 155, 1) !important;
+      border: 0ch;
+      color:white;
+      font-size: 18px;
+    }
+    .lightbutton{
+          border-radius: 1px;
+          background-color:white;
+          color: rgba(58, 100, 115, 1);
+          text-align: center;
+          font-family: Roboto;
+          border: 0px;
+          left: 1242px;
+          border: 1px solid rgba(58, 100, 115, 1);
+        }
+    .lightbutton:focus, .lightbutton:hover{
+      background-color:rgba(210, 230, 255, 1) !important;
+      border: 1px solid rgba(58, 100, 115, 1);
+      color:navy;
+    }
+    .el-dialog__title{
+      color:rgba(3, 43, 72, 1);
+      font-size: 22px;
+    }
+    .el-form-item__label{
+      color:rgba(3, 43, 72, 1);
+      font-size: 18px;
+    }
+    .el-radio__label{
+      color:rgba(3, 43, 72, 1);
+      font-size: 16px;
+    }
+  .el-radio__inner
+  {
+    border-color: black;
+  }
+  .el-radio__input.is-checked .el-radio__inner{
+      color:rgb(16, 7, 47);
+  }
+  .el-radio__input.is-checked+.el-radio__label {
+    color:rgb(16, 7, 47);
+  }
+  .page{
+    justify-content: center;
+    width: 100%;
+
+  }
 </style>
