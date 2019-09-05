@@ -1,6 +1,6 @@
 <template>
   <AdminUsersFrame>
-    <div slot='menu'>
+    <div class="menubar" slot='menu'>
         <div class="title">工程认证指标点</div>
         <div class="title">计算系统</div>
         <AppMenu></AppMenu>
@@ -97,10 +97,16 @@ export default {
 }
 </script>
 <style>
-    .title {
+   .menubar .title {
         width: 100%;
         justify-content: center;
+        font-size: 20px;
         color: white;
+        margin: 3%;
+    }
+    .menubar .el-menu-item{
+      font-size: 16px;
+      font-family: 'Microsoft YaHei';
     }
     .contentTitle{
         font-size: x-large;

@@ -34,8 +34,8 @@ export default {
 
   .topBox{
     width:500px;
-    height:80px;
-    margin: auto;
+    height:40px;
+    margin:auto;
     justify-content: center;
     text-align:center;
     vertical-align: center;
@@ -44,9 +44,9 @@ export default {
   }
 
   .centerBox {
-    background-color: rgba(255,255,255, 0.5);
+    background-color: rgba(255,255,255, 0.3);
     margin:auto;
-    width:500px;
-    height:400px;
+    width:auto;
+    height:auto;
   }
 </style>
