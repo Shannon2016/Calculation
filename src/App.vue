@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Login v-if="ifLogin">
+    <Login v-if="!ifLogin">
     </Login>
     <div style='display:flex;width:100%;' v-else>
       <div class='menu'>
@@ -28,12 +28,12 @@ export default {
   },
   computed: {
     ...mapState([
-      'fullScreen'
+      'fullScreen',
+      'ifLogin'
     ])
   },
   data () {
     return {
-      ifLogin: false
     }
   }
 }

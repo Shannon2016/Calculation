@@ -31,6 +31,7 @@ export default {
   },
   methods: {
     onLogin () {
+      this.$store.commit('login')
       this.$router.push('/home')
       // this.$request({
       //         url: `/api/auth`,

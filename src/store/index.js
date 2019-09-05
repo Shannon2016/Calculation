@@ -5,7 +5,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     resizeVersion: 0,
-    fullScreen: false
+    fullScreen: false,
+    ifLogin: false
   },
   mutations: {
     resize (state) {
@@ -13,6 +14,12 @@ const store = new Vuex.Store({
     },
     toggleFullscreen (state) {
       state.fullScreen = !state.fullScreen
+    },
+    login (state) {
+      state.ifLogin = true
+    },
+    logout (state) {
+      state.ifLogin = false
     }
   }
 })
