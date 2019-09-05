@@ -14,34 +14,40 @@
         class="el-menu-vertical"
         text-color="#ddd"
         active-text-color="rgba(0,180,180,0.8)"
-
         :collapse="isCollapse">
-        <template v-for='(item,index) in menuNames' >
-            <el-submenu v-if="item.child != null" :key="index">
+        <template v-for='(item,index) in menu' >
+            <el-submenu v-if="item.child != undefined" :key="index">
                 <template slot="title">
-                  <i class="item.icon"></i>
+                  <i :class="item.icon"></i>
                   <span>{{item.title}}</span>
                 </template>
-                <el-menu-item v-for='(subItem, subIndex) in item.child' :key='subIndex'>
+                <el-menu-item v-for='(subItem, subIndex) in item.child' :key='subIndex' :index='subItem.path'>
                   <i :class='subItem.icon'></i>
-                  <span slot='title'>{{subItem.titiel}}</span>
+                  <span slot='title'>{{subItem.cn}}</span>
                 </el-menu-item>
             </el-submenu>
-            <el-menu-item v-else :key="index">
+            <el-menu-item v-else :key="index" :index='item.path'>
                 <i :class="item.icon"></i>
                 <span slot="title">{{item.title}}</span>
             </el-menu-item>
         </template>
-        <el-menu-item v-for='(item,index) in menu' :key='index' :index="item.path">
-            <i :class="item.icon"></i>
-            <span slot="title">{{item.title}}</span>
-        </el-menu-item>
     </el-menu>
     </div>
 </template>
 
 <script>
 import menu from '../../router/menu.js'
+
+console.log(menu.menu.map(
+  item => {
+    return {
+      title: item.cn,
+      path: item.path,
+      icon: item.icon,
+      child: item.child
+    }
+  }
+))
 export default {
   name: 'AppMenu',
   props: {
@@ -73,7 +79,8 @@ export default {
           return {
             title: item.cn,
             path: item.path,
-            icon: item.icon
+            icon: item.icon,
+            child: item.child
           }
         }
       )

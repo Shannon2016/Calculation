@@ -1,24 +1,25 @@
 <template>
-    <div>
+  <testFrame>
+    <div class="menubar" slot='menu'>
+        <div class="title">工程认证指标点</div>
+        <div class="title">计算系统</div>
+        <AppMenu></AppMenu>
+    </div>
+    <div slot='content'>
       <el-row class='contentTitle'>
-        <el-col :span='5'>文件上传</el-col>
+        <el-col :span='5'>用户管理</el-col>
       </el-row>
       <el-divider></el-divider>
-      <el-steps :active="1">
-        <el-step title="步骤 1" description="上传培养方案"></el-step>
-        <el-step title="步骤 2" description="上传教师信息"></el-step>
-        <el-step title="步骤 3" description="上传课程信息"></el-step>
-        <el-step title="步骤 4" description="上传学生选课信息"></el-step>
-      </el-steps>
     </div>
+  </testFrame>
 </template>
 <script>
-import uploadPlanFrame from './uploadPlanFrame'
+import testFrame from './testFrame'
 import AppMenu from './../../components/menu/AppMenu'
 export default {
-  name: 'uploadPlan',
+  name: 'test',
   components: {
-    uploadPlanFrame,
+    testFrame,
     AppMenu
   },
   data () {

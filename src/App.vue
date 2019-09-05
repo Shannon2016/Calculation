@@ -1,6 +1,17 @@
 <template>
   <div id="app">
-      <router-view></router-view>
+    <Login v-if="ifLogin">
+    </Login>
+    <div style='display:flex;width:100%;' v-else>
+      <div class='menu'>
+        <div class="title">工程认证指标点</div>
+        <div class="title">计算系统</div>
+        <AppMenu/>
+      </div>
+      <div class='content-box'>
+        <router-view></router-view>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -19,6 +30,11 @@ export default {
     ...mapState([
       'fullScreen'
     ])
+  },
+  data () {
+    return {
+      ifLogin: false
+    }
   }
 }
 </script>
@@ -41,15 +57,34 @@ export default {
   linear-gradient(336deg, rgba(48, 48, 82, 0.849), rgba(20, 20, 54, 0.767) 70.71%); */
   display:flex;
 }
-#menu {
-  height:100%;
+.menu {
+    height:100%;
+    width:300px;
+    background-image: url('./assets/menu.png');
+    background-size: cover;
 }
+.title {
+        width: 100%;
+        justify-content: center;
+        font-size: 20px;
+        color: white;
+        margin: 3%;
+    }
 #body{
   flex-grow: 1;
   width: 0;
   height:calc(100% - 40px);
   padding: 20px;
 }
+.content-box {
+    height: 100%;
+    width: 0;
+    flex-grow: 1;
+    padding: 0 50px;
+    text-align: left;
+    background-color: #f9f9f9;
+    overflow-y: scroll;
+  }
 *{
   margin: 0;
   padding: 0;

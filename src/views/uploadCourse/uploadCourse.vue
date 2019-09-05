@@ -4,7 +4,7 @@
         <el-col :span='5'>文件上传</el-col>
       </el-row>
       <el-divider></el-divider>
-      <el-steps :active="1">
+      <el-steps :active="3">
         <el-step title="步骤 1" description="上传培养方案"></el-step>
         <el-step title="步骤 2" description="上传教师信息"></el-step>
         <el-step title="步骤 3" description="上传课程信息"></el-step>
@@ -13,12 +13,12 @@
     </div>
 </template>
 <script>
-import uploadPlanFrame from './uploadPlanFrame'
+import uploadCourseFrame from './uploadCourseFrame'
 import AppMenu from './../../components/menu/AppMenu'
 export default {
-  name: 'uploadPlan',
+  name: 'uploadCourse',
   components: {
-    uploadPlanFrame,
+    uploadCourseFrame,
     AppMenu
   },
   data () {

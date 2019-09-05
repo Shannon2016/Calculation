@@ -1,11 +1,5 @@
 <template>
-  <AdminUsersFrame>
-    <div class="menubar" slot='menu'>
-        <div class="title">工程认证指标点</div>
-        <div class="title">计算系统</div>
-        <AppMenu></AppMenu>
-    </div>
-    <div slot='content'>
+<div>
       <el-row class='contentTitle'>
         <el-col :span='5'>用户管理</el-col>
       </el-row>
@@ -74,7 +68,6 @@
         :total="totalSize">
       </el-pagination>
     </div>
-  </AdminUsersFrame>
 </template>
 <script>
 import AdminUsersFrame from './AdminUsersFrame'

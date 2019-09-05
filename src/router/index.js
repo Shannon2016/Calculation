@@ -17,6 +17,26 @@ export default new Router({
     path: '/adminUsers',
     name: 'AdminUsers',
     component: () => import(`@/views/AdminUsers/AdminUsers`)
+  }, {
+    path: '/uploadPlan',
+    name: 'uploadPlan',
+    component: () => import(`@/views/uploadPlan/uploadPlan`)
+  }, {
+    path: '/test',
+    name: 'test',
+    component: () => import(`@/views/test/test`)
+  }, {
+    path: '/uploadTeacher',
+    name: 'uploadTeacher',
+    component: () => import(`@/views/uploadTeacher/uploadTeacher`)
+  }, {
+    path: '/uploadStudent',
+    name: 'uploadStudent',
+    component: () => import(`@/views/uploadStudent/uploadStudent`)
+  }, {
+    path: '/uploadCourse',
+    name: 'uploadCourse',
+    component: () => import(`@/views/uploadCourse/uploadCourse`)
   }
   ]
 })

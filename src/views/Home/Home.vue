@@ -1,11 +1,5 @@
 <template>
-  <HomeFrame>
-    <div class="menubar" slot='menu'>
-        <div class="title">工程认证指标点</div>
-        <div class="title">计算系统</div>
-        <AppMenu></AppMenu>
-    </div>
-    <div slot='content'>
+    <div>
       <el-row class='contentTitle'>
         <el-col :span='5'>个人信息</el-col>
       </el-row>
@@ -30,7 +24,6 @@
           </el-form-item>
         </el-form>
     </div>
-  </HomeFrame>
 </template>
 <script>
 import HomeFrame from './HomeFrame'
