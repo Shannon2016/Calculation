@@ -11,6 +11,12 @@ export default {
       name: 'AdminUsers',
       cn: '用户管理',
       icon: 'el-icon-menu'
+    },
+    {
+      path: '/uploadPlan',
+      name: 'UploadPlan',
+      cn: '文件上传',
+      icon: 'el-icon-menu'
     }
   ]
   // menu: [
