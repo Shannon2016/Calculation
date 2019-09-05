@@ -20,7 +20,7 @@
             <el-input v-model='form.confirmPassword'></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button @click='modifyPassword'>确认修改</el-button>
+            <el-button class="lightbutton" @click='modifyPassword'>确认修改</el-button>
           </el-form-item>
         </el-form>
     </div>
@@ -103,5 +103,21 @@ export default {
     }
     .formStyle{
       width: 500px;
+    }
+     .lightbutton{
+          border-radius: 1px;
+          background-color:white;
+          color: rgba(58, 100, 115, 1);
+          text-align: center;
+          font-family: Roboto;
+          border: 0px;
+          font-size: 16px;
+          border: 1px solid rgba(58, 100, 115, 1);
+        }
+    .lightbutton:focus, .lightbutton:hover{
+      background-color:rgba(210, 230, 255, 1) !important;
+      border: 1px solid rgba(58, 100, 115, 1);
+      color:navy;
+      font-size: 16px;
     }
 </style>
