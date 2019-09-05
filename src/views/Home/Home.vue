@@ -84,23 +84,31 @@ export default {
     margin: 0%;
 }
     .contentTitle{
-        font-size: x-large;
-        line-height: 75px;
+        font-size: 30px;
+        line-height: 70px;
+        color: rgba(3, 43, 72, 1);
     }
 
     .contentStyle{
-      line-height: 75px;
-      font-size: large;
+      line-height:70px;
+      font-size: 24px;
+      color: rgba(3, 43, 72, 1);
     }
 
     .el-button--text{
-      line-height: 75px;
-      font-size: large;
+      line-height: 70px;
+      font-size: 24px;
+      color: rgba(3, 43, 72, 1);
+    }
+    .el-button--text:hover{
+      color:darkcyan;
     }
 
     .el-form-item__label{
       font-size: large;
+      text-align:left;
     }
+    
 
     .formStyle{
       width: 500px;
