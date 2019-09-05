@@ -53,9 +53,19 @@ export default {
 }
 </script>
 <style>
-.el-input__inner {
+.card .el-input__inner {
       background-color: transparent !important;
+      border-top: 0ch;
+      border-right: 0ch;
+      border-left: 0ch;
+      border-radius: 0%;
+      color: white;
     }
+.card .el-button{
+  background: #245466 ;
+  border-radius: 0px;
+  border: 0ch;
+}
 </style>
 <style scoped>
   .card{
@@ -64,8 +74,6 @@ export default {
     background-color: transparent;
   }
    .card :hover{
-    background-color: transparent;
-    opacity: 0.8;
     transition-duration: 0.5s;
     transform: scale3d(1.02,1.02,1);
   }
@@ -84,10 +92,10 @@ export default {
     .button{
       margin-top: 10%;
       width: 80%;
-      background-color:transparent;
       font-family: 'Microsoft YaHei';
       font-size: 20px;
-      color:darkblue;
     }
-    
+    .button:hover{
+      color: white;
+    }
 </style>
