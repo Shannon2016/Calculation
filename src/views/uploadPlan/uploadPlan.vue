@@ -10,24 +10,37 @@
         <el-step title="步骤 3" description="上传课程信息"></el-step>
         <el-step title="步骤 4" description="上传学生选课信息"></el-step>
       </el-steps>
+      <Upload :title='upload1.title' :tips='upload1.tips' @upload-click="clickUpload1" @detail-click="clickDetail1"></Upload>
     </div>
 </template>
 <script>
 import uploadPlanFrame from './uploadPlanFrame'
 import AppMenu from './../../components/menu/AppMenu'
+import Upload from './../../components/Upload'
 export default {
   name: 'uploadPlan',
   components: {
     uploadPlanFrame,
-    AppMenu
+    AppMenu,
+    Upload
   },
   data () {
     return {
+      upload1: {
+        title: '1、上传培养方案',
+        tips: '注：培养方案包含课程代码、课程名称、学分、学时等。'
+      }
     }
   },
   mounted () {
   },
   methods: {
+    clickUpload1 (fileList) {
+      console.log(fileList)
+    },
+    clickDetail1 () {
+      console.log(1)
+    }
   }
 }
 </script>
