@@ -92,9 +92,6 @@ export default {
   .el-menu-item:focus{
     background:#487 !important;
   }
-  .el-menu-vertical:not(.el-menu--collapse) {
-    
-  }
   .toggleButton{
       margin-top:20px;
       font-size: 30px;
