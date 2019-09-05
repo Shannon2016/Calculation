@@ -108,7 +108,6 @@ export default {
       font-size: large;
       text-align:left;
     }
-    
 
     .formStyle{
       width: 500px;

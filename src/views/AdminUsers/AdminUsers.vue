@@ -18,9 +18,36 @@
           <el-button @click='onSearch'>搜索</el-button>
         </el-col>
         <el-col :push='8' :span='4'>
-          <el-button @click='addUser'>添加新用户</el-button>
+          <el-button @click='addDialog=true'>添加新用户</el-button>
         </el-col>
       </el-row>
+      <el-dialog title="添加新用户" :visible.sync="addDialog">
+        <el-form label-width="80" :model="formAdd">
+          <el-form-item label="用户名">
+            <el-input v-model="formAdd.username"></el-input>
+          </el-form-item>
+          <el-form-item label="用户身份">
+            <el-radio-group v-model="formAdd.identity">
+              <el-radio :label="1">学生</el-radio>
+              <el-radio :label="2">教师</el-radio>
+              <el-radio :label="3">教学干事</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="所属学院">
+            <el-select v-model="formAdd.college" placeholder="请选择">
+              <el-option
+                v-for="item in collegeOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="addUser">确 认</el-button>
+        </div>
+      </el-dialog>
       <el-table :data='currentData'>
           <el-table-column
             prop="username"
@@ -61,6 +88,7 @@ export default {
   data () {
     return {
       searchWord: '',
+      addDialog: false,
       currentPage: 1,
       totalSize: 25,
       currentData: [],
@@ -116,6 +144,20 @@ export default {
         }, {
           username: '1120161920'
         }
+      ],
+      formAdd: {
+        username: '',
+        identity: -1,
+        college: ''
+      },
+      collegeOptions: [
+        {
+          value: 1,
+          label: '机械与车辆学院'
+        }, {
+          value: 2,
+          label: '计算机学院'
+        }
       ]
     }
   },
@@ -127,7 +169,8 @@ export default {
       console.log(this.searchWord)
     },
     addUser () {
-      console.log(1)
+      console.log(this.formAdd)
+      this.addDialog = false
     },
     handleEdit (index, row) {
       console.log(index, row)
@@ -140,7 +183,6 @@ export default {
       for (let i = (val - 1) * 10; i < val * 10 && i < this.totalSize; i++) {
         this.currentData.push(this.userData[i])
       }
-      console.log(this.currentData)
     }
   }
 }
