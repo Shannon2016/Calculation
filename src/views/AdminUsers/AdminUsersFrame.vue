@@ -41,5 +41,6 @@ export default {
     padding: 0 50px;
     text-align: left;
     background-color: #f9f9f9;
+    overflow-y: scroll;
   }
 </style>

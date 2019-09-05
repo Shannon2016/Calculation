@@ -21,7 +21,7 @@
           <el-button @click='addUser'>添加新用户</el-button>
         </el-col>
       </el-row>
-      <el-table :data='userData'>
+      <el-table :data='currentData'>
           <el-table-column
             prop="username"
             label="用户名">
@@ -39,14 +39,13 @@
             </template>
           </el-table-column>
       </el-table>
-      <!-- <el-pagination
-        @size-change="handleSizeChange"
+      <el-pagination
         @current-change="handleCurrentChange"
-        :current-page.sync="currentPage3"
-        :page-size="100"
+        :current-page.sync="currentPage"
+        :page-size="10"
         layout="prev, pager, next, jumper"
-        :total="1000">
-      </el-pagination> -->
+        :total="totalSize">
+      </el-pagination>
     </div>
   </AdminUsersFrame>
 </template>
@@ -62,9 +61,52 @@ export default {
   data () {
     return {
       searchWord: '',
+      currentPage: 1,
+      totalSize: 25,
+      currentData: [],
       userData: [
         {
           username: '1120161930'
+        }, {
+          username: '1120161920'
+        }, {
+          username: '1120161920'
+        }, {
+          username: '1120161920'
+        }, {
+          username: '1120161920'
+        }, {
+          username: '1120161920'
+        }, {
+          username: '1120161920'
+        }, {
+          username: '1120161920'
+        }, {
+          username: '1120161920'
+        }, {
+          username: '1120161920'
+        }, {
+          username: '1120161920'
+        }, {
+          username: '1120161920'
+        }, {
+          username: '1120161920'
+        }, {
+          username: '1120161920'
+        }, {
+          username: '1120161920'
+        }, {
+          username: '1120161920'
+        }, {
+          username: '1120161920'
+        }, {
+          username: '1120161920'
+        }, {
+          username: '1120161920'
+        }, {
+          username: '1120161920'
+        }, {
+          username: '1120161920'
         }, {
           username: '1120161920'
         }, {
@@ -78,7 +120,7 @@ export default {
     }
   },
   mounted () {
-
+    this.handleCurrentChange(1)
   },
   methods: {
     onSearch () {
@@ -92,6 +134,13 @@ export default {
     },
     handleDelete (index, row) {
       console.log(index, row)
+    },
+    handleCurrentChange (val) {
+      this.currentData = []
+      for (let i = (val - 1) * 10; i < val * 10 && i < this.totalSize; i++) {
+        this.currentData.push(this.userData[i])
+      }
+      console.log(this.currentData)
     }
   }
 }
