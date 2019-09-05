@@ -5,19 +5,19 @@
         <div class="title">计算系统</div>
         <AppMenu></AppMenu>
     </div>
-    <div slot='content'>
+    <div  slot='content'>
       <el-row class='contentTitle'>
         <el-col :span='5'>用户管理</el-col>
       </el-row>
       <el-divider></el-divider>
-      <el-row :gutter='20'>
+      <el-row class="search"   :gutter='20'>
         <el-col :span='9'>
           <el-input v-model='searchWord'><i slot="suffix" class="el-input__icon el-icon-search"></i></el-input>
         </el-col>
-        <el-col :span='3'>
+        <el-col :push='7' span='3'>
           <el-button @click='onSearch'>搜索</el-button>
         </el-col>
-        <el-col :push='8' :span='4'>
+        <el-col :push='5' :span='4'>
           <el-button @click='addUser'>添加新用户</el-button>
         </el-col>
       </el-row>
@@ -157,8 +157,28 @@ export default {
       font-size: 16px;
       font-family: 'Microsoft YaHei';
     }
-    .contentTitle{
-        font-size: x-large;
-        line-height: 75px;
+     .contentTitle{
+        font-size: 30px;
+        line-height: 70px;
+        color: rgba(2, 43, 72, 1);
+    }
+
+    .el-divider--horizontal{
+    margin: 0%;
+    }
+    .search{
+      margin-top:2% !important;
+    }
+    .contentStyle{
+      line-height:70px;
+      font-size: 22px;
+      color: rgba(2, 43, 72, 1);
+    }
+    .el-table{
+      margin-top:3%;
+      width:88%;
+    }
+    .search .el-button{
+      float:right;
     }
 </style>
