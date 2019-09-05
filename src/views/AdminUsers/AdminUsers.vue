@@ -71,7 +71,8 @@
         :current-page.sync="currentPage"
         :page-size="10"
         layout="prev, pager, next, jumper"
-        :total="totalSize">
+        :total="totalSize"
+        style="justify-content:center; display:flex">
       </el-pagination>
     </div>
   </AdminUsersFrame>
@@ -286,5 +287,10 @@ export default {
   }
   .el-radio__input.is-checked+.el-radio__label {
     color:rgb(16, 7, 47);
+  }
+  .page{
+    justify-content: center;
+    width: 100%;
+
   }
 </style>
