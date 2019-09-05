@@ -66,7 +66,7 @@
         :page-size="10"
         layout="prev, pager, next, jumper"
         :total="totalSize"
-        style="justify-content:center; display:flex">
+        style="justify-content:center; display:flex;margin:3%">
       </el-pagination>
     </div>
 </template>
@@ -206,11 +206,11 @@ export default {
       margin-top:2% !important;
     }
     .search .el-button{
-      font-size: 18px;
+      font-size: 16px;
     }
     .search .el-input{
-        line-height: 44px;
-        height: 44px;;
+        line-height: 40px;
+        height: 40px;
     }
     .contentStyle{
       line-height:70px;
@@ -219,15 +219,15 @@ export default {
     }
      .el-table{
       margin-top:1%;
-      width:88%;
+      width:92%;
     }
     .el-table .cell{
-      line-height: 25px;
+      line-height: 16px;
       color: rgba(2, 43, 72, 1);
-      font-size: 18px;
+      font-size: 16px;
     }
     .table .el-button{
-      font-size: 18px;
+      font-size: 16px;
     }
     .darkbutton{
       border-radius: 1px;
@@ -236,13 +236,13 @@ export default {
       text-align: center;
       font-family: Roboto;
       border: 0ch;
-      font-size: 18px;
+      font-size: 16px;
     }
     .darkbutton:focus, .darkbutton:hover{
       background-color:rgba(98, 140, 155, 1) !important;
       border: 0ch;
       color:white;
-      font-size: 18px;
+      font-size: 16px;
     }
     .lightbutton{
           border-radius: 1px;
@@ -251,21 +251,22 @@ export default {
           text-align: center;
           font-family: Roboto;
           border: 0px;
-          left: 1242px;
+          font-size: 16px;
           border: 1px solid rgba(58, 100, 115, 1);
         }
     .lightbutton:focus, .lightbutton:hover{
       background-color:rgba(210, 230, 255, 1) !important;
       border: 1px solid rgba(58, 100, 115, 1);
       color:navy;
+      font-size: 16px;
     }
     .el-dialog__title{
       color:rgba(3, 43, 72, 1);
-      font-size: 22px;
+      font-size: 20px;
     }
     .el-form-item__label{
       color:rgba(3, 43, 72, 1);
-      font-size: 18px;
+      font-size: 16px;
     }
     .el-radio__label{
       color:rgba(3, 43, 72, 1);
@@ -280,10 +281,5 @@ export default {
   }
   .el-radio__input.is-checked+.el-radio__label {
     color:rgb(16, 7, 47);
-  }
-  .page{
-    justify-content: center;
-    width: 100%;
-
   }
 </style>

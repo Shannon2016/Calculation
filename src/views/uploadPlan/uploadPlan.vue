@@ -60,4 +60,7 @@ export default {
         font-size: x-large;
         line-height: 75px;
     }
+    .el-steps--horizontal{
+      margin:3%;
+    }
 </style>
