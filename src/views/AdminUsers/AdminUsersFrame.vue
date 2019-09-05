@@ -14,7 +14,7 @@
 </template>
 <script>
 export default {
-  name: 'AdminUsersFrame',
+  name: 'HomeFrame',
   components: {},
   data () {
     return {}
@@ -30,14 +30,16 @@ export default {
 
   .menuBox{
     height:100%;
-    width:350px;
+    width:300px;
     background-image: url('../../assets/menu.png');
-    background-size: 100% 100%;
+    background-size: cover;
   }
 
   .contentBox {
     height: 100%;
     flex-grow: 1;
+    padding: 0 50px;
+    text-align: left;
     background-color: #f9f9f9;
   }
 </style>

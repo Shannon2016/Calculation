@@ -10,10 +10,11 @@
     <el-menu
         :default-active="current"
         router
-        background-color="rgba(0,0,0,0)"
+        background-color="rgba(36, 84, 102, 0.9)"
         class="el-menu-vertical"
-        text-color="#fff"
-        active-text-color="#ffd04b"
+        text-color="#ddd"
+        active-text-color="rgba(0,180,180,0.8)"
+
         :collapse="isCollapse">
         <template v-for='(item,index) in menuNames' >
             <el-submenu v-if="item.child != null" :key="index">
@@ -92,7 +93,7 @@ export default {
     background:#487 !important;
   }
   .el-menu-vertical:not(.el-menu--collapse) {
-    width: 150px;
+    
   }
   .toggleButton{
       margin-top:20px;

@@ -1,6 +1,6 @@
 <template>
   <HomeFrame>
-    <div slot='menu'>
+    <div class="menubar" slot='menu'>
         <div class="title">工程认证指标点</div>
         <div class="title">计算系统</div>
         <AppMenu></AppMenu>
@@ -63,13 +63,26 @@ export default {
   }
 }
 </script>
-<style>
-    .title {
+<style  >
+    .menubar .title {
         width: 100%;
         justify-content: center;
+        font-size: 20px;
         color: white;
+        margin: 3%;
     }
-
+    .menubar .el-menu-item{
+      font-size: 16px;
+      font-family: 'Microsoft YaHei';
+      color: white;
+    }
+    .menubar .el-menu-item:hover{
+      transition-duration: 0.5s;
+      transform: scale3d(1.0,1.03,1);
+    }
+.el-divider--horizontal{
+    margin: 0%;
+}
     .contentTitle{
         font-size: x-large;
         line-height: 75px;
@@ -77,7 +90,6 @@ export default {
 
     .contentStyle{
       line-height: 75px;
-      padding-left: 20px;
       font-size: large;
     }
 

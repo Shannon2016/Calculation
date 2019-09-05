@@ -10,7 +10,7 @@ export default {
       path: '/adminUsers',
       name: 'AdminUsers',
       cn: '用户管理',
-      icon: 'el-icon-user'
+      icon: 'el-icon-menu'
     }
   ]
   // menu: [

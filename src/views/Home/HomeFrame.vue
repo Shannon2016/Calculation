@@ -30,9 +30,9 @@ export default {
 
   .menuBox{
     height:100%;
-    width:350px;
+    width:300px;
     background-image: url('../../assets/menu.png');
-    background-size: 100% 100%;
+    background-size: cover;
   }
 
   .contentBox {
