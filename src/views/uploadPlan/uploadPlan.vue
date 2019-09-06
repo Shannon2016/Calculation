@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="pic">
       <el-row class='contentTitle'>
         <el-col :span='5'>管理培养方案</el-col>
       </el-row>
@@ -109,7 +109,7 @@ export default {
 <style scoped>
     .uploadContainer{
         margin: 25px 0;
-        padding: 0 15px;
+        padding: 0 0px;
     }
 
     .uploadTitle{
