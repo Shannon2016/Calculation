@@ -16,7 +16,7 @@
         active-text-color="rgba(0,180,180,0.8)"
         :collapse="isCollapse">
         <template v-for='(item,index) in menu' >
-            <el-submenu v-if="item.child != undefined" :key="index" index="/">
+            <el-submenu v-if="item.child != undefined" :key="index" :index='"/"+index'>
                 <template slot="title">
                   <i :class="item.icon"></i>
                   <span>{{item.title}}</span>

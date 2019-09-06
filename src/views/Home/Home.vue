@@ -64,8 +64,6 @@ export default {
     .contentStyle .el-button:hover{
       color:darkcyan;
     }
-</style>
-<style  scoped>
     .menubar .title {
         width: 100%;
         justify-content: center;
@@ -84,7 +82,7 @@ export default {
     }
 .el-divider--horizontal{
     margin: 0%;
-}
+    }
     .contentTitle{
         font-size: 30px;
         line-height: 70px;
@@ -99,6 +97,8 @@ export default {
       font-size: large;
       text-align:left;
     }
+</style>
+<style  scoped>
     .formStyle{
       width: 500px;
     }

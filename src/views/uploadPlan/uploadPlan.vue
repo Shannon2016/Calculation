@@ -138,13 +138,19 @@ export default {
     }
 
     .uploadBtn .el-button{
-        border-radius: 3px;
-        background-color: rgba(58, 100, 115, 1);
-        color: rgba(255, 255, 255, 1);
-        text-align: center;
-        font-family: Roboto;
-        border: 0ch;
-        font-size: 18px;
+      border-radius: 3px;
+      background-color: rgba(58, 100, 115, 1);
+      color: rgba(255, 255, 255, 1);
+      text-align: center;
+      font-family: 'Microsoft YaHei';
+      border: 0ch;
+      font-size: 16px;
+    }
+    .uploadBtn .el-button:hover{
+      background-color:rgba(98, 140, 155, 1) !important;
+      border: 0ch;
+      color:white;
+      font-size: 16px;
     }
 
     .uploadTips{
