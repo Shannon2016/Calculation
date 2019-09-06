@@ -17,15 +17,20 @@
                 action="/uploadFile"
                 :limit="1"
                 :on-exceed="handleExceed"
-                :file-list="fileList">
+                :file-list="fileList1">
                 <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
         </div>
         <div class='uploadTips'>
             {{upload1.tips}}
-            <el-button type='text' size='mini' @click='onDetail1Clicked'>点此查看</el-button>
+            <el-button type='text' size='mini' @click='dialog1Visible=true'>点此查看</el-button>
         </div>
       </div>
+      <el-dialog
+        title="示例"
+        :visible.sync="dialog1Visible">
+        <img src="./../../assets/培养方案.png" style='width:100%;'>
+      </el-dialog>
       <div class='uploadContainer'>
         <div class='uploadTitle'>{{upload2.title}}</div>
         <div class='uploadBtn'>
@@ -38,15 +43,20 @@
                 action="/uploadFile"
                 :limit="1"
                 :on-exceed="handleExceed"
-                :file-list="fileList">
+                :file-list="fileList2">
                 <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
         </div>
         <div class='uploadTips'>
             {{upload2.tips}}
-            <el-button type='text' size='mini' @click='onDetail2Clicked'>点此查看</el-button>
+            <el-button type='text' size='mini' @click='dialog2Visible=true'>点此查看</el-button>
         </div>
       </div>
+      <el-dialog
+        title="示例"
+        :visible.sync="dialog2Visible">
+        <img src="./../../assets/培养标准矩阵.png" style='width:100%;'>
+      </el-dialog>
     </div>
 </template>
 <script>
@@ -60,12 +70,14 @@ export default {
   },
   data () {
     return {
+      dialog1Visible: false,
+      dialog2Visible: false,
       semester: '2019~2020',
       upload1: {
         title: '1、上传培养方案',
         tips: '注：培养方案包含课程代码、课程名称、学分、学时等。'
       },
-      fileList1: [],
+      fileList1: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
       upload2: {
         title: '2、上传培养方案矩阵',
         tips: '注：培养实现矩阵包含毕业要求点及每门课程针对各要求点的分数占比。'
@@ -76,12 +88,6 @@ export default {
   mounted () {
   },
   methods: {
-    onDetail1Clicked () {
-      console.log(1)
-    },
-    onDetail2Clicked () {
-      console.log(1)
-    },
     handleExceed (files, fileList) {
       this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
     },
