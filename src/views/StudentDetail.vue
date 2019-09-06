@@ -1,26 +1,15 @@
 <template>
-  <testFrame>
-    <div class="menubar" slot='menu'>
-        <div class="title">工程认证指标点</div>
-        <div class="title">计算系统</div>
-        <AppMenu></AppMenu>
-    </div>
-    <div slot='content'>
+  <div>
       <el-row class='contentTitle'>
-        <el-col :span='5'>用户管理</el-col>
+        <el-col :span='5'>test</el-col>
       </el-row>
       <el-divider></el-divider>
-    </div>
-  </testFrame>
+  </div>
 </template>
 <script>
-import testFrame from './testFrame'
-import AppMenu from './../../components/menu/AppMenu'
 export default {
-  name: 'test',
+  name: 'StudentDetail',
   components: {
-    testFrame,
-    AppMenu
   },
   data () {
     return {

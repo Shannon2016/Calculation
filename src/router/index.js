@@ -18,10 +18,6 @@ export default new Router({
     name: 'uploadPlan',
     component: () => import(`@/views/uploadPlan/uploadPlan`)
   }, {
-    path: '/test',
-    name: 'test',
-    component: () => import(`@/views/test/test`)
-  }, {
     path: '/uploadTeacher',
     name: 'uploadTeacher',
     component: () => import(`@/views/uploadTeacher/uploadTeacher`)
@@ -33,6 +29,14 @@ export default new Router({
     path: '/uploadCourse',
     name: 'uploadCourse',
     component: () => import(`@/views/uploadCourse/uploadCourse`)
+  }, {
+    path: '/studentEvaluate',
+    name: 'StudentEvaluate',
+    component: () => import(`@/views/StudentEvaluate`)
+  }, {
+    path: '/studentDetail',
+    name: 'StudentDetail',
+    component: () => import(`@/views/StudentDetail`)
   }
   ]
 })

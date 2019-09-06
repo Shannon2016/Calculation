@@ -41,32 +41,20 @@ export default {
           icon: 'el-icon-folder'
         }
       ]
+    },
+    {
+      path: '/studentEvaluate',
+      name: 'StudentEvaluate',
+      cn: '学生评价',
+      icon: 'el-icon-folder',
+      child: [
+        {
+          path: '/studentEvaluate',
+          name: 'studentEvaluate',
+          cn: '本期评价',
+          icon: 'el-icon-folder'
+        }
+      ]
     }
   ]
-  // menu: [
-  //   {
-  //     path: '/',
-  //     name: 'Home',
-  //     cn: '主页',
-  //     icon: 'el-icon-s-home'
-  //   },
-  //   {
-  //     path: '/economy',
-  //     name: 'Economy',
-  //     cn: '经济',
-  //     icon: 'el-icon-baseball'
-  //   },
-  //   {
-  //     path: '/ecology',
-  //     name: 'Ecology',
-  //     cn: '生态',
-  //     icon: 'el-icon-cherry'
-  //   },
-  //   {
-  //     path: '/population',
-  //     name: 'Population',
-  //     cn: '人口',
-  //     icon: 'el-icon-user'
-  //   }
-  // ]
 }
