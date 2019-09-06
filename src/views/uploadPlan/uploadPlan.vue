@@ -100,7 +100,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
    .menubar .title {
         width: 100%;
         justify-content: center;

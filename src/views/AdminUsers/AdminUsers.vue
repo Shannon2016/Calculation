@@ -193,12 +193,11 @@ export default {
       font-size: 18px;
       font-family: 'Microsoft YaHei';
     }
-     .contentTitle{
+    .contentTitle{
         font-size: 30px;
         line-height: 70px;
         color: rgba(2, 43, 72, 1);
     }
-
     .el-divider--horizontal{
     margin: 0%;
     }
@@ -230,11 +229,11 @@ export default {
       font-size: 16px;
     }
     .darkbutton{
-      border-radius: 1px;
+      border-radius: 3px;
       background-color: rgba(58, 100, 115, 1);
       color: rgba(255, 255, 255, 1);
       text-align: center;
-      font-family: Roboto;
+      font-family: 'Microsoft YaHei';
       border: 0ch;
       font-size: 16px;
     }
@@ -245,11 +244,11 @@ export default {
       font-size: 16px;
     }
     .lightbutton{
-          border-radius: 1px;
+          border-radius: 3px;
           background-color:white;
           color: rgba(58, 100, 115, 1);
           text-align: center;
-          font-family: Roboto;
+          font-family: 'Microsoft YaHei';
           border: 0px;
           font-size: 16px;
           border: 1px solid rgba(58, 100, 115, 1);
@@ -281,5 +280,31 @@ export default {
   }
   .el-radio__input.is-checked+.el-radio__label {
     color:rgb(16, 7, 47);
+  }
+  .el-pager li{
+    color:rgba(103, 143, 172, 0.5);
+  }
+  .el-pager li.active{
+    color:rgba(3, 43, 72, 1);
+  }
+   .el-pager li:hover{
+    color:rgba(53, 83, 122, 0.8);
+  }
+  .el-radio__input.is-checked .el-radio__inner{
+    color:rgba(3, 43, 72, 1);
+    border-color: rgba(3, 43, 72, 1);
+    background: rgba(3, 43, 72, 1);
+  }
+  .el-select .el-input.is-focus .el-input__inner{
+    border-color:rgba(53, 83, 122, 0.8);
+  }
+  .el-select .el-input__inner:focus{
+    border-color:rgba(103, 143, 172, 0.5);
+  }
+  .el-select-dropdown__item.selected{
+    color:rgba(3, 43, 72, 1);
+  }
+  .el-input.is-active .el-input__inner, .el-input__inner:focus{
+    border-color: rgba(3, 43, 72, 1);
   }
 </style>

@@ -56,7 +56,16 @@ export default {
   }
 }
 </script>
-<style  >
+<style >
+     .contentStyle .el-button{
+      font-size: 23px;
+      color: rgba(3, 43, 72, 1);
+    }
+    .contentStyle .el-button:hover{
+      color:darkcyan;
+    }
+</style>
+<style  scoped>
     .menubar .title {
         width: 100%;
         justify-content: center;
@@ -81,22 +90,11 @@ export default {
         line-height: 70px;
         color: rgba(3, 43, 72, 1);
     }
-
     .contentStyle{
       line-height:70px;
       font-size: 24px;
       color: rgba(3, 43, 72, 1);
     }
-
-    .el-button--text{
-      line-height: 70px;
-      font-size: 24px;
-      color: rgba(3, 43, 72, 1);
-    }
-    .el-button--text:hover{
-      color:darkcyan;
-    }
-
     .el-form-item__label{
       font-size: large;
       text-align:left;
