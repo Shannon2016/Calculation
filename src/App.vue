@@ -39,7 +39,7 @@ export default {
     }
   },
   methods: {
-  logout () {
+    logout () {
       this.$store.commit('logout')
       // this.$request({
       //         url: `/api/auth`,
@@ -115,10 +115,10 @@ export default {
     color:white;
   }
   .el-submenu .el-menu-item{
-    background-color: rgba(20, 45, 62, 0.8) !important; 
+    background-color: rgba(20, 45, 62, 0.8) !important;
   }
   .el-submenu__title:hover{
-    background-color:#487 !important; 
+    background-color:#487 !important;
   }
 *{
   margin: 0;

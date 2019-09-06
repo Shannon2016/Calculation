@@ -1,11 +1,11 @@
 <template>
     <div>
       <el-row class='contentTitle'>
-        <el-col :span='5'>教师信息上传</el-col>
+        <el-col :span='5'>教师信息管理</el-col>
       </el-row>
       <el-divider></el-divider>
-       <div class='uploadContainer'>
-        <div class='uploadTitle'>{{upload1.title}}</div>
+      <div class='uploadContainer'>
+        <div class='uploadTitle'>{{upload.title}}</div>
         <div class='uploadBtn'>
             <el-upload
                 class="upload-demo"
@@ -66,50 +66,21 @@ export default {
   }
 }
 </script>
-<style scoped>
- .uploadContainer{
-        margin: 25px 0;
-        padding: 0 15px;
+<style>
+   .menubar .title {
+        width: 100%;
+        justify-content: center;
+        font-size: 20px;
+        color: white;
+        margin: 3%;
     }
-
-    .uploadTitle{
-        font-size: large;
-        color: #032B48;
-        font-weight: bold;
-    }
-
-    .uploadBtn{
-        margin-top: 15px;
-    }
-
-    .uploadBtn .el-button{
-      border-radius: 3px;
-      background-color: rgba(58, 100, 115, 1);
-      color: rgba(255, 255, 255, 1);
-      text-align: center;
+    .menubar .el-menu-item{
+      font-size: 16px;
       font-family: 'Microsoft YaHei';
-      border: 0ch;
-      font-size: 16px;
     }
-    .uploadBtn .el-button:hover{
-      background-color:rgba(98, 140, 155, 1) !important;
-      border: 0ch;
-      color:white;
-      font-size: 16px;
-    }
-
-    .uploadTips{
-        color: #7B7B7B;
-        font-size: large;
-        margin-top: 15px;
-    }
-
-    .el-button--text{
-      font-size: medium;
-      color: rgba(3, 43, 72, 1);
-    }
-    .el-button--text:hover{
-      color:darkcyan;
+    .contentTitle{
+        font-size: x-large;
+        line-height: 75px;
     }
 </style>
 
