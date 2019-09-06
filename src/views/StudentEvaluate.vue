@@ -26,8 +26,8 @@
             header-align="center"
             width="250">
              <template slot-scope="scope">
-                 <el-button v-if="scope.row.state===1" @click='onUploadClick' class="lightbutton">上传</el-button>
-                 <el-button v-else class="darkbutton">修改</el-button>
+                 <el-button v-if="scope.row.state===1" @click='onUploadClick' class="darkbutton">上传</el-button>
+                 <el-button v-else class="lightbutton">修改</el-button>
             </template>
           </el-table-column>
       </el-table>
