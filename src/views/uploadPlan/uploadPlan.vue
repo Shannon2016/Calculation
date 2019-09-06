@@ -101,27 +101,6 @@ export default {
 }
 </script>
 <style scoped>
-   .menubar .title {
-        width: 100%;
-        justify-content: center;
-        font-size: 20px;
-        color: white;
-        margin: 3%;
-    }
-    .menubar .el-menu-item{
-      font-size: 16px;
-      font-family: 'Microsoft YaHei';
-    }
-    .contentTitle{
-        font-size: x-large;
-        line-height: 75px;
-    }
-    .el-steps--horizontal{
-      margin:3%;
-    }
-</style>
-
-<style scoped>
     .uploadContainer{
         margin: 25px 0;
         padding: 0 15px;
