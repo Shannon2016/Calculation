@@ -1,7 +1,7 @@
 <template>
     <div>
       <el-row class='contentTitle'>
-        <el-col :span='5'>文件上传</el-col>
+        <el-col :span='5'>管理培养方案</el-col>
       </el-row>
       <el-divider></el-divider>
       <div class='contentTitle'>当前是{{semester}}学年，请您上传以下文件：</div>
