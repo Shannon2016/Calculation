@@ -121,6 +121,9 @@ export default {
         font-size: x-large;
         line-height: 75px;
     }
+    .pic .el-dialog{
+      width:80%;
+    }
 </style>
 <style scoped>
     .uploadContainer{

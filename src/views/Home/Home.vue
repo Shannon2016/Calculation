@@ -97,6 +97,9 @@ export default {
       font-size: large;
       text-align:left;
     }
+    .pic .el-dialog{
+      width:80%;
+    }
 </style>
 <style  scoped>
     .formStyle{
