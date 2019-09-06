@@ -44,11 +44,15 @@ function ajax ({
         headers: {'Authorization': global.token}
       }
     ).then(res => {
+      console.log(res)
       success(res.data)
       // } else {
       //   fail(res)
       // }
     }).catch(res => {
+      if (res === 401) {
+        console.log(res)
+      }
       error(res)
     })
   }

@@ -8,8 +8,8 @@
 
     <div slot='center'>
     <div class="card">
-        <el-input class="text" id="username" v-model="username" prefix-icon="el-icon-user"></el-input>
-        <el-input class="text" id="password" v-model="password" prefix-icon="el-icon-unlock"></el-input>
+        <el-input class="text" name='username' id="username" v-model="username" prefix-icon="el-icon-user"></el-input>
+        <el-input class="text" name='password' id="password" v-model="password" prefix-icon="el-icon-unlock"></el-input>
         <el-button  class="button"   @click="onLogin">登录</el-button>
      </div>
     </div>
@@ -34,30 +34,25 @@ export default {
     onLogin () {
       // this.$store.commit('login')
       // this.$router.push('/home')
-      this.$request({
-        url: `/auth`,
-        method: 'POST',
-        data: {
+      this.$ajaxPost(
+        '/api/auth',
+        {
           username: this.username,
           password: this.password
-        },
-        success: (res) => {
-          global.token = 'Bearer ' + res.token
-          console.log(global.token)
-          this.$request({
-            url: '/user',
-            method: 'GET',
-            success: console.log
-          })
-          this.$store.commit('login')
-          this.$router.push('/home')
-        },
-        fail: (res) => {
-          this.$err('服务器错误')
-        },
-        error: (res) => {
-          this.$err()
         }
+      ).then(res => {
+        global.token = 'Bearer ' + res.data.token
+        this.$ajaxGet(
+          '/api/user'
+        ).then(res => {
+          console.log(res)
+        }).catch(res => {
+          console.log(res)
+        })
+        this.$store.commit('login')
+        this.$router.push('/home')
+      }).catch(res => {
+        this.$err('登录失败')
       })
     }
   }

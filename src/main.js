@@ -6,7 +6,8 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import echarts from 'echarts'
-
+import global from './store/global'
+import axios from 'axios'
 import 'echarts/theme/dark.js'
 import './plugins/element.js'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -24,6 +25,25 @@ Vue.prototype.$err = function (info = '网络信号差') {
     message: info,
     type: 'error'
   })
+}
+Vue.prototype.$ajaxGet = function (url, data = {}) {
+  console.log(url)
+  return axios.get(
+    url,
+    {
+      params: data,
+      headers: {'Authorization': global.token}
+    }
+  )
+}
+Vue.prototype.$ajaxPost = function (url, data = {}) {
+  return axios.post(
+    url,
+    data,
+    {
+      headers: {'Authorization': global.token}
+    }
+  )
 }
 
 /* eslint-disable no-new */
