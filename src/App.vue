@@ -5,7 +5,9 @@
     <div style='display:flex;width:100%;' v-else>
       <div class='menu'>
         <div class="title">工程认证指标点</div>
-        <div class="title">计算系统</div>
+        <div class="title">计算系统
+          <el-button type='text' @click='logout'  style="float:right; margin-right:10px;margin-left:-60px;" >点此登出</el-button>
+        </div>
         <AppMenu/>
       </div>
       <div class='content-box'>
@@ -34,6 +36,27 @@ export default {
   },
   data () {
     return {
+    }
+  },
+  methods: {
+  logout () {
+      this.$store.commit('logout')
+      // this.$request({
+      //         url: `/api/auth`,
+      //         method: 'POST',
+      //         data: {
+      //           username: this.username,
+      //           password: this.password
+      //         },
+      //         success: (res) => {
+      //         },
+      //         fail: (res) => {
+      //           this.$err('服务器错误')
+      //         },
+      //         error: (res) => {
+      //           this.$err()
+      //         }
+      //       })
     }
   }
 }
@@ -80,10 +103,22 @@ export default {
     height: 100%;
     width: 0;
     flex-grow: 1;
-    padding: 0 50px;
+    padding: 0px 60px 50px 80px;
     text-align: left;
     background-color: #f9f9f9;
     overflow-y: scroll;
+  }
+   .title .el-button--text{
+     color: grey;
+   }
+  .title .el-button--text:focus, .el-button--text:hover{
+    color:white;
+  }
+  .el-submenu .el-menu-item{
+    background-color: rgba(20, 45, 62, 0.8) !important; 
+  }
+  .el-submenu__title:hover{
+    background-color:#487 !important; 
   }
 *{
   margin: 0;
