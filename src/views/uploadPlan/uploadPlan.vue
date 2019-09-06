@@ -4,42 +4,98 @@
         <el-col :span='5'>文件上传</el-col>
       </el-row>
       <el-divider></el-divider>
-      <el-steps :active="1">
-        <el-step title="步骤 1" description="上传培养方案"></el-step>
-        <el-step title="步骤 2" description="上传教师信息"></el-step>
-        <el-step title="步骤 3" description="上传课程信息"></el-step>
-        <el-step title="步骤 4" description="上传学生选课信息"></el-step>
-      </el-steps>
-      <Upload :title='upload1.title' :tips='upload1.tips' @upload-click="clickUpload1" @detail-click="clickDetail1"></Upload>
+      <div class='contentTitle'>当前是{{semester}}学年，请您上传以下文件：</div>
+      <div class='uploadContainer'>
+        <div class='uploadTitle'>{{upload1.title}}</div>
+        <div class='uploadBtn'>
+            <el-upload
+                class="upload-demo"
+                :multiple="false"
+                :auto-upload="false"
+                :on-change='onChange1'
+                :before-remove='beforeRemove1'
+                action="/uploadFile"
+                :limit="1"
+                :on-exceed="handleExceed"
+                :file-list="fileList">
+                <el-button size="small" type="primary">点击上传</el-button>
+            </el-upload>
+        </div>
+        <div class='uploadTips'>
+            {{upload1.tips}}
+            <el-button type='text' size='mini' @click='onDetail1Clicked'>点此查看</el-button>
+        </div>
+      </div>
+      <div class='uploadContainer'>
+        <div class='uploadTitle'>{{upload2.title}}</div>
+        <div class='uploadBtn'>
+            <el-upload
+                class="upload-demo"
+                :multiple="false"
+                :auto-upload="false"
+                :on-change='onChange2'
+                :before-remove='beforeRemove2'
+                action="/uploadFile"
+                :limit="1"
+                :on-exceed="handleExceed"
+                :file-list="fileList">
+                <el-button size="small" type="primary">点击上传</el-button>
+            </el-upload>
+        </div>
+        <div class='uploadTips'>
+            {{upload2.tips}}
+            <el-button type='text' size='mini' @click='onDetail2Clicked'>点此查看</el-button>
+        </div>
+      </div>
     </div>
 </template>
 <script>
 import uploadPlanFrame from './uploadPlanFrame'
 import AppMenu from './../../components/menu/AppMenu'
-import Upload from './../../components/Upload'
 export default {
   name: 'uploadPlan',
   components: {
     uploadPlanFrame,
-    AppMenu,
-    Upload
+    AppMenu
   },
   data () {
     return {
+      semester: '2019~2020',
       upload1: {
         title: '1、上传培养方案',
         tips: '注：培养方案包含课程代码、课程名称、学分、学时等。'
-      }
+      },
+      fileList1: [],
+      upload2: {
+        title: '2、上传培养方案矩阵',
+        tips: '注：培养实现矩阵包含毕业要求点及每门课程针对各要求点的分数占比。'
+      },
+      fileList2: []
     }
   },
   mounted () {
   },
   methods: {
-    clickUpload1 (fileList) {
-      console.log(fileList)
-    },
-    clickDetail1 () {
+    onDetail1Clicked () {
       console.log(1)
+    },
+    onDetail2Clicked () {
+      console.log(1)
+    },
+    handleExceed (files, fileList) {
+      this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+    },
+    onChange1 (file, fileList) {
+      this.fileList1 = fileList
+    },
+    beforeRemove1 (file, fileList) {
+      this.fileList1 = fileList
+    },
+    onChange2 (file, fileList) {
+      this.fileList2 = fileList
+    },
+    beforeRemove2 (file, fileList) {
+      this.fileList2 = fileList
     }
   }
 }
@@ -62,5 +118,46 @@ export default {
     }
     .el-steps--horizontal{
       margin:3%;
+    }
+</style>
+
+<style scoped>
+    .uploadContainer{
+        margin: 25px 0;
+        padding: 0 15px;
+    }
+
+    .uploadTitle{
+        font-size: large;
+        color: #032B48;
+        font-weight: bold;
+    }
+
+    .uploadBtn{
+        margin-top: 15px;
+    }
+
+    .uploadBtn .el-button{
+        border-radius: 3px;
+        background-color: rgba(58, 100, 115, 1);
+        color: rgba(255, 255, 255, 1);
+        text-align: center;
+        font-family: Roboto;
+        border: 0ch;
+        font-size: 18px;
+    }
+
+    .uploadTips{
+        color: #7B7B7B;
+        font-size: large;
+        margin-top: 15px;
+    }
+
+    .el-button--text{
+      font-size: medium;
+      color: rgba(3, 43, 72, 1);
+    }
+    .el-button--text:hover{
+      color:darkcyan;
     }
 </style>

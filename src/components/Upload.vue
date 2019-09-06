@@ -6,6 +6,8 @@
                 class="upload-demo"
                 :multiple="false"
                 :auto-upload="false"
+                :on-change='onChange'
+                :before-remove='beforeRemove'
                 action="/uploadFile"
                 :limit="1"
                 :on-exceed="handleExceed"
@@ -47,6 +49,16 @@ export default {
     },
     handleExceed (files, fileList) {
       this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+    },
+    onChange (file, fileList) {
+      console.log(file)
+      console.log(fileList)
+      this.fileList = fileList
+    },
+    beforeRemove (file, fileList) {
+      console.log(file)
+      console.log(fileList)
+      this.fileList = fileList
     }
   }
 }

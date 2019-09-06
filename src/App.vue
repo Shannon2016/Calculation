@@ -18,7 +18,6 @@
 <script>
 import AppMenu from './components/menu/AppMenu'
 import Login from './views/Login/Login'
-import Upload from './components/Upload'
 import {mapState} from 'vuex'
 
 export default {
