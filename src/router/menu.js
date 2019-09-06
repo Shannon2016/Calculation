@@ -27,18 +27,15 @@ export default {
         {
           path: '/uploadTeacher',
           name: 'uploadTeacher',
-          cn: '上传教师信息',
-          icon: 'el-icon-data-analysis'
+          cn: '上传教师信息'
         }, {
           path: '/uploadCourse',
           name: 'uploadCourse',
-          cn: '上传课程信息',
-          icon: 'el-icon-notebook-1'
+          cn: '上传课程信息'
         }, {
           path: '/uploadStudent',
           name: 'uploadStudent',
-          cn: '上传学生选课信息',
-          icon: 'el-icon-thumb'
+          cn: '上传学生选课信息'
         }
       ]
     },
@@ -46,13 +43,12 @@ export default {
       path: '/studentEvaluate',
       name: 'StudentEvaluate',
       cn: '学生评价',
-      icon: 'el-icon-folder',
+      icon: 'el-icon-chat-dot-square',
       child: [
         {
           path: '/studentEvaluate',
           name: 'studentEvaluate',
-          cn: '本期评价',
-          icon: 'el-icon-folder'
+          cn: '本期评价'
         }
       ]
     }

@@ -105,7 +105,7 @@ export default {
     height: 100%;
     width: 0;
     flex-grow: 1;
-    padding: 0px 60px 50px 80px;
+    padding: 0px 60px 0px 80px;
     text-align: left;
     background-color: #f9f9f9;
     overflow-y: scroll;
