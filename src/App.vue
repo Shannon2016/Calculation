@@ -20,6 +20,7 @@
 <script>
 import AppMenu from './components/menu/AppMenu'
 import Login from './views/Login/Login'
+import global from './store/global.js'
 import {mapState} from 'vuex'
 
 export default {
@@ -39,8 +40,9 @@ export default {
     }
   },
   methods: {
-  logout () {
+    logout () {
       this.$store.commit('logout')
+      global.token = null
       // this.$request({
       //         url: `/api/auth`,
       //         method: 'POST',
@@ -115,10 +117,10 @@ export default {
     color:white;
   }
   .el-submenu .el-menu-item{
-    background-color: rgba(20, 45, 62, 0.8) !important; 
+    background-color: rgba(20, 45, 62, 0.8) !important;
   }
   .el-submenu__title:hover{
-    background-color:#487 !important; 
+    background-color:#487 !important;
   }
 *{
   margin: 0;

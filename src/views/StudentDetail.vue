@@ -1,9 +1,19 @@
 <template>
   <div>
       <el-row class='contentTitle'>
-        <el-col :span='5'>test</el-col>
+        <el-col :span='5'>学生评价</el-col>
       </el-row>
       <el-divider></el-divider>
+      <el-row class='contentTitle'>
+        <el-col :span='17'>请为{{courseName}}课程填写评价</el-col>
+        <el-col :span='4' :offset="3">
+          <el-button>提交</el-button>
+        </el-col>
+      </el-row>
+      <div class='contentTitle'>请根据指标点进行打分，由1~4从低到高，越高代表越符合指标点。</div>
+      <!-- <div :v-for='(item, index) in qualities'>
+        <div>{{}}</div>
+      </div> -->
   </div>
 </template>
 <script>
@@ -13,9 +23,11 @@ export default {
   },
   data () {
     return {
+      courseName: 'default name'
     }
   },
   mounted () {
+    console.log(this.$route.params)
   },
   methods: {
   }

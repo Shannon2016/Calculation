@@ -18,6 +18,7 @@
 </template>
 <script>
 import LoginFrame from './LoginFrame'
+import global from './../../store/global.js'
 export default {
   name: 'Login',
   components: {
@@ -31,24 +32,33 @@ export default {
   },
   methods: {
     onLogin () {
-      this.$store.commit('login')
-      this.$router.push('/home')
-      // this.$request({
-      //         url: `/api/auth`,
-      //         method: 'POST',
-      //         data: {
-      //           username: this.username,
-      //           password: this.password
-      //         },
-      //         success: (res) => {
-      //         },
-      //         fail: (res) => {
-      //           this.$err('服务器错误')
-      //         },
-      //         error: (res) => {
-      //           this.$err()
-      //         }
-      //       })
+      // this.$store.commit('login')
+      // this.$router.push('/home')
+      this.$request({
+        url: `/auth`,
+        method: 'POST',
+        data: {
+          username: this.username,
+          password: this.password
+        },
+        success: (res) => {
+          global.token = 'Bearer ' + res.token
+          console.log(global.token)
+          this.$request({
+            url: '/user',
+            method: 'GET',
+            success: console.log
+          })
+          this.$store.commit('login')
+          this.$router.push('/home')
+        },
+        fail: (res) => {
+          this.$err('服务器错误')
+        },
+        error: (res) => {
+          this.$err()
+        }
+      })
     }
   }
 }

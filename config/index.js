@@ -19,7 +19,7 @@ module.exports = {
         }
       },
       '/api': {
-        target: 'http://10.4.20.191:8080',
+        target: 'http://localhost:8080',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''

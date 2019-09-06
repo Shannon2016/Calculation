@@ -12,16 +12,22 @@
           </el-table-column>
           <el-table-column
             prop="state"
-            label="状态">
+            label="状态"
+            align="right"
+            width="200">
+             <template slot-scope="scope">
+                 <div v-if="scope.row.state===1">未上传</div>
+                 <div v-else>已上传</div>
+            </template>
           </el-table-column>
           <el-table-column
             label="操作"
-            align="right"
+            align="center"
             header-align="center"
             width="250">
-            <template slot-scope="scope">
-              <el-button class="lightbutton"
-                @click="handleEdit(scope.$index, scope.row)">修改</el-button>
+             <template slot-scope="scope">
+                 <el-button v-if="scope.row.state===1" @click='onUploadClick'>上传</el-button>
+                 <el-button v-else>修改</el-button>
             </template>
           </el-table-column>
       </el-table>
@@ -42,15 +48,61 @@ export default {
   },
   data () {
     return {
-      currentData: []
+      currentPage: 1,
+      totalSize: 11,
+      currentData: [],
+      courseData: [{
+        name: '111',
+        state: 1
+      }, {
+        name: '111',
+        state: 0
+      }, {
+        name: '111',
+        state: 0
+      }, {
+        name: '111',
+        state: 0
+      }, {
+        name: '111',
+        state: 0
+      }, {
+        name: '111',
+        state: 0
+      }, {
+        name: '111',
+        state: 1
+      }, {
+        name: '111',
+        state: 0
+      }, {
+        name: '111',
+        state: 0
+      }, {
+        name: '111',
+        state: 0
+      }, {
+        name: '111',
+        state: 0
+      }]
     }
   },
   mounted () {
+    this.handleCurrentChange(1)
   },
   methods: {
-    // onclick () {
-    //   this.$router.push('/studentDetail')
-    // }
+    handleCurrentChange (val) {
+      this.currentData = []
+      for (let i = (val - 1) * 10; i < val * 10 && i < this.totalSize; i++) {
+        this.currentData.push(this.courseData[i])
+      }
+    },
+    onUploadClick () {
+      this.$router.push('/studentDetail/1/1')
+    },
+    onModifyClick () {
+    //   this.
+    }
   }
 }
 </script>

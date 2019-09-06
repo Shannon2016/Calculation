@@ -1,4 +1,5 @@
 import axios from 'axios'
+import global from '../store/global'
 // import mock from './mock'
 
 const prefix = '/api'
@@ -18,7 +19,10 @@ function ajax ({
   if (method === 'GET') {
     axios.get(
       url,
-      data
+      {
+        params: data,
+        headers: {'Authorization': global.token}
+      }
     ).then(res => {
       if (res.status === 200 && res.data.code === 200) {
         success(res.data)
@@ -35,13 +39,15 @@ function ajax ({
     }
     axios.post(
       url,
-      param
-    ).then(res => {
-      if (res.status === 200 && res.data.code === 200) {
-        success(res.data)
-      } else {
-        fail(res)
+      data,
+      {
+        headers: {'Authorization': global.token}
       }
+    ).then(res => {
+      success(res.data)
+      // } else {
+      //   fail(res)
+      // }
     }).catch(res => {
       error(res)
     })
