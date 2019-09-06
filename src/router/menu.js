@@ -27,18 +27,15 @@ export default {
         {
           path: '/uploadTeacher',
           name: 'uploadTeacher',
-          cn: '上传教师信息',
-          
+          cn: '上传教师信息'
         }, {
           path: '/uploadCourse',
           name: 'uploadCourse',
-          cn: '上传课程信息',
-         
+          cn: '上传课程信息'
         }, {
           path: '/uploadStudent',
           name: 'uploadStudent',
-          cn: '上传学生选课信息',
-          
+          cn: '上传学生选课信息'
         }
       ]
     },
@@ -51,8 +48,7 @@ export default {
         {
           path: '/studentEvaluate',
           name: 'studentEvaluate',
-          cn: '本期评价',
-          
+          cn: '本期评价'
         }
       ]
     }
