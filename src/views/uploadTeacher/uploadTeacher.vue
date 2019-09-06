@@ -82,6 +82,10 @@ export default {
         font-size: x-large;
         line-height: 75px;
     }
+    .el-upload-list{
+      width:auto;
+      background-color: rgba(0, 255, 85, 0.035) ;
+    }
 </style>
 
 <style scoped>
@@ -89,25 +93,28 @@ export default {
         margin: 25px 0;
         padding: 0 15px;
     }
-
     .uploadTitle{
         font-size: large;
         color: #032B48;
         font-weight: bold;
     }
-
     .uploadBtn{
         margin-top: 15px;
     }
-
     .uploadBtn .el-button{
-        border-radius: 3px;
-        background-color: rgba(58, 100, 115, 1);
-        color: rgba(255, 255, 255, 1);
-        text-align: center;
-        font-family: Roboto;
-        border: 0ch;
-        font-size: 18px;
+      border-radius: 3px;
+      background-color: rgba(58, 100, 115, 1);
+      color: rgba(255, 255, 255, 1);
+      text-align: center;
+      font-family: 'Microsoft YaHei';
+      border: 0ch;
+      font-size: 16px;
+    }
+    .uploadBtn .el-button:hover{
+      background-color:rgba(98, 140, 155, 1) !important;
+      border: 0ch;
+      color:white;
+      font-size: 16px;
     }
 
     .uploadTips{
