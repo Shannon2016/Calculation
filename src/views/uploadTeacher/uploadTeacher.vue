@@ -86,6 +86,9 @@ export default {
       width:auto;
       background-color: rgba(0, 255, 85, 0.035) ;
     }
+    .pic .el-dialog{
+      width:80%;
+    }
 </style>
 
 <style scoped>

@@ -13,11 +13,11 @@
           <el-table-column
             prop="state"
             label="状态"
-            align="right"
+            align="left"
             width="200">
              <template slot-scope="scope">
-                 <div v-if="scope.row.state===1">未上传</div>
-                 <div v-else>已上传</div>
+                 <div class="is_upload" v-if="scope.row.state===1" style="color:rgb(119, 0, 2);font-weight: bolder">未上传</div>
+                 <div class="is_upload" v-else  style="color: rgba(2, 43, 72, 1)">已上传</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -26,8 +26,8 @@
             header-align="center"
             width="250">
              <template slot-scope="scope">
-                 <el-button v-if="scope.row.state===1" @click='onUploadClick'>上传</el-button>
-                 <el-button v-else>修改</el-button>
+                 <el-button v-if="scope.row.state===1" @click='onUploadClick' class="darkbutton">上传</el-button>
+                 <el-button v-else class="lightbutton">修改</el-button>
             </template>
           </el-table-column>
       </el-table>
@@ -121,5 +121,48 @@ export default {
     .contentTitle{
         font-size: x-large;
         line-height: 75px;
+    }
+    .el-table{
+      margin-top:1%;
+      width:92%;
+    }
+    .el-table .cell{
+      line-height: 16px;
+      color: rgba(2, 43, 72, 1);
+      font-size: 16px;
+    }
+    .table .el-button{
+      font-size: 16px;
+    }
+    .darkbutton{
+      border-radius: 3px;
+      background-color: rgba(58, 100, 115, 1);
+      color: rgba(255, 255, 255, 1);
+      text-align: center;
+      font-family: 'Microsoft YaHei';
+      border: 0ch;
+      font-size: 16px;
+    }
+    .darkbutton:focus, .darkbutton:hover{
+      background-color:rgba(98, 140, 155, 1) !important;
+      border: 0ch;
+      color:white;
+      font-size: 16px;
+    }
+    .lightbutton{
+          border-radius: 3px;
+          background-color:white;
+          color: rgba(58, 100, 115, 1);
+          text-align: center;
+          font-family: 'Microsoft YaHei';
+          border: 0px;
+          font-size: 16px;
+          border: 1px solid rgba(58, 100, 115, 1);
+        }
+    .lightbutton:focus, .lightbutton:hover{
+      background-color:rgba(210, 230, 255, 1) !important;
+      border: 1px solid rgba(58, 100, 115, 1);
+      color:navy;
+      font-size: 16px;
     }
 </style>
