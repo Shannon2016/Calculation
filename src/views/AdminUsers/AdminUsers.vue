@@ -1,7 +1,7 @@
 <template>
 <div>
       <el-row class='contentTitle'>
-        <el-col :span='5'>用户管理</el-col>
+        <el-col :span='24'>用户管理</el-col>
       </el-row>
       <el-divider></el-divider>
       <el-row class="search"   :gutter='20'>

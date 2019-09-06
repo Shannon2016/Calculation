@@ -1,7 +1,7 @@
 <template>
   <div>
       <el-row class='contentTitle'>
-        <el-col :span='5'>学生评价</el-col>
+        <el-col :span='24'>学生评价</el-col>
       </el-row>
       <el-divider></el-divider>
       <el-row class='contentTitle'>
