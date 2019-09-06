@@ -11,8 +11,8 @@
                 class="upload-demo"
                 :multiple="false"
                 :auto-upload="false"
-                :on-change='onChange1'
-                :before-remove='beforeRemove1'
+                :on-change='onChange'
+                :before-remove='beforeRemove'
                 action="/uploadFile"
                 :limit="1"
                 :on-exceed="handleExceed"
