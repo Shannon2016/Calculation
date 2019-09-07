@@ -10,15 +10,18 @@
         <div class='uploadBtn'>
             <el-upload
                 class="upload-demo"
+                accept=".xls,.xlsx"
+                :limit="1"
+                ref="upload"
                 :multiple="false"
                 :auto-upload="false"
                 :on-change='onChange1'
                 :before-remove='beforeRemove1'
-                action="/uploadFile"
-                :limit="1"
+                action="/upload/cultivatePlan"
                 :on-exceed="handleExceed"
                 :file-list="fileList1">
-                <el-button size="small" type="primary">点击上传</el-button>
+                <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
+                <el-button style="margin-left: 10px;" size="small" icon="el-icon-upload2" type="success" @click="submitUpload">提交</el-button>
             </el-upload>
         </div>
         <div class='uploadTips'>
@@ -40,7 +43,7 @@
                 :auto-upload="false"
                 :on-change='onChange2'
                 :before-remove='beforeRemove2'
-                action="/uploadFile"
+                action="/upload/cultivateMatrix"
                 :limit="1"
                 :on-exceed="handleExceed"
                 :file-list="fileList2">
@@ -77,7 +80,7 @@ export default {
         title: '1、上传培养方案',
         tips: '注：培养方案包含课程代码、课程名称、学分、学时等。'
       },
-      fileList1: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
+      fileList1: [],
       upload2: {
         title: '2、上传培养方案矩阵',
         tips: '注：培养实现矩阵包含毕业要求点及每门课程针对各要求点的分数占比。'
@@ -102,6 +105,32 @@ export default {
     },
     beforeRemove2 (file, fileList) {
       this.fileList2 = fileList
+    },
+    submitUpload () {
+      let list = document.getElementsByClassName('el-upload-list__item is-ready')
+      if (list.length === 0) {
+        this.$message({
+          type: 'warning',
+          message: '请选择需要导入的模板！'
+        })
+        return
+      }
+      var fileValue = document.querySelector('.el-upload .el-upload__input')
+      var fd = new window.FormData()
+      fd.append('fileType', 'category')
+      fd.append('file', fileValue.files[0])
+      // eslint-disable-next-line no-undef
+      this.$ajaxPost(
+        '/api/upload/cultivatePlan',
+        fd
+      ).then(res => {
+
+      }).catch(res => {
+        this.$alert('上传失败')
+      })
+      //
+      //
+      // this.$refs.upload.submit()
     }
   }
 }
