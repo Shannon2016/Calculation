@@ -1,7 +1,7 @@
 <template>
     <div class="pic">
       <el-row class='contentTitle'>
-        <el-col :span='5'>教师信息管理</el-col>
+        <el-col :span='24'>教师信息管理</el-col>
       </el-row>
       <el-divider></el-divider>
       <div class='uploadContainer'>

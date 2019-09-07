@@ -117,7 +117,7 @@ export default {
     color:white;
   }
   .el-submenu .el-menu-item{
-    background-color: rgba(20, 45, 62, 0.8) !important;
+    background-color: rgba(20, 45, 62, 0.5) !important;
   }
   .el-submenu__title:hover{
     background-color:#487 !important;

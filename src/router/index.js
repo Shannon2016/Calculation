@@ -37,6 +37,10 @@ export default new Router({
     path: '/studentDetail/:flag/:id',
     name: 'StudentDetail',
     component: () => import(`@/views/StudentDetail`)
+  }, {
+    path: '/teacherEvaluate',
+    name: 'TeacherEvaluate',
+    component: () => import(`@/views/TeacherEvaluate`)
   }
   ]
 })

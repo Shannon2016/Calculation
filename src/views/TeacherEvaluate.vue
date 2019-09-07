@@ -1,10 +1,10 @@
 <template>
   <div>
       <el-row class='contentTitle'>
-        <el-col :span='24'>学生评价</el-col>
+        <el-col :span='24'>教师评价</el-col>
       </el-row>
       <el-divider></el-divider>
-      <div class='contentTitle'>请为本学期如下课程填写您的评价</div>
+      <div class='contentTitle'>请您上传如下课程的课程评价</div>
       <el-table class="table" :data='currentData'>
           <el-table-column
             prop="name"
@@ -26,11 +26,28 @@
             header-align="center"
             width="250">
              <template slot-scope="scope">
-                 <el-button v-if="scope.row.state===1" @click='onUploadClick' class="darkbutton">上传</el-button>
-                 <el-button v-else class="lightbutton">修改</el-button>
+                 <el-button v-if="scope.row.state===1" @click='dialogVisible=true' class="darkbutton">上传</el-button>
+                 <el-button v-else class="lightbutton" @click='dialogVisible=true'>修改</el-button>
             </template>
           </el-table-column>
       </el-table>
+      <el-dialog title="上传本课程课程评价" :visible.sync="dialogVisible">
+          <el-upload
+                class="upload-demo"
+                :multiple="false"
+                :auto-upload="false"
+                :on-change='onChange'
+                :before-remove='beforeRemove'
+                action="/uploadFile"
+                :limit="1"
+                :on-exceed="handleExceed"
+                :file-list="fileList">
+                <el-button slot="trigger" class='darkbutton'>选取文件</el-button>
+                <el-button style="margin-left: 10px;" class='lightbutton' @click="submitUpload">上传到服务器</el-button>
+            </el-upload>
+            <div class='uploadTips' style="margin:30px 0 15px;">注：课程评价包含学生成绩、涉及到的工程认证指标点及学生在该指标点
+                获得的真实成绩平均分和该指标点的评价值。</div>
+        </el-dialog>
       <el-pagination
         @current-change="handleCurrentChange"
         :current-page.sync="currentPage"
@@ -43,11 +60,13 @@
 </template>
 <script>
 export default {
-  name: 'StudentEvaluate',
+  name: 'TeacherEvaluate',
   components: {
   },
   data () {
     return {
+      fileList: [],
+      dialogVisible: false,
       currentPage: 1,
       totalSize: 11,
       currentData: [],
@@ -98,10 +117,24 @@ export default {
       }
     },
     onUploadClick () {
-      this.$router.push('/studentDetail/1/1')
+      //
     },
     onModifyClick () {
     //   this.
+    },
+    submitUpload () {
+      //    this.$refs.upload.submit();
+      this.dialogVisible = false
+      this.fileList = []
+    },
+    onChange (file, fileList) {
+      this.fileList = fileList
+    },
+    beforeRemove (file, fileList) {
+      this.fileList = fileList
+    },
+    handleExceed (files, fileList) {
+      this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
     }
   }
 }

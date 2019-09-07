@@ -10,7 +10,7 @@
     <el-menu
         :default-active="current"
         router
-        background-color="rgba(36, 84, 102, 0.9)"
+        background-color="rgba(36, 84, 102, 0.5)"
         class="el-menu-vertical"
         text-color="#ddd"
         active-text-color="rgba(0,180,180,0.8)"

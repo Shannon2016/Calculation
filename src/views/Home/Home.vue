@@ -1,7 +1,7 @@
 <template>
     <div>
       <el-row class='contentTitle'>
-        <el-col :span='5'>个人信息</el-col>
+        <el-col :span='24'>个人信息</el-col>
       </el-row>
       <el-divider></el-divider>
         <div class='contentStyle'>您好，{{username}}！</div>

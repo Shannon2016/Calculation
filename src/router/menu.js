@@ -51,6 +51,19 @@ export default {
           cn: '本期评价'
         }
       ]
+    },
+    {
+      path: '/teacherEvaluate',
+      name: 'TeacherEvaluate',
+      cn: '教师评价',
+      icon: 'el-icon-chat-dot-square',
+      child: [
+        {
+          path: '/teacherEvaluate',
+          name: 'TeacherEvaluate',
+          cn: '本期评价'
+        }
+      ]
     }
   ]
 }
