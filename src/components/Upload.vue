@@ -13,7 +13,7 @@
                 :on-exceed="handleExceed"
                 :file-list="fileList">
                 <el-button size="small" type="primary" @click='onUploadClicked'>点击上传</el-button>
-            </el-upload>
+          </el-upload>
         </div>
         <div class='uploadTips'>
             {{tips}}
