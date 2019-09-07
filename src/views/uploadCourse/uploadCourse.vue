@@ -78,7 +78,7 @@ export default {
       },
       fileList1: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
       upload2: {
-        title: '2、上传培养方案矩阵',
+        title: '2、上传本学年教师开设课程列表',
         tips: '注：本学年教师开设课程列表包含教师开设的对应课程的基本信息——选课课号、课程名称、开课教师姓名、课程编号等。'
       },
       fileList2: []

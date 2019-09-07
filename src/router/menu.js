@@ -19,6 +19,12 @@ export default {
       icon: 'el-icon-folder'
     },
     {
+      path: '/result',
+      name: 'Result',
+      cn: '查看结果',
+      icon: 'el-icon-folder'
+    },
+    {
       path: '/uploadTeacher',
       name: 'uploadTeacher',
       cn: '管理其他信息',
@@ -49,6 +55,11 @@ export default {
           path: '/studentEvaluate',
           name: 'studentEvaluate',
           cn: '本期评价'
+        },
+        {
+          path: '/studentPast',
+          name: 'StudentPast',
+          cn: '往期评价'
         }
       ]
     },
@@ -62,6 +73,11 @@ export default {
           path: '/teacherEvaluate',
           name: 'TeacherEvaluate',
           cn: '本期评价'
+        },
+        {
+          path: '/teacherPast',
+          name: 'TeacherPast',
+          cn: '往期评价'
         }
       ]
     }

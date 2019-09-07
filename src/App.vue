@@ -43,22 +43,6 @@ export default {
     logout () {
       this.$store.commit('logout')
       global.token = null
-      // this.$request({
-      //         url: `/api/auth`,
-      //         method: 'POST',
-      //         data: {
-      //           username: this.username,
-      //           password: this.password
-      //         },
-      //         success: (res) => {
-      //         },
-      //         fail: (res) => {
-      //           this.$err('服务器错误')
-      //         },
-      //         error: (res) => {
-      //           this.$err()
-      //         }
-      //       })
     }
   }
 }

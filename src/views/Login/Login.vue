@@ -41,6 +41,7 @@ export default {
           password: this.password
         }
       ).then(res => {
+        console.log(res)
         global.token = 'Bearer ' + res.data.token
         this.$ajaxGet(
           '/api/user'

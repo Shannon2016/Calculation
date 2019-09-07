@@ -7,7 +7,7 @@
       <el-row class='contentTitle'>
         <el-col :span='17'>请为{{courseName}}课程填写评价</el-col>
         <el-col :span='4' :offset="3">
-          <el-button @click="onSubmitScores">提交</el-button>
+          <el-button @click="onSubmitScores" class='darkbutton'>提交</el-button>
         </el-col>
       </el-row>
       <div class='contentTitle'>请根据指标点进行打分，由1~4从高到低，越高代表越符合指标点。</div>
@@ -57,6 +57,7 @@ export default {
   methods: {
     onSubmitScores () {
       console.log(this.scores)
+      this.$router.push('/studentEvaluate')
     }
   }
 }
@@ -120,4 +121,19 @@ export default {
   .el-input.is-active .el-input__inner, .el-input__inner:focus{
     border-color: rgba(3, 43, 72, 1);
   }
+  .darkbutton{
+      border-radius: 3px;
+      background-color: rgba(58, 100, 115, 1);
+      color: rgba(255, 255, 255, 1);
+      text-align: center;
+      font-family: 'Microsoft YaHei';
+      border: 0ch;
+      font-size: 16px;
+    }
+    .darkbutton:focus, .darkbutton:hover{
+      background-color:rgba(98, 140, 155, 1) !important;
+      border: 0ch;
+      color:white;
+      font-size: 16px;
+    }
 </style>

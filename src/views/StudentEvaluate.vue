@@ -13,7 +13,7 @@
           <el-table-column
             prop="state"
             label="状态"
-            align="left"
+            align="center"
             width="200">
              <template slot-scope="scope">
                  <div class="is_upload" v-if="scope.row.state===1" style="color:rgb(119, 0, 2);font-weight: bolder">未上传</div>
@@ -26,8 +26,8 @@
             header-align="center"
             width="250">
              <template slot-scope="scope">
-                 <el-button v-if="scope.row.state===1" @click='onUploadClick' class="darkbutton">上传</el-button>
-                 <el-button v-else class="lightbutton">修改</el-button>
+                 <el-button v-if="scope.row.state===1" @click='onUploadClick(scope.$index, scope.row)' class="darkbutton">上传</el-button>
+                 <el-button v-else class="lightbutton" @click='onModifyClick(scope.$index, scope.row)'>修改</el-button>
             </template>
           </el-table-column>
       </el-table>
@@ -97,11 +97,11 @@ export default {
         this.currentData.push(this.courseData[i])
       }
     },
-    onUploadClick () {
-      this.$router.push('/studentDetail/1/1')
+    onUploadClick (index, row) {
+      this.$router.push('/studentDetail/1/' + row.name)
     },
-    onModifyClick () {
-    //   this.
+    onModifyClick (index, row) {
+      this.$router.push('/studentDetail/2/' + row.name)// :flag=1 upload flag=2 modify :id
     }
   }
 }

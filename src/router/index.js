@@ -38,9 +38,21 @@ export default new Router({
     name: 'StudentDetail',
     component: () => import(`@/views/StudentDetail`)
   }, {
+    path: '/studentPast',
+    name: 'StudentPast',
+    component: () => import(`@/views/StudentPast`)
+  }, {
     path: '/teacherEvaluate',
     name: 'TeacherEvaluate',
     component: () => import(`@/views/TeacherEvaluate`)
+  }, {
+    path: '/teacherPast',
+    name: 'TeacherPast',
+    component: () => import(`@/views/TeacherPast`)
+  }, {
+    path: '/result',
+    name: 'Result',
+    component: () => import(`@/views/Result`)
   }
   ]
 })
