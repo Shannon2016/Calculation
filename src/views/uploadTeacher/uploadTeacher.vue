@@ -9,16 +9,20 @@
         <div class='uploadBtn'>
             <el-upload
                 class="upload-demo"
+                accept=".xls,.xlsx"
+                ref="upload"
                 :multiple="false"
                 :auto-upload="false"
                 :on-change='onChange'
                 :before-remove='beforeRemove'
-                action="/uploadFile"
+                action="/upload/teacherInfo"
                 :limit="1"
                 :on-exceed="handleExceed"
                 :file-list="fileList">
-                <el-button size="small" type="primary">点击上传</el-button>
+                <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
+                <el-button style="margin-left:10px;" size="small" icon="el-icon-upload2" type="success" @click="submitUpload">提交</el-button>
             </el-upload>
+
         </div>
         <div class='uploadTips'>
             {{upload.tips}}
@@ -62,6 +66,27 @@ export default {
     },
     beforeRemove (file, fileList) {
       this.fileList = fileList
+    },
+    submitUpload () {
+      let list = document.getElementsByClassName('el-upload-list__item is-ready')
+      if (list.length === 0) {
+        this.$message({
+          type: 'warning',
+          message: '请选择需要导入的模板！'
+        })
+        return
+      }
+      var fileValue = document.querySelector('.el-upload .el-upload__input')
+      var fd = new window.FormData()
+      fd.append('fileType', 'category')
+      fd.append('file', fileValue.files[0])
+      this.$ajaxPost(
+        '/api/upload/teacherInfo', fd
+      ).then(res => {
+        this.$alert('上传成功')
+      }).catch(res => {
+        this.$alert('上传失败')
+      })
     }
   }
 }
