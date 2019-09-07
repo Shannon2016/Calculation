@@ -32,29 +32,29 @@ export default {
   },
   methods: {
     onLogin () {
-      // this.$store.commit('login')
-      // this.$router.push('/home')
-      this.$ajaxPost(
-        '/api/auth',
-        {
-          username: this.username,
-          password: this.password
-        }
-      ).then(res => {
-        console.log(res)
-        global.token = 'Bearer ' + res.data.token
-        this.$ajaxGet(
-          '/api/user'
-        ).then(res => {
-          console.log(res)
-        }).catch(res => {
-          console.log(res)
-        })
-        this.$store.commit('login')
-        this.$router.push('/home')
-      }).catch(res => {
-        this.$err('登录失败')
-      })
+      this.$store.commit('login')
+      this.$router.push('/home')
+      // this.$ajaxPost(
+      //   '/api/auth',
+      //   {
+      //     username: this.username,
+      //     password: this.password
+      //   }
+      // ).then(res => {
+      //   console.log(res)
+      //   global.token = 'Bearer ' + res.data.token
+      //   this.$ajaxGet(
+      //     '/api/user'
+      //   ).then(res => {
+      //     console.log(res)
+      //   }).catch(res => {
+      //     console.log(res)
+      //   })
+      //   this.$store.commit('login')
+      //   this.$router.push('/home')
+      // }).catch(res => {
+      //   this.$err('登录失败')
+      // })
     }
   }
 }
