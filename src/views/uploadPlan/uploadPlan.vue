@@ -122,7 +122,10 @@ export default {
       // eslint-disable-next-line no-undef
       this.$ajaxPost(
         '/api/upload/cultivatePlan',
-        fd
+        {
+          'fileType': 'category',
+          'file': fileValue.files[0]
+        }
       ).then(res => {
         this.$alert('上传成功')
       }).catch(res => {
