@@ -116,6 +116,26 @@ export default {
       console.log(this.searchWord)
     },
     addUser () {
+      this.$ajaxPost(
+        '/api/user/addNew',
+        {
+          userName:this.formAdd.username,
+          userType:this.formAdd.identity,
+          departmentId:this.formAdd.college
+        }
+      ).then(res=>{
+          if(res.data.code==='success')
+          {
+            console.log('添加成功')
+          }
+          else{
+            console.log('添加失败')
+          }
+      }
+      ).catch(res=>{
+        this.$err('添加失败')
+      })
+      
       console.log(this.formAdd)
       this.addDialog = false
     },
@@ -177,7 +197,7 @@ export default {
       font-family: 'Microsoft YaHei';
     }
     .contentTitle{
-        font-size: 30px;
+        font-size: 24px;
         line-height: 70px;
         color: rgba(2, 43, 72, 1);
     }
