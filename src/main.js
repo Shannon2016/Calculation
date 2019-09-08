@@ -4,7 +4,7 @@ import Vue from 'vue'
 import store from './store'
 import App from './App'
 import router from './router'
-import ElementUI from 'element-ui'
+import ElementUI, { Form } from 'element-ui'
 import echarts from 'echarts'
 import global from './store/global'
 import axios from 'axios'
@@ -37,6 +37,10 @@ Vue.prototype.$ajaxGet = function (url, data = {}) {
   )
 }
 Vue.prototype.$ajaxPost = function (url, data = {}) {
+  let param = new FormData()
+  for (let i in data) {
+    param.append(i, data[i])
+  }
   return axios.post(
     url,
     data,
@@ -45,7 +49,15 @@ Vue.prototype.$ajaxPost = function (url, data = {}) {
     }
   )
 }
-
+Vue.prototype.$ajaxPost2 = function (url, data = {}) {
+  return axios.post(
+    url,
+    data,
+    {
+      headers: {'Authorization': global.token}
+    }
+  )
+}
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -28,6 +28,7 @@
 <script>
 import HomeFrame from './HomeFrame'
 import AppMenu from './../../components/menu/AppMenu'
+import global from './../../store/global.js'
 export default {
   name: 'Home',
   components: {
@@ -47,7 +48,17 @@ export default {
     }
   },
   mounted () {
-
+    console.log(global.userId)
+    this.$ajaxPost2(
+      '/api/user/getInfo',
+      {
+        userId: global.userId + ''
+      }
+    ).then(res => {
+      console.log(res)
+    }).catch(res => {
+      console.log(res)
+    })
   },
   methods: {
     modifyPassword () {
