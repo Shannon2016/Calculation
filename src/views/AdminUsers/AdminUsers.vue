@@ -144,14 +144,12 @@ export default {
     },
     handleDelete (index, row) {
       console.log(row.id)
-      this.$ajaxGet(
+      this.$ajaxPost2(
         '/api/user/deleteBatch',
-        {
-          userList: [row.id]
-        }
+        [{id: row.id}]
       ).then(res => {
         console.log(res)
-        this.handleCurrentChange()
+        this.handleCurrentChange(1)
       }).catch(res => {
         console.log(res)
       })

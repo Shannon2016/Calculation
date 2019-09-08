@@ -26,6 +26,13 @@ Vue.prototype.$err = function (info = '网络信号差') {
     type: 'error'
   })
 }
+Vue.prototype.$success = function (info = '操作成功') {
+  this.$message({
+    showClose: true,
+    message: info,
+    type: 'success'
+  })
+}
 Vue.prototype.$ajaxGet = function (url, data = {}) {
   console.log(url)
   return axios.get(
@@ -54,7 +61,10 @@ Vue.prototype.$ajaxPost2 = function (url, data = {}) {
     url,
     data,
     {
-      headers: {'Authorization': global.token}
+      headers: {
+        'Authorization': global.token,
+        'Content-Type': 'application/json;charset=UTF-8'
+      }
     }
   )
 }

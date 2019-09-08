@@ -37,8 +37,8 @@ export default {
   },
   data () {
     return {
-      username: 'default name',
-      number: '1120161930',
+      username: '_________',
+      number: '__________',
       showFlag: false,
       form: {
         originPassword: '',
@@ -64,7 +64,17 @@ export default {
   },
   methods: {
     modifyPassword () {
-      console.log(1)
+      this.$ajaxPost(
+      '/api/user/updateInfo',
+      {
+        userId: global.userId + '',
+        newPassword: this.form.newPassword
+      }
+    ).then(res => {
+      this.$success('密码修改成功')
+    }).catch(res => {
+      this.$err()
+    })
     }
   }
 }
