@@ -9,6 +9,7 @@
         <div class='uploadBtn'>
             <el-upload
                 class="upload-demo"
+                accept=".xls,.xlsx"
                 :multiple="false"
                 :auto-upload="false"
                 :on-change='onChange1'
@@ -17,7 +18,8 @@
                 :limit="1"
                 :on-exceed="handleExceed"
                 :file-list="fileList1">
-                <el-button size="small" type="primary">点击上传</el-button>
+                <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
+              <el-button style="margin-left: 10px;" size="small" icon="el-icon-upload2" type="success" @click="submitUpload()">提交</el-button>
             </el-upload>
         </div>
         <div class='uploadTips'>
@@ -34,7 +36,9 @@
         <div class='uploadTitle'>{{upload2.title}}</div>
         <div class='uploadBtn'>
             <el-upload
+                id="upload2"
                 class="upload-demo"
+                accept=".xls,.xlsx"
                 :multiple="false"
                 :auto-upload="false"
                 :on-change='onChange2'
@@ -43,7 +47,9 @@
                 :limit="1"
                 :on-exceed="handleExceed"
                 :file-list="fileList2">
-                <el-button size="small" type="primary">点击上传</el-button>
+                <el-button slot="trigger" size="small" type="primary">点击上传</el-button>
+                <el-button style="margin-left: 10px;" size="small" icon="el-icon-upload2" type="success" @click="submitUpload1()">提交</el-button>
+
             </el-upload>
         </div>
         <div class='uploadTips'>
@@ -76,7 +82,7 @@ export default {
         title: '1、上传本学年课程列表',
         tips: '注：本学年课程列表包含当前学年开设的所有课程信息——课程名称、课程编号等。'
       },
-      fileList1: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
+      fileList1: [],
       upload2: {
         title: '2、上传本学年教师开设课程列表',
         tips: '注：本学年教师开设课程列表包含教师开设的对应课程的基本信息——选课课号、课程名称、开课教师姓名、课程编号等。'
@@ -101,6 +107,52 @@ export default {
     },
     beforeRemove2 (file, fileList) {
       this.fileList2 = fileList
+    },
+    submitUpload () {
+      if (this.fileList1.length === 0) {
+        this.$message({
+          type: 'warning',
+          message: '请选择需要导入的模板！'
+        })
+        return
+      }
+      var fileValue = document.querySelector('.el-upload .el-upload__input')
+      var fd = new window.FormData()
+      fd.append('fileType', 'category')
+      fd.append('file', fileValue.files[0])
+      // eslint-disable-next-line no-undef
+      this.$ajaxPost(
+        '/api/upload/courseUpload',
+        fd
+      ).then(res => {
+        this.$alert('上传成功')
+      }).catch(res => {
+        this.$alert('上传失败')
+      })
+    },
+    submitUpload1 () {
+      if (this.fileList2.length === 0) {
+        this.$message({
+          type: 'warning',
+          message: '请选择需要导入的模板！'
+        })
+        return
+      }
+
+      var fileValue = document.querySelectorAll('.el-upload .el-upload__input')
+      var file = fileValue[1]
+      var fd = new window.FormData()
+      fd.append('fileType', 'category')
+      fd.append('file', file.files[0])
+      // eslint-disable-next-line no-undef
+      this.$ajaxPost(
+        '/api/upload/teacherCourseUpload',
+        fd
+      ).then(res => {
+        this.$alert('上传成功')
+      }).catch(res => {
+        this.$alert('上传失败')
+      })
     }
   }
 }
