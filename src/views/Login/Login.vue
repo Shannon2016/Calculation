@@ -9,7 +9,7 @@
     <div slot='center'>
     <div class="card">
         <el-input class="text" name='username' id="username" v-model="username" prefix-icon="el-icon-user"></el-input>
-        <el-input class="text" name='password' id="password" v-model="password" prefix-icon="el-icon-unlock"></el-input>
+        <el-input type='password' class="text" name='password' id="password" v-model="password" prefix-icon="el-icon-unlock"></el-input>
         <el-button  class="button"   @click="onLogin">登录</el-button>
      </div>
     </div>
@@ -32,8 +32,8 @@ export default {
   },
   methods: {
     onLogin () {
-      this.$store.commit('login')
-      this.$router.push('/home')
+      // this.$store.commit('login')
+      // this.$router.push('/home')
       this.$ajaxPost(
         '/api/auth',
         {
@@ -46,7 +46,8 @@ export default {
         this.$ajaxGet(
           '/api/user'
         ).then(res => {
-          console.log(res)
+          global.userId = res.data.id
+          console.log(global.userId)
         }).catch(res => {
           console.log(res)
         })
