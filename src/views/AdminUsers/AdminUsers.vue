@@ -44,8 +44,12 @@
       </el-dialog>
       <el-table class="table" :data='currentData'>
           <el-table-column
-            prop="username"
+            prop="userName"
             label="用户名">
+          </el-table-column>
+          <el-table-column
+            prop="realName"
+            label="真实姓名">
           </el-table-column>
           <el-table-column
             label="操作"
@@ -87,57 +91,6 @@ export default {
       totalSize: 25,
       currentData: [],
       userData: [
-        {
-          username: '1120161930'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }, {
-          username: '1120161920'
-        }
       ],
       formAdd: {
         username: '',
@@ -156,7 +109,7 @@ export default {
     }
   },
   mounted () {
-    this.handleCurrentChange(1)
+    this.handleCurrentChange(1, 10)
   },
   methods: {
     onSearch () {
@@ -170,13 +123,43 @@ export default {
       console.log(index, row)
     },
     handleDelete (index, row) {
-      console.log(index, row)
+      console.log(row.id)
+      this.$ajaxGet(
+        '/api/user/deleteBatch',
+        {
+          userList: [row.id]
+        }
+      ).then(res => {
+        console.log(res)
+        this.handleCurrentChange()
+      }).catch(res => {
+        console.log(res)
+      })
     },
-    handleCurrentChange (val) {
-      this.currentData = []
-      for (let i = (val - 1) * 10; i < val * 10 && i < this.totalSize; i++) {
-        this.currentData.push(this.userData[i])
-      }
+    handleCurrentChange (index) {
+      // this.currentData = []
+      // for (let i = (val - 1) * 10; i < val * 10 && i < this.totalSize; i++) {
+      //   this.currentData.push(this.userData[i])
+      // }
+      this.currentPage = index
+      this.$ajaxPost(
+        '/api/user/getAll',
+        {
+          pageIndex: index,
+          pageSize: 10,
+          searchKey: ''
+        }
+      ).then(res => {
+        console.log(res.data)
+        if (res.data.code === 'success') {
+          this.totalSize = res.data.data.total
+          this.currentData = res.data.data.resultList
+        } else {
+          this.$err('系统错误')
+        }
+      }).catch(res => {
+        console.log(res)
+      })
     }
   }
 }
