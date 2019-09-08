@@ -43,7 +43,7 @@ Vue.prototype.$ajaxPost = function (url, data = {}) {
   }
   return axios.post(
     url,
-    data,
+    param,
     {
       headers: {'Authorization': global.token}
     }

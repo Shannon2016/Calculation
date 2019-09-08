@@ -49,7 +49,7 @@ export default {
   },
   mounted () {
     console.log(global.userId)
-    this.$ajaxPost2(
+    this.$ajaxPost(
       '/api/user/getInfo',
       {
         userId: global.userId + ''
