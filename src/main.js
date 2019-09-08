@@ -37,6 +37,7 @@ Vue.prototype.$ajaxGet = function (url, data = {}) {
   )
 }
 Vue.prototype.$ajaxPost = function (url, data = {}) {
+  console.log(global.token)
   return axios.post(
     url,
     data,
