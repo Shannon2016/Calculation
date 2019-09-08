@@ -124,7 +124,7 @@ export default {
         '/api/upload/cultivatePlan',
         fd
       ).then(res => {
-
+        this.$alert('上传成功')
       }).catch(res => {
         this.$alert('上传失败')
       })
