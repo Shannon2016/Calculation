@@ -194,7 +194,7 @@ export default {
       font-family: 'Microsoft YaHei';
     }
     .contentTitle{
-        font-size: 30px;
+        font-size: 24px;
         line-height: 70px;
         color: rgba(2, 43, 72, 1);
     }

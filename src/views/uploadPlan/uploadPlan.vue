@@ -4,7 +4,7 @@
         <el-col :span='24'>管理培养方案</el-col>
       </el-row>
       <el-divider></el-divider>
-      <div class='contentTitle'>当前是{{semester}}学年，请您上传以下文件：</div>
+      <div class='uploadTitle' >当前是{{semester}}学年，请您上传以下文件：</div>
       <div class='uploadContainer'>
         <div class='uploadTitle'>{{upload1.title}}</div>
         <div class='uploadBtn'>
@@ -145,6 +145,7 @@ export default {
         font-size: large;
         color: #032B48;
         font-weight: bold;
+        margin-top: 3%;
     }
 
     .uploadBtn{
