@@ -7,16 +7,16 @@
       <div class='contentTitle'>请您上传如下课程的课程评价</div>
       <el-table class="table" :data='currentData'>
           <el-table-column
-            prop="name"
+            prop="courseName"
             label="课程名称">
           </el-table-column>
           <el-table-column
-            prop="state"
+            prop="status"
             label="状态"
             align="center"
             width="200">
              <template slot-scope="scope">
-                 <div class="is_upload" v-if="scope.row.state===1" style="color:rgb(119, 0, 2);font-weight: bolder">未上传</div>
+                 <div class="is_upload" v-if="scope.row.status===3" style="color:rgb(119, 0, 2);font-weight: bolder">未上传</div>
                  <div class="is_upload" v-else  style="color: rgba(2, 43, 72, 1)">已上传</div>
             </template>
           </el-table-column>
@@ -26,8 +26,8 @@
             header-align="center"
             width="250">
              <template slot-scope="scope">
-                 <el-button v-if="scope.row.state===1" @click='dialogVisible=true' class="darkbutton">上传</el-button>
-                 <el-button v-else class="lightbutton" @click='dialogVisible=true'>修改</el-button>
+                 <el-button v-if="scope.row.status===3" @click='prepareUpload(scope.row.id)' class="darkbutton">上传</el-button>
+                 <el-button v-else class="lightbutton" @click='prepareUpload(scope.row.id)'>修改</el-button>
             </template>
           </el-table-column>
       </el-table>
@@ -70,51 +70,37 @@ export default {
       currentPage: 1,
       totalSize: 11,
       currentData: [],
-      courseData: [{
-        name: '111',
-        state: 1
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 1
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }]
+      courseData: [],
+      classId: ''
     }
   },
   mounted () {
-    this.handleCurrentChange(1)
+    this.handleCurrentChange(1, 10)
   },
   methods: {
-    handleCurrentChange (val) {
-      this.currentData = []
-      for (let i = (val - 1) * 10; i < val * 10 && i < this.totalSize; i++) {
-        this.currentData.push(this.courseData[i])
-      }
+    prepareUpload (id) {
+      this.dialogVisible = true
+      this.classId = id
+    },
+    handleCurrentChange (index) {
+      this.currentPage = index
+      this.$ajaxPost(
+        '/api/getInfo/teacherEvaluation',
+        {
+          pageIndex: index,
+          pageSize: 10
+        }
+      ).then(res => {
+        console.log(res.data)
+        if (res.data.code === 'success') {
+          this.totalSize = res.data.data.total
+          this.currentData = res.data.data.resultList
+        } else {
+          this.$err('系统错误')
+        }
+      }).catch(res => {
+        console.log(res)
+      })
     },
     onUploadClick () {
       //
@@ -123,7 +109,29 @@ export default {
     //   this.
     },
     submitUpload () {
-      //    this.$refs.upload.submit();
+      let list = document.getElementsByClassName('el-upload-list__item is-ready')
+      if (list.length === 0) {
+        this.$message({
+          type: 'warning',
+          message: '请选择需要导入的模板！'
+        })
+        return
+      }
+      var fileValue = document.querySelector('.el-upload .el-upload__input')
+      // eslint-disable-next-line no-undef
+      this.$ajaxPost(
+        '/api/upload/uploadTeacherCom',
+        {
+          'fileType': 'category',
+          'file': fileValue.files[0],
+          'classId': this.classId
+        }
+      ).then(res => {
+        this.$alert('上传成功')
+        this.handleCurrentChange(1)
+      }).catch(res => {
+        this.$alert('上传失败')
+      })
       this.dialogVisible = false
       this.fileList = []
     },
