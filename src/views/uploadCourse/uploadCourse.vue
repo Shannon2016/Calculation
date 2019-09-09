@@ -81,7 +81,7 @@ export default {
     return {
       dialog1Visible: false,
       dialog2Visible: false,
-      semester: '2019~2020',
+      semester: '2019~2020', //
       upload1: {
         title: '1、上传本学年课程列表',
         tips: '注：本学年课程列表包含当前学年开设的所有课程信息——课程名称、课程编号等。'
