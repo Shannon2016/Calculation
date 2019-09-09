@@ -8,8 +8,8 @@
 
     <div slot='center'>
     <div class="card">
-        <el-input class="text" name='username' id="username" v-model="username" prefix-icon="el-icon-user"></el-input>
-        <el-input class="text" name='password' id="password" v-model="password" prefix-icon="el-icon-unlock"></el-input>
+        <el-input class="text" name='username' id="username" type="username" v-model="username" prefix-icon="el-icon-user"></el-input>
+        <el-input class="text" name='password' id="password" type="password" v-model="password" prefix-icon="el-icon-unlock"></el-input>
         <el-button  class="button"   @click="onLogin">登录</el-button>
      </div>
     </div>
