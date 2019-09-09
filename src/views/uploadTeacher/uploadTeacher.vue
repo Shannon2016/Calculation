@@ -81,7 +81,11 @@ export default {
       fd.append('fileType', 'category')
       fd.append('file', fileValue.files[0])
       this.$ajaxPost(
-        '/api/upload/teacherInfo', fd
+        '/api/upload/teacherInfo',
+        {
+          fileType: 'category',
+          file: fileValue.files[0]
+        }
       ).then(res => {
         this.$alert('上传成功')
       }).catch(res => {

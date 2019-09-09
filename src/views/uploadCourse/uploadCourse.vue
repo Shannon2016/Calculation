@@ -117,13 +117,13 @@ export default {
         return
       }
       var fileValue = document.querySelector('.el-upload .el-upload__input')
-      var fd = new window.FormData()
-      fd.append('fileType', 'category')
-      fd.append('file', fileValue.files[0])
       // eslint-disable-next-line no-undef
       this.$ajaxPost(
         '/api/upload/courseUpload',
-        fd
+        {
+          fileType: 'category',
+          file: fileValue.files[0]
+        }
       ).then(res => {
         this.$alert('上传成功')
       }).catch(res => {
@@ -141,13 +141,13 @@ export default {
 
       var fileValue = document.querySelectorAll('.el-upload .el-upload__input')
       var file = fileValue[1]
-      var fd = new window.FormData()
-      fd.append('fileType', 'category')
-      fd.append('file', file.files[0])
       // eslint-disable-next-line no-undef
       this.$ajaxPost(
         '/api/upload/teacherCourseUpload',
-        fd
+        {
+          'fileType': 'category',
+          'file': file.files[0]
+        }
       ).then(res => {
         this.$alert('上传成功')
       }).catch(res => {
