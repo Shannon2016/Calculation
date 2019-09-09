@@ -126,7 +126,7 @@ export default {
       ).then(res=>{
           if(res.data.code==='success')
           {
-            console.log('添加成功')
+            this.handleCurrentChange(this.currentPage)
           }
           else{
             console.log('添加失败')
