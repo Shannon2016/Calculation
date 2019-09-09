@@ -114,7 +114,7 @@ export default {
   },
   methods: {
     onSearch () {
-      this.searchKey = "" + this.searchWord
+      this.searchKey = '' + this.searchWord
       this.handleCurrentChange(1)
     },
     addUser () {

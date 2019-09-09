@@ -15,6 +15,12 @@ export default {
       icon: 'el-icon-menu'
     },
     {
+      path: '/uploadPlan',
+      name: 'UploadPlan',
+      title: '管理培养方案',
+      icon: 'el-icon-menu'
+    },
+    {
       path: '/uploadTeacher',
       name: 'uploadTeacher',
       title: '管理其他信息',
@@ -83,4 +89,3 @@ export default {
     }
   ]
 }
-
