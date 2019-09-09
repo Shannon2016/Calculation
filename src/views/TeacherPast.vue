@@ -22,11 +22,11 @@
       </el-row>
       <el-table class="table" :data='currentData'>
           <el-table-column
-            prop="name"
+            prop="courseName"
             label="课程名称">
           </el-table-column>
           <el-table-column
-            prop="state"
+            prop="status"
             label="状态"
             align="center"
             width="200">
@@ -38,7 +38,7 @@
             header-align="center"
             width="250">
              <template slot-scope="scope">
-                 <el-button @click='onDetailClicked(scope.$index, scope.row)' class="lightbutton" size='small'>下载文件</el-button>
+                 <el-button @click='onDetailClicked(scope.row.id)' class="lightbutton" size='small'>下载文件</el-button>
             </template>
           </el-table-column>
       </el-table>
@@ -73,40 +73,7 @@ export default {
       currentPage: 1,
       totalSize: 11,
       currentData: [],
-      courseData: [{
-        name: '111',
-        state: 1
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 1
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }],
+      courseData: [],
       collegeOptions: [
         {
           value: 1,
@@ -124,13 +91,36 @@ export default {
   },
   methods: {
     handleCurrentChange (val) {
-      this.currentData = []
-      for (let i = (val - 1) * 10; i < val * 10 && i < this.totalSize; i++) {
-        this.currentData.push(this.courseData[i])
-      }
+      this.currentPage = val
+      this.$ajaxPost(
+        '/api/getInfo/oldTeacherEvaluation',
+        {
+          pageIndex: val,
+          pageSize: 10
+        }
+      ).then(res => {
+        console.log(res.data)
+        if (res.data.code === 'success') {
+          this.totalSize = res.data.data.total
+          this.currentData = res.data.data.resultList
+        } else {
+          this.$err('系统错误')
+        }
+      }).catch(res => {
+        console.log(res)
+      })
     },
-    onDetailClicked (index, row) {
-      console.log(index, row)
+    onDetailClicked (id) {
+      this.$ajaxPost(
+        '/api/getInfo/oldTeacherEvaluation',
+        {
+          id: id
+        }
+      ).then(res => {
+
+      }).catch(res => {
+        console.log(res)
+      })
     }
   }
 }
