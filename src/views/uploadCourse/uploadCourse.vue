@@ -169,7 +169,7 @@ export default {
       // })
     },
     submitUpload1 (param) {
-      this.loadingFlag = true
+      this.loadingFlag2 = true
       this.$ajaxPostFile(
         '/api/upload/teacherCourseUpload',
         {
@@ -190,10 +190,10 @@ export default {
           message: '上传成功！',
           type: 'success'
         })
-        this.loadingFlag = false
+        this.loadingFlag2 = false
       }).catch(res => {
         this.$message.error('上传失败！')
-        this.loadingFlag = false
+        this.loadingFlag2 = false
       })
       // if (this.fileList2.length === 0) {
       //   this.$message({
