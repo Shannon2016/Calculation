@@ -17,11 +17,12 @@
                 :auto-upload="false"
                 :on-change='onChange1'
                 :before-remove='beforeRemove1'
+                :http-request="submitUpload"
                 action="/upload/cultivatePlan"
                 :on-exceed="handleExceed"
                 :file-list="fileList1">
                 <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
-                <el-button style="margin-left: 10px;" size="small" icon="el-icon-upload2" type="success" @click="submitUpload">提交</el-button>
+                <el-button style="margin-left: 10px;" size="small" icon="el-icon-upload2" type="success" @click="hhh" :loading='loadingFlag'>提交</el-button>
             </el-upload>
         </div>
         <div class='uploadTips'>
@@ -85,12 +86,16 @@ export default {
         title: '2、上传培养方案矩阵',
         tips: '注：培养实现矩阵包含毕业要求点及每门课程针对各要求点的分数占比。'
       },
-      fileList2: []
+      fileList2: [],
+      loadingFlag: false
     }
   },
   mounted () {
   },
   methods: {
+    hhh () {
+      this.$refs.upload.submit()
+    },
     handleExceed (files, fileList) {
       this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
     },
@@ -106,31 +111,33 @@ export default {
     beforeRemove2 (file, fileList) {
       this.fileList2 = fileList
     },
-    submitUpload () {
-      let list = document.getElementsByClassName('el-upload-list__item is-ready')
-      if (list.length === 0) {
-        this.$message({
-          type: 'warning',
-          message: '请选择需要导入的模板！'
-        })
-        return
-      }
-      var fileValue = document.querySelector('.el-upload .el-upload__input')
-      // eslint-disable-next-line no-undef
-      this.$ajaxPost(
+    submitUpload (param) {
+      this.loadingFlag = true
+      this.$ajaxPostFile(
         '/api/upload/cultivatePlan',
         {
-          'fileType': 'category',
-          'file': fileValue.files[0]
+          fileType: 'category',
+          file: param.file
+        },
+        {
+          onUploadProgress: progressEvent => {
+            console.log(111)
+            let percent=(progressEvent.loaded / progressEvent.total * 100) | 0
+            console.log(this.$refs.upload)
+            console.log(percent)
+            param.onProgress({percent:percent})
+          }
         }
       ).then(res => {
-        this.$alert('上传成功')
+        this.$message({
+          message: '上传成功！',
+          type: 'success'
+        })
+        this.loadingFlag = false
       }).catch(res => {
-        this.$alert('上传失败')
+        this.$message.error('上传失败！')
+        this.loadingFlag = false
       })
-      //
-      //
-      // this.$refs.upload.submit()
     }
   }
 }

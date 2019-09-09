@@ -9,7 +9,7 @@
         <div class='uploadBtn'>
             <el-upload
                 class="upload-demo"
-                accept=".xls,.xlsx"
+                accept=".xlsx, .xls"
                 ref="upload"
                 :multiple="false"
                 :auto-upload="false"
@@ -17,10 +17,11 @@
                 :before-remove='beforeRemove'
                 action="/upload/teacherInfo"
                 :limit="1"
+                :http-request = "submitUpload"
                 :on-exceed="handleExceed"
                 :file-list="fileList">
                 <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
-                <el-button style="margin-left:10px;" size="small" icon="el-icon-upload2" type="success" @click="submitUpload">提交</el-button>
+                <el-button style="margin-left:10px;" size="small" icon="el-icon-upload2" type="success" @click="hhh" :loading='loadingFlag'>提交</el-button>
             </el-upload>
 
         </div>
@@ -52,12 +53,16 @@ export default {
         title: '1、上传教师信息列表',
         tips: '注：教师信息列表包含教师的基本信息——姓名、工号等。'
       },
-      fileList: []
+      fileList: [],
+      loadingFlag: false
     }
   },
   mounted () {
   },
   methods: {
+    hhh () {
+      this.$refs.upload.submit()
+    },
     handleExceed (files, fileList) {
       this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
     },
@@ -67,29 +72,32 @@ export default {
     beforeRemove (file, fileList) {
       this.fileList = fileList
     },
-    submitUpload () {
-      let list = document.getElementsByClassName('el-upload-list__item is-ready')
-      if (list.length === 0) {
-        this.$message({
-          type: 'warning',
-          message: '请选择需要导入的模板！'
-        })
-        return
-      }
-      var fileValue = document.querySelector('.el-upload .el-upload__input')
-      var fd = new window.FormData()
-      fd.append('fileType', 'category')
-      fd.append('file', fileValue.files[0])
-      this.$ajaxPost(
+    submitUpload (param) {
+      this.loadingFlag = true
+      this.$ajaxPostFile(
         '/api/upload/teacherInfo',
         {
           fileType: 'category',
-          file: fileValue.files[0]
+          file: param.file
+        },
+        {
+          onUploadProgress: progressEvent => {
+            console.log(111)
+            let percent=(progressEvent.loaded / progressEvent.total * 100) | 0
+            console.log(this.$refs.upload)
+            console.log(percent)
+            param.onProgress({percent:percent})
+          }
         }
       ).then(res => {
-        this.$alert('上传成功')
+        this.$message({
+          message: '上传成功！',
+          type: 'success'
+        })
+        this.loadingFlag = false
       }).catch(res => {
-        this.$alert('上传失败')
+        this.$message.error('上传失败！')
+        this.loadingFlag = false
       })
     }
   }

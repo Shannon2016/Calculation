@@ -17,9 +17,11 @@
                 action="/uploadFile"
                 :limit="1"
                 :on-exceed="handleExceed"
+                :http-request = "submitUpload"
+                ref="upload"
                 :file-list="fileList1">
                 <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
-              <el-button style="margin-left: 10px;" size="small" icon="el-icon-upload2" type="success" @click="submitUpload()">提交</el-button>
+              <el-button style="margin-left: 10px;" size="small" icon="el-icon-upload2" type="success" @click="hhh" :loading='loadingFlag'>提交</el-button>
             </el-upload>
         </div>
         <div class='uploadTips'>
@@ -44,11 +46,13 @@
                 :on-change='onChange2'
                 :before-remove='beforeRemove2'
                 action="/uploadFile"
+                :http-request = "submitUpload1"
+                ref="upload2"
                 :limit="1"
                 :on-exceed="handleExceed"
                 :file-list="fileList2">
                 <el-button slot="trigger" size="small" type="primary">点击上传</el-button>
-                <el-button style="margin-left: 10px;" size="small" icon="el-icon-upload2" type="success" @click="submitUpload1()">提交</el-button>
+                <el-button style="margin-left: 10px;" size="small" icon="el-icon-upload2" type="success" @click="hhh2" :loading="loadingFlag2">提交</el-button>
 
             </el-upload>
         </div>
@@ -87,12 +91,20 @@ export default {
         title: '2、上传本学年教师开设课程列表',
         tips: '注：本学年教师开设课程列表包含教师开设的对应课程的基本信息——选课课号、课程名称、开课教师姓名、课程编号等。'
       },
-      fileList2: []
+      fileList2: [],
+      loadingFlag: false,
+      loadingFlag2: false
     }
   },
   mounted () {
   },
   methods: {
+    hhh () {
+      this.$refs.upload.submit()
+    },
+    hhh2 () {
+      this.$refs.upload2.submit()
+    },
     handleExceed (files, fileList) {
       this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
     },
@@ -108,51 +120,103 @@ export default {
     beforeRemove2 (file, fileList) {
       this.fileList2 = fileList
     },
-    submitUpload () {
-      if (this.fileList1.length === 0) {
-        this.$message({
-          type: 'warning',
-          message: '请选择需要导入的模板！'
-        })
-        return
-      }
-      var fileValue = document.querySelector('.el-upload .el-upload__input')
-      // eslint-disable-next-line no-undef
-      this.$ajaxPost(
+    submitUpload (param) {
+      this.loadingFlag = true
+      this.$ajaxPostFile(
         '/api/upload/courseUpload',
         {
           fileType: 'category',
-          file: fileValue.files[0]
+          file: param.file
+        },
+        {
+          onUploadProgress: progressEvent => {
+            console.log(111)
+            let percent=(progressEvent.loaded / progressEvent.total * 100) | 0
+            console.log(this.$refs.upload)
+            console.log(percent)
+            param.onProgress({percent:percent})
+          }
         }
       ).then(res => {
-        this.$alert('上传成功')
-      }).catch(res => {
-        this.$alert('上传失败')
-      })
-    },
-    submitUpload1 () {
-      if (this.fileList2.length === 0) {
         this.$message({
-          type: 'warning',
-          message: '请选择需要导入的模板！'
+          message: '上传成功！',
+          type: 'success'
         })
-        return
-      }
-
-      var fileValue = document.querySelectorAll('.el-upload .el-upload__input')
-      var file = fileValue[1]
-      // eslint-disable-next-line no-undef
-      this.$ajaxPost(
+        this.loadingFlag = false
+      }).catch(res => {
+        this.$message.error('上传失败！')
+        this.loadingFlag = false
+      })
+      // if (this.fileList1.length === 0) {
+      //   this.$message({
+      //     type: 'warning',
+      //     message: '请选择需要导入的模板！'
+      //   })
+      //   return
+      // }
+      // var fileValue = document.querySelector('.el-upload .el-upload__input')
+      // // eslint-disable-next-line no-undef
+      // this.$ajaxPost(
+      //   '/api/upload/courseUpload',
+      //   {
+      //     fileType: 'category',
+      //     file: fileValue.files[0]
+      //   }
+      // ).then(res => {
+      //   this.$alert('上传成功')
+      // }).catch(res => {
+      //   this.$alert('上传失败')
+      // })
+    },
+    submitUpload1 (param) {
+      this.loadingFlag = true
+      this.$ajaxPostFile(
         '/api/upload/teacherCourseUpload',
         {
-          'fileType': 'category',
-          'file': file.files[0]
+          fileType: 'category',
+          file: param.file
+        },
+        {
+          onUploadProgress: progressEvent => {
+            console.log(111)
+            let percent=(progressEvent.loaded / progressEvent.total * 100) | 0
+            console.log(this.$refs.upload)
+            console.log(percent)
+            param.onProgress({percent:percent})
+          }
         }
       ).then(res => {
-        this.$alert('上传成功')
+        this.$message({
+          message: '上传成功！',
+          type: 'success'
+        })
+        this.loadingFlag = false
       }).catch(res => {
-        this.$alert('上传失败')
+        this.$message.error('上传失败！')
+        this.loadingFlag = false
       })
+      // if (this.fileList2.length === 0) {
+      //   this.$message({
+      //     type: 'warning',
+      //     message: '请选择需要导入的模板！'
+      //   })
+      //   return
+      // }
+
+      // var fileValue = document.querySelectorAll('.el-upload .el-upload__input')
+      // var file = fileValue[1]
+      // // eslint-disable-next-line no-undef
+      // this.$ajaxPost(
+      //   '/api/upload/teacherCourseUpload',
+      //   {
+      //     'fileType': 'category',
+      //     'file': file.files[0]
+      //   }
+      // ).then(res => {
+      //   this.$alert('上传成功')
+      // }).catch(res => {
+      //   this.$alert('上传失败')
+      // })
     }
   }
 }

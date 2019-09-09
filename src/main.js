@@ -68,6 +68,21 @@ Vue.prototype.$ajaxPost2 = function (url, data = {}) {
     }
   )
 }
+Vue.prototype.$ajaxPostFile = function (url, data = {}, config = {}) {
+  let param = new FormData()
+  for (let i in data) {
+    param.append(i, data[i])
+  }
+  config.headers = {
+    'Authorization': global.token,
+    'Content-Type': 'application/json;charset=UTF-8'
+  }
+  return axios.post(
+    url,
+    param,
+    config
+  )
+}
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
