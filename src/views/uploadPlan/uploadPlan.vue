@@ -116,9 +116,6 @@ export default {
         return
       }
       var fileValue = document.querySelector('.el-upload .el-upload__input')
-      var fd = new window.FormData()
-      fd.append('fileType', 'category')
-      fd.append('file', fileValue.files[0])
       // eslint-disable-next-line no-undef
       this.$ajaxPost(
         '/api/upload/cultivatePlan',
