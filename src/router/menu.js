@@ -1,85 +1,86 @@
 export default {
-  menu: [
+  common: [
     {
       path: '/home',
       name: 'Home',
-      cn: '个人中心',
+      title: '个人中心',
       icon: 'el-icon-user'
-    },
+    }
+  ],
+  admin: [
     {
       path: '/adminUsers',
       name: 'AdminUsers',
-      cn: '用户管理',
+      title: '用户管理',
       icon: 'el-icon-menu'
-    },
-    {
-      path: '/uploadPlan',
-      name: 'uploadPlan',
-      cn: '管理培养方案',
-      icon: 'el-icon-folder'
-    },
-    {
-      path: '/result',
-      name: 'Result',
-      cn: '查看结果',
-      icon: 'el-icon-folder'
     },
     {
       path: '/uploadTeacher',
       name: 'uploadTeacher',
-      cn: '管理其他信息',
+      title: '管理其他信息',
       icon: 'el-icon-upload',
       child: [
         {
           path: '/uploadTeacher',
           name: 'uploadTeacher',
-          cn: '上传教师信息'
+          title: '上传教师信息'
         }, {
           path: '/uploadCourse',
           name: 'uploadCourse',
-          cn: '上传课程信息'
+          title: '上传课程信息'
         }, {
           path: '/uploadStudent',
           name: 'uploadStudent',
-          cn: '上传学生选课信息'
+          title: '上传学生选课信息'
         }
       ]
     },
     {
-      path: '/studentEvaluate',
-      name: 'StudentEvaluate',
-      cn: '学生评价',
-      icon: 'el-icon-chat-dot-square',
-      child: [
-        {
-          path: '/studentEvaluate',
-          name: 'studentEvaluate',
-          cn: '本期评价'
-        },
-        {
-          path: '/studentPast',
-          name: 'StudentPast',
-          cn: '往期评价'
-        }
-      ]
-    },
+      path: '/result',
+      name: 'Result',
+      title: '查看结果',
+      icon: 'el-icon-folder'
+    }
+  ],
+  teacher: [
     {
       path: '/teacherEvaluate',
       name: 'TeacherEvaluate',
-      cn: '教师评价',
+      title: '教师评价',
       icon: 'el-icon-chat-dot-square',
       child: [
         {
           path: '/teacherEvaluate',
           name: 'TeacherEvaluate',
-          cn: '本期评价'
+          title: '本期评价'
         },
         {
           path: '/teacherPast',
           name: 'TeacherPast',
-          cn: '往期评价'
+          title: '往期评价'
+        }
+      ]
+    }
+  ],
+  student: [
+    {
+      path: '/studentEvaluate',
+      name: 'StudentEvaluate',
+      title: '学生评价',
+      icon: 'el-icon-chat-dot-square',
+      child: [
+        {
+          path: '/studentEvaluate',
+          name: 'studentEvaluate',
+          title: '本期评价'
+        },
+        {
+          path: '/studentPast',
+          name: 'StudentPast',
+          title: '往期评价'
         }
       ]
     }
   ]
 }
+

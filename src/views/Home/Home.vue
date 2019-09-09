@@ -56,7 +56,6 @@ export default {
       }
     ).then(res => {
       console.log(res)
-    
       this.username = res.data.data.realName
       this.number = res.data.data.userName
     }).catch(res => {
@@ -66,16 +65,16 @@ export default {
   methods: {
     modifyPassword () {
       this.$ajaxPost(
-      '/api/user/updateInfo',
-      {
-        userId: global.userId + '',
-        newPassword: this.form.newPassword
-      }
-    ).then(res => {
-      this.$success('密码修改成功')
-    }).catch(res => {
-      this.$err()
-    })
+        '/api/user/updateInfo',
+        {
+          userId: global.userId + '',
+          newPassword: this.form.newPassword
+        }
+      ).then(res => {
+        this.$success('密码修改成功')
+      }).catch(res => {
+        this.$err()
+      })
     }
   }
 }

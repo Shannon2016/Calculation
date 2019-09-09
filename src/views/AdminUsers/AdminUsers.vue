@@ -119,23 +119,20 @@ export default {
       this.$ajaxPost(
         '/api/user/addNew',
         {
-          userName:this.formAdd.username,
-          userType:this.formAdd.identity,
-          departmentId:this.formAdd.college
+          userName: this.formAdd.username,
+          userType: this.formAdd.identity,
+          departmentId: this.formAdd.college
         }
-      ).then(res=>{
-          if(res.data.code==='success')
-          {
-            this.handleCurrentChange(this.currentPage)
-          }
-          else{
-            console.log('添加失败')
-          }
+      ).then(res => {
+        if (res.data.code === 'success') {
+          this.handleCurrentChange(this.currentPage)
+        } else {
+          console.log('添加失败')
+        }
       }
-      ).catch(res=>{
+      ).catch(res => {
         this.$err('添加失败')
       })
-      
       console.log(this.formAdd)
       this.addDialog = false
     },

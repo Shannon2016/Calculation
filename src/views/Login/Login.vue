@@ -46,13 +46,16 @@ export default {
         this.$ajaxGet(
           '/api/user'
         ).then(res => {
+          console.log(res)
+          global.authorities = res.data.authorities
+          console.log(global.authorities)
           global.userId = res.data.id
+          this.$store.commit('login')
+          this.$router.push('/home')
           console.log(global.userId)
         }).catch(res => {
           console.log(res)
         })
-        this.$store.commit('login')
-        this.$router.push('/home')
       }).catch(res => {
         this.$err('登录失败')
       })
