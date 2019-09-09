@@ -74,10 +74,19 @@ export default {
       //     }
       //   }
       // )
-      console.log(global.authorities)
-      console.log(menus)
-      console.log(global.authorities[0].authority)
-      return menus[global.authorities[0].authority]
+      let temp = {}
+      for (let i of global.authorities) {
+        let t = menus[i.authority]
+        for (let j of t) {
+          temp[j.name] = j
+        }
+      }
+      let ans = []
+      for (let i in temp) {
+        ans.push(temp[i])
+      }
+      ans.sort((a,b) => {return a.order - b.order})
+      return ans
     }
   },
   methods: {
