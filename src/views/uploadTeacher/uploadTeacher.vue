@@ -20,7 +20,7 @@
                 :on-exceed="handleExceed"
                 :file-list="fileList">
                 <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
-                <el-button style="margin-left:10px;" size="small" icon="el-icon-upload2" type="success" @click="submitUpload">提交</el-button>
+                <el-button style="margin-left:10px;" size="small" icon="el-icon-upload2" type="success" @click="submitUpload" :loading='loadingFlag'>提交</el-button>
             </el-upload>
 
         </div>
@@ -52,7 +52,8 @@ export default {
         title: '1、上传教师信息列表',
         tips: '注：教师信息列表包含教师的基本信息——姓名、工号等。'
       },
-      fileList: []
+      fileList: [],
+      loadingFlag: false
     }
   },
   mounted () {
@@ -76,6 +77,7 @@ export default {
         })
         return
       }
+      this.loadingFlag = true
       var fileValue = document.querySelector('.el-upload .el-upload__input')
       var fd = new window.FormData()
       fd.append('fileType', 'category')
@@ -87,9 +89,14 @@ export default {
           file: fileValue.files[0]
         }
       ).then(res => {
-        this.$alert('上传成功')
+        this.$message({
+          message: '上传成功！',
+          type: 'success'
+        })
+        this.loadingFlag = false
       }).catch(res => {
-        this.$alert('上传失败')
+        this.$message.error('上传失败！')
+        this.loadingFlag = false
       })
     }
   }

@@ -86,7 +86,7 @@ export default {
       for (let i in temp) {
         ans.push(temp[i])
       }
-      ans.sort((a,b) => {return a.order - b.order})
+      ans.sort((a, b) => { return a.order - b.order })
       return ans
     }
   },

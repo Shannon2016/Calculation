@@ -142,15 +142,31 @@ export default {
       console.log(index, row)
     },
     handleDelete (index, row) {
-      console.log(row.id)
-      this.$ajaxPost2(
-        '/api/user/deleteBatch',
-        [{id: row.id}]
-      ).then(res => {
-        console.log(res)
-        this.handleCurrentChange(1)
-      }).catch(res => {
-        console.log(res)
+      this.$confirm('确认删除该用户吗？', '确认信息', {
+        distinguishCancelAndClose: true,
+        confirmButtonText: '确认',
+        cancelButtonText: '取消'
+      }).then(() => {
+        this.$ajaxPost2(
+          '/api/user/deleteBatch',
+          [{id: row.id}]
+        ).then(res => {
+          console.log(res)
+          this.$message({
+            type: 'success',
+            message: '用户已删除'
+          })
+          this.handleCurrentChange(1)
+        }).catch(res => {
+          console.log(res)
+        })
+      }).catch(action => {
+        this.$message({
+          type: 'error',
+          message: action === 'cancel'
+            ? '取消修改'
+            : '停留在当前页面'
+        })
       })
     },
     handleCurrentChange (index) {
@@ -228,7 +244,23 @@ export default {
     .table .el-button{
       font-size: 16px;
     }
-    .darkbutton{
+    .lightbutton，.el-message-box__btns button{
+      border-radius: 3px;
+      background-color:white;
+      color: rgba(58, 100, 115, 1);
+      text-align: center;
+      font-family: 'Microsoft YaHei';
+      border: 0px;
+      font-size: 16px !important;
+      border: 1px solid rgba(58, 100, 115, 1);
+    }
+    .lightbutton:focus, .lightbutton:hover, ，.el-message-box__btns button:focus, ，.el-message-box__btns button:hover{
+      background-color:rgba(210, 230, 255, 1) !important;
+      border: 1px solid rgba(58, 100, 115, 1);
+      color:navy;
+      font-size: 16px !important;
+    }
+    .darkbutton, .el-message-box__btns .el-button--primary {
       border-radius: 3px;
       background-color: rgba(58, 100, 115, 1);
       color: rgba(255, 255, 255, 1);
@@ -237,27 +269,14 @@ export default {
       border: 0ch;
       font-size: 16px;
     }
-    .darkbutton:focus, .darkbutton:hover{
+    .darkbutton:focus, .darkbutton:hover, .el-message-box__btns .el-button--primary:hover, .el-message-box__btns .el-button--primary:focus{
       background-color:rgba(98, 140, 155, 1) !important;
       border: 0ch;
       color:white;
       font-size: 16px;
     }
-    .lightbutton{
-          border-radius: 3px;
-          background-color:white;
-          color: rgba(58, 100, 115, 1);
-          text-align: center;
-          font-family: 'Microsoft YaHei';
-          border: 0px;
-          font-size: 16px;
-          border: 1px solid rgba(58, 100, 115, 1);
-        }
-    .lightbutton:focus, .lightbutton:hover{
-      background-color:rgba(210, 230, 255, 1) !important;
-      border: 1px solid rgba(58, 100, 115, 1);
-      color:navy;
-      font-size: 16px;
+    .el-button--mini, .el-button--small{
+      font-size: 16px !important;
     }
     .el-dialog__title{
       color:rgba(3, 43, 72, 1);
