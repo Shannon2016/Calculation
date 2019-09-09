@@ -8,8 +8,8 @@
 
     <div slot='center'>
     <div class="card">
-        <el-input class="text" name='username' id="username" type="username" v-model="username" prefix-icon="el-icon-user"></el-input>
-        <el-input class="text" name='password' id="password" type="password" v-model="password" prefix-icon="el-icon-unlock"></el-input>
+        <el-input class="text" name='username' id="username" v-model="username" prefix-icon="el-icon-user"></el-input>
+        <el-input type='password' class="text" name='password' id="password" v-model="password" prefix-icon="el-icon-unlock"></el-input>
         <el-button  class="button"   @click="onLogin">登录</el-button>
      </div>
     </div>
@@ -32,8 +32,8 @@ export default {
   },
   methods: {
     onLogin () {
-      this.$store.commit('login')
-      this.$router.push('/home')
+      // this.$store.commit('login')
+      // this.$router.push('/home')
       this.$ajaxPost(
         '/api/auth',
         {
@@ -47,11 +47,17 @@ export default {
           '/api/user'
         ).then(res => {
           console.log(res)
+          global.authorities = res.data.authorities
+          console.log(global.authorities)
+          global.userId = res.data.id
+          this.$store.commit('login')
+          this.$router.push('/home')
+          console.log(global.userId)
+          this.$store.commit('login')
+          this.$router.push('/home')
         }).catch(res => {
           console.log(res)
         })
-        this.$store.commit('login')
-        this.$router.push('/home')
       }).catch(res => {
         this.$err('登录失败')
       })

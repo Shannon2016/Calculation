@@ -36,14 +36,15 @@
               <el-button class='lightbutton'>结果导出</el-button>
           </el-form-item>
       </el-form>
-      <!-- <el-table :data="tableData">
+      <el-table :data="tableData">
         <el-table-column :label='pointDescription'>
             <el-table-column
-            :v-for='(item, index) in rec'
-            :prop="tableData[item.prop]"
+            v-for='(item, index) in rec'
+            :key = 'index'
+            :prop="item.prop"
             :label="item.label"></el-table-column>
         </el-table-column>
-      </el-table> -->
+      </el-table>
     </div>
 </template>
 <script>
@@ -81,55 +82,56 @@ export default {
       }
     },
     setData () {
-        // 为下拉框动态添加信息
-        for (let i = 0; i < 10; i++) {
+      // 为下拉框动态添加信息
+      for (let i = 0; i < 10; i++) {
         let str1 = (i + 2010) + '~' + (i + 2012)
         let str2 = (i + 2010) + '级'
         this.yearsByGrade.push({label: str2, value: i + 2010})
         this.yearsByTime.push({label: str1, value: i + 2010})
-        }
-        for (let i = 0; i < 10; i++) {
+      }
+      for (let i = 0; i < 10; i++) {
         this.points.push({label: '工程点' + (i + 1), value: i + 1})
-        }
+      }
+      console.log('setData')
     },
     onSearchClicked () {
-        // 加载表格信息
-        // 需要获取该认证点的完整描述，记录在pointDescription中
-        this.pointDescription = '工程认证点五XXXXXX'
-        // 需要先动态获取所有该工程点的子认证点，将内容记录至rec中
-        this.rec = [
-            {
-                prop: 'subpoint1',
-                label: '子认证点1'
-            },
-            {
-                prop: 'subpoint2',
-                label: '子认证点2'
-            },
-            {
-                prop: 'subpoint3',
-                label: '子认证点3'
-            }
-        ]
-        // 再获取各自认证点对应课程的数值,将内容记录在tableData中
-        this.tableData = [
-            {
-                subpoint1: null,
-                subpoint2: 0.5,
-                subpoint3: 0.1
-            },
-            {
-                subpoint1: 1,
-                subpoint2: 0.5,
-                subpoint3: null
-            },
-            {
-                subpoint1: null,
-                subpoint2: 0.6,
-                subpoint3: 0.2
-            }
-        ]
-        console.log(this.tableData[1][this.rec[1].prop])
+      // 加载表格信息
+      // 需要获取该认证点的完整描述，记录在pointDescription中
+      this.pointDescription = '工程认证点五XXXXXX'
+      // 需要先动态获取所有该工程点的子认证点，将内容记录至rec中
+      this.rec = [
+        {
+          prop: 'subpoint1',
+          label: '子认证点1'
+        },
+        {
+          prop: 'subpoint2',
+          label: '子认证点2'
+        },
+        {
+          prop: 'subpoint3',
+          label: '子认证点3'
+        }
+      ]
+      // 再获取各自认证点对应课程的数值,将内容记录在tableData中
+      this.tableData = [
+        {
+          subpoint1: null,
+          subpoint2: 0.5,
+          subpoint3: 0.1
+        },
+        {
+          subpoint1: 1,
+          subpoint2: 0.5,
+          subpoint3: null
+        },
+        {
+          subpoint1: null,
+          subpoint2: 0.6,
+          subpoint3: 0.2
+        }
+      ]
+      // console.log(this.tableData[1][this.rec[1].prop])
     }
   }
 }

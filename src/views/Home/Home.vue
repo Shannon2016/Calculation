@@ -28,6 +28,7 @@
 <script>
 import HomeFrame from './HomeFrame'
 import AppMenu from './../../components/menu/AppMenu'
+import global from './../../store/global.js'
 export default {
   name: 'Home',
   components: {
@@ -36,8 +37,8 @@ export default {
   },
   data () {
     return {
-      username: 'default name',
-      number: '1120161930',
+      username: '_________',
+      number: '__________',
       showFlag: false,
       form: {
         originPassword: '',
@@ -47,11 +48,33 @@ export default {
     }
   },
   mounted () {
-
+    console.log(global.userId)
+    this.$ajaxPost(
+      '/api/user/getInfo',
+      {
+        userId: global.userId + ''
+      }
+    ).then(res => {
+      console.log(res)
+      this.username = res.data.data.realName
+      this.number = res.data.data.userName
+    }).catch(res => {
+      console.log(res)
+    })
   },
   methods: {
     modifyPassword () {
-      console.log(1)
+      this.$ajaxPost(
+        '/api/user/updateInfo',
+        {
+          userId: global.userId + '',
+          newPassword: this.form.newPassword
+        }
+      ).then(res => {
+        this.$success('密码修改成功')
+      }).catch(res => {
+        this.$err()
+      })
     }
   }
 }

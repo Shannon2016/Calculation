@@ -23,7 +23,7 @@
                 </template>
                 <el-menu-item v-for='(subItem, subIndex) in item.child' :key='subIndex' :index='subItem.path'>
                   <i :class='subItem.icon'></i>
-                  <span slot='title'>{{subItem.cn}}</span>
+                  <span slot='title'>{{subItem.title}}</span>
                 </el-menu-item>
             </el-submenu>
             <el-menu-item v-else :key="index" :index='item.path'>
@@ -36,18 +36,8 @@
 </template>
 
 <script>
-import menu from '../../router/menu.js'
-
-console.log(menu.menu.map(
-  item => {
-    return {
-      title: item.cn,
-      path: item.path,
-      icon: item.icon,
-      child: item.child
-    }
-  }
-))
+import menus from '../../router/menu.js'
+import global from './../../store/global.js'
 export default {
   name: 'AppMenu',
   props: {
@@ -74,16 +64,20 @@ export default {
   },
   computed: {
     menu () {
-      return menu.menu.map(
-        item => {
-          return {
-            title: item.cn,
-            path: item.path,
-            icon: item.icon,
-            child: item.child
-          }
-        }
-      )
+      // return menu.menu.map(
+      //   item => {
+      //     return {
+      //       title: item.cn,
+      //       path: item.path,
+      //       icon: item.icon,
+      //       child: item.child
+      //     }
+      //   }
+      // )
+      console.log(global.authorities)
+      console.log(menus)
+      console.log(global.authorities[0].authority)
+      return menus[global.authorities[0].authority]
     }
   },
   methods: {

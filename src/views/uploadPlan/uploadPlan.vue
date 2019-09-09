@@ -4,7 +4,7 @@
         <el-col :span='24'>管理培养方案</el-col>
       </el-row>
       <el-divider></el-divider>
-      <div class='contentTitle'>当前是{{semester}}学年，请您上传以下文件：</div>
+      <div class='uploadTitle' >当前是{{semester}}学年，请您上传以下文件：</div>
       <div class='uploadContainer'>
         <div class='uploadTitle'>{{upload1.title}}</div>
         <div class='uploadBtn'>
@@ -116,13 +116,13 @@ export default {
         return
       }
       var fileValue = document.querySelector('.el-upload .el-upload__input')
-      var fd = new window.FormData()
-      fd.append('fileType', 'category')
-      fd.append('file', fileValue.files[0])
       // eslint-disable-next-line no-undef
       this.$ajaxPost(
         '/api/upload/cultivatePlan',
-        fd
+        {
+          'fileType': 'category',
+          'file': fileValue.files[0]
+        }
       ).then(res => {
         this.$alert('上传成功')
       }).catch(res => {
@@ -145,6 +145,7 @@ export default {
         font-size: large;
         color: #032B48;
         font-weight: bold;
+        margin-top: 3%;
     }
 
     .uploadBtn{
