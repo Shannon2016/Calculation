@@ -90,6 +90,7 @@ export default {
       currentPage: 1,
       totalSize: 25,
       currentData: [],
+      searchKey: '',
       userData: [
       ],
       formAdd: {
@@ -113,7 +114,8 @@ export default {
   },
   methods: {
     onSearch () {
-      console.log(this.searchWord)
+      this.searchKey = "" + this.searchWord
+      this.handleCurrentChange(1)
     },
     addUser () {
       this.$ajaxPost(
@@ -165,7 +167,7 @@ export default {
         {
           pageIndex: index,
           pageSize: 10,
-          searchKey: ''
+          searchKey: this.searchKey
         }
       ).then(res => {
         console.log(res.data)

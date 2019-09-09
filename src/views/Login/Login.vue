@@ -48,11 +48,11 @@ export default {
         ).then(res => {
           global.userId = res.data.id
           console.log(global.userId)
+          this.$store.commit('login')
+          this.$router.push('/home')
         }).catch(res => {
           console.log(res)
         })
-        this.$store.commit('login')
-        this.$router.push('/home')
       }).catch(res => {
         this.$err('登录失败')
       })
