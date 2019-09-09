@@ -75,6 +75,7 @@ export default {
       //   }
       // )
       let temp = {}
+      global.authorities.push({authority: 'common'})
       for (let i of global.authorities) {
         let t = menus[i.authority]
         for (let j of t) {
