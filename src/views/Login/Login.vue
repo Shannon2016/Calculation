@@ -53,6 +53,8 @@ export default {
           this.$store.commit('login')
           this.$router.push('/home')
           console.log(global.userId)
+          this.$store.commit('login')
+          this.$router.push('/home')
         }).catch(res => {
           console.log(res)
         })
