@@ -83,6 +83,35 @@ Vue.prototype.$ajaxPostFile = function (url, data = {}, config = {}) {
     config
   )
 }
+
+Vue.prototype.$download = (url, data = {}) => {
+  //
+  // const queryArgs = {
+  //   url,
+  //   method: 'get',
+  //   headers: {
+  //     Accept: 'application/json',
+  //     'Content-Type': 'application/json; charset=utf-8',
+  //     'Authorization': global.token,
+  //     withCredentials: true
+  //   },
+  //   responseType: 'blob' // 设置返回类型为 blob
+  // }
+  // return axios.request(queryArgs).catch(err => console.log(err))
+  return axios.get(
+    url,
+    {
+      params: data,
+      headers: {
+        Accept: 'application/json',
+        'Authorization': global.token,
+        'Content-Type': 'application/json; charset=utf-8',
+        withCredentials: true,
+        responseType: 'blob'
+      }
+    }
+  )
+}
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
