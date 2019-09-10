@@ -22,9 +22,9 @@
           </el-form-item>
           <el-form-item label="用户身份">
             <el-radio-group v-model="formAdd.identity">
-              <el-radio :label="1">学生</el-radio>
-              <el-radio :label="2">教师</el-radio>
-              <el-radio :label="3">教学干事</el-radio>
+              <el-radio label="student">学生</el-radio>
+              <el-radio label="teacher">教师</el-radio>
+              <el-radio label="professor">教学干事</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="所属学院">
@@ -72,6 +72,33 @@
         :total="totalSize"
         style="justify-content:center; display:flex;margin:3%">
       </el-pagination>
+      <el-dialog title="修改用户信息" :visible.sync="modifyDialog">
+        <el-form label-width="80" :model="formModify">
+          <el-form-item label="用户名">
+            <el-input v-model="formModify.username"></el-input>
+          </el-form-item>
+          <el-form-item label="用户身份">
+            <el-radio-group v-model="formModify.identity">
+              <el-radio label="student">学生</el-radio>
+              <el-radio label="teacher">教师</el-radio>
+              <el-radio label="professor">教学干事</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="所属学院">
+            <el-select v-model="formModify.college" placeholder="请选择">
+              <el-option
+                v-for="item in collegeOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button class="darkbutton" @click="modifyUser">确 认</el-button>
+        </div>
+      </el-dialog>
     </div>
 </template>
 <script>
@@ -87,30 +114,38 @@ export default {
     return {
       searchWord: '',
       addDialog: false,
+      modifyDialog: false,
       currentPage: 1,
       totalSize: 25,
       currentData: [],
       searchKey: '',
-      userData: [
-      ],
+      userData: [],
       formAdd: {
         username: '',
         identity: -1,
         college: ''
       },
-      collegeOptions: [
-        {
-          value: 1,
-          label: '机械与车辆学院'
-        }, {
-          value: 2,
-          label: '计算机学院'
-        }
-      ]
+      formModify: {
+        username: '',
+        identity: -1,
+        college: ''
+      },
+      collegeOptions: []
     }
   },
   mounted () {
     this.handleCurrentChange(1, 10)
+    this.$ajaxPost(
+      '/api/getInfo/departmentInfo',
+      { }
+    ).then(res => {
+      console.log(res)
+      for (let i = 0; i < res.data.data.length; i++) {
+        this.collegeOptions.push({value: res.data.data[i], label: res.data.data[i]})
+      }
+    }).catch(res => {
+      this.$err('系统错误')
+    })
   },
   methods: {
     onSearch () {
@@ -118,12 +153,13 @@ export default {
       this.handleCurrentChange(1)
     },
     addUser () {
+      console.log(this.formAdd)
       this.$ajaxPost(
         '/api/user/addNew',
         {
           userName: this.formAdd.username,
           userType: this.formAdd.identity,
-          departmentId: this.formAdd.college
+          departmentName: this.formAdd.college
         }
       ).then(res => {
         if (res.data.code === 'success') {
@@ -138,8 +174,14 @@ export default {
       console.log(this.formAdd)
       this.addDialog = false
     },
+    modifyUser () {
+      // 待实现
+    },
     handleEdit (index, row) {
-      console.log(index, row)
+      this.formModify.username = row.userName
+      this.formModify.identity = row.userType
+      this.formModify.college = row.userDepartment
+      this.modifyDialog = true
     },
     handleDelete (index, row) {
       this.$confirm('确认删除该用户吗？', '确认信息', {
@@ -170,10 +212,6 @@ export default {
       })
     },
     handleCurrentChange (index) {
-      // this.currentData = []
-      // for (let i = (val - 1) * 10; i < val * 10 && i < this.totalSize; i++) {
-      //   this.currentData.push(this.userData[i])
-      // }
       this.currentPage = index
       this.$ajaxPost(
         '/api/user/getAll',

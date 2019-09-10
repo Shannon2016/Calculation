@@ -7,23 +7,22 @@
       <div class='uploadContainer'>
         <div class='uploadTitle'>{{upload.title}}</div>
         <div class='uploadBtn'>
-            <el-upload
-                class="upload-demo"
-                accept=".xlsx, .xls"
-                ref="upload"
-                :multiple="false"
-                :auto-upload="false"
-                :on-change='onChange'
-                :before-remove='beforeRemove'
-                action="/upload/teacherInfo"
-                :limit="1"
-                :http-request = "submitUpload"
-                :on-exceed="handleExceed"
-                :file-list="fileList">
-                <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
-                <el-button style="margin-left:10px;" size="small" icon="el-icon-upload2" type="success" @click="hhh" :loading='loadingFlag'>提交</el-button>
-            </el-upload>
-
+          <el-upload
+            class="upload-demo"
+            accept=".xlsx, .xls"
+            ref="upload"
+            :multiple="false"
+            :auto-upload="false"
+            :on-change='onChange'
+            :before-remove='beforeRemove'
+            action="/upload/teacherInfo"
+            :limit="1"
+            :http-request = "submitUpload"
+            :on-exceed="handleExceed"
+            :file-list="fileList">
+            <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
+            <el-button style="margin-left:10px;" size="small" icon="el-icon-upload2" type="success" @click="hhh" :loading='loadingFlag'>提交</el-button>
+          </el-upload>
         </div>
         <div class='uploadTips'>
             {{upload.tips}}

@@ -16,8 +16,11 @@
                 action="/uploadFile"
                 :limit="1"
                 :on-exceed="handleExceed"
-                :file-list="fileList">
-                <el-button size="small" type="primary">点击上传</el-button>
+                :file-list="fileList"
+                ref="upload"
+                :http-request="submitUpload">
+                <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
+                <el-button style="margin-left:10px;" size="small" icon="el-icon-upload2" type="success" @click="hhh" :loading='loadingFlag'>提交</el-button>
             </el-upload>
         </div>
         <div class='uploadTips'>
@@ -48,7 +51,8 @@ export default {
         title: '1、上传学生选课列表',
         tips: '注：学生选课列表包含学生选课的基本信息——学生姓名、学号、课程编号、课程名称等'
       },
-      fileList: []
+      fileList: [],
+      loadingFlag: false
     }
   },
   mounted () {
@@ -62,6 +66,37 @@ export default {
     },
     beforeRemove (file, fileList) {
       this.fileList = fileList
+    },
+    hhh () {
+      this.$refs.upload.submit()
+    },
+    submitUpload (param) {
+      this.loadingFlag = true
+      this.$ajaxPostFile(
+        '/api/upload/studentCourse',
+        {
+          fileType: 'category',
+          file: param.file
+        },
+        {
+          onUploadProgress: progressEvent => {
+            console.log(111)
+            let percent=(progressEvent.loaded / progressEvent.total * 100) | 0
+            console.log(this.$refs.upload)
+            console.log(percent)
+            param.onProgress({percent:percent})
+          }
+        }
+      ).then(res => {
+        this.$message({
+          message: '上传成功！',
+          type: 'success'
+        })
+        this.loadingFlag = false
+      }).catch(res => {
+        this.$message.error('上传失败！')
+        this.loadingFlag = false
+      })
     }
   }
 }

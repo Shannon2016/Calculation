@@ -81,7 +81,7 @@ export default {
     return {
       dialog1Visible: false,
       dialog2Visible: false,
-      semester: '2019~2020',
+      semester: '2019~2020', //
       upload1: {
         title: '1、上传本学年课程列表',
         tips: '注：本学年课程列表包含当前学年开设的所有课程信息——课程名称、课程编号等。'
@@ -169,7 +169,7 @@ export default {
       // })
     },
     submitUpload1 (param) {
-      this.loadingFlag = true
+      this.loadingFlag2 = true
       this.$ajaxPostFile(
         '/api/upload/teacherCourseUpload',
         {
@@ -190,10 +190,10 @@ export default {
           message: '上传成功！',
           type: 'success'
         })
-        this.loadingFlag = false
+        this.loadingFlag2 = false
       }).catch(res => {
         this.$message.error('上传失败！')
-        this.loadingFlag = false
+        this.loadingFlag2 = false
       })
       // if (this.fileList2.length === 0) {
       //   this.$message({

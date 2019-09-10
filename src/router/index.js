@@ -53,6 +53,10 @@ export default new Router({
     path: '/result',
     name: 'Result',
     component: () => import(`@/views/Result`)
+  }, {
+    path: '/download',
+    name: 'Download',
+    component: () => import(`@/views/Download`)
   }
   ]
 })

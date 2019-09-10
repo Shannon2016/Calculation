@@ -6,21 +6,24 @@
       <el-divider></el-divider>
         <div class='contentStyle'>您好，{{username}}！</div>
         <div class='contentStyle'>您的工号是{{number}}。</div>
-        <div class='contentStyle'>若您需要修改密码，请
+        <div class='contentStyle'>若您需要修改密码及个人姓名，请
           <el-button type='text' @click='showFlag=true'>点击此处</el-button>
         </div>
         <el-form v-if='showFlag' :model="form" label-width="120px" class='formStyle'>
+          <el-form-item label='个人姓名'>
+            <el-input v-model='form.name'></el-input>
+          </el-form-item>
           <el-form-item label='原密码'>
-            <el-input v-model='form.originPassword'></el-input>
+            <el-input v-model='form.originPassword' type='password'></el-input>
           </el-form-item>
           <el-form-item label='新密码'>
-            <el-input v-model='form.newPassword'></el-input>
+            <el-input v-model='form.newPassword' type='password'></el-input>
           </el-form-item>
           <el-form-item label='确认密码'>
-            <el-input v-model='form.confirmPassword'></el-input>
+            <el-input v-model='form.confirmPassword' type='password'></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button class="lightbutton" @click='modifyPassword'>确认修改</el-button>
+            <el-button class="lightbutton" @click='modifyInfo'>确认修改</el-button>
           </el-form-item>
         </el-form>
     </div>
@@ -41,6 +44,7 @@ export default {
       number: '__________',
       showFlag: false,
       form: {
+        name: '',
         originPassword: '',
         newPassword: '',
         confirmPassword: ''
@@ -63,12 +67,17 @@ export default {
     })
   },
   methods: {
-    modifyPassword () {
+    modifyInfo () {
+      if (this.form.newPassword !== this.form.confirmPassword) {
+        this.$err('新密码不一致，请重新输入')
+        return
+      }
       this.$ajaxPost(
         '/api/user/updateInfo',
         {
           userId: global.userId + '',
-          newPassword: this.form.newPassword
+          newPassword: this.form.newPassword,
+          newRealName: this.form.name
         }
       ).then(res => {
         this.$success('密码修改成功')
