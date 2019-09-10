@@ -111,16 +111,7 @@ export default {
       })
     },
     onDetailClicked (id) {
-      this.$ajaxPost(
-        '/api/getInfo/oldTeacherEvaluation',
-        {
-          id: id
-        }
-      ).then(res => {
-
-      }).catch(res => {
-        console.log(res)
-      })
+      window.open('/api/download/downOldTeacherEvaluation?id=' + id)
     }
   }
 }

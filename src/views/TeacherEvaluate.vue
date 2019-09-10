@@ -17,7 +17,7 @@
             width="200">
              <template slot-scope="scope">
                  <div class="is_upload" v-if="scope.row.status===3" style="color:rgb(119, 0, 2);font-weight: bolder">未上传</div>
-                 <div class="is_upload" v-else  style="color: rgba(2, 43, 72, 1)">已上传</div>
+                 <div class="is_upload" v-if="scope.row.status===4"  style="color: rgba(2, 43, 72, 1)">已上传</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -27,7 +27,7 @@
             width="250">
              <template slot-scope="scope">
                  <el-button v-if="scope.row.status===3" @click='prepareUpload(scope.row.id)' class="darkbutton">上传</el-button>
-                 <el-button v-else class="lightbutton" @click='prepareUpload(scope.row.id)'>修改</el-button>
+                 <el-button v-if="scope.row.status===4" class="lightbutton" @click='prepareUpload(scope.row.id)'>修改</el-button>
             </template>
           </el-table-column>
       </el-table>
