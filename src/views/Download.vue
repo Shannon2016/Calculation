@@ -7,22 +7,9 @@
             <el-row type="flex" align="middle" class='inputForm'>
                 <el-col :span='4' class="formLabel">请输入关键词:</el-col>
                 <el-col :span='7'><el-input v-model="formSearch.keyWord"></el-input></el-col>
-            </el-row>
-            <el-row type="flex" align="middle" class='inputForm'>
-                <el-col :span='4' class="formLabel">请选择学年:</el-col>
-                <el-col :span='5'>
-                    <el-select v-model="formSearch.chosenYear" placeholder="请选择">
-                        <el-option
-                        v-for="item in years"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-col>
-                <el-col :span='2' style="margin-left:30px">
-                    <el-button @click="onSearch" class='darkbutton'>搜索</el-button>
-                </el-col>
+              <el-col :span='2' style="margin-left:30px">
+                <el-button @click="onSearch" class='darkbutton'>搜索</el-button>
+              </el-col>
             </el-row>
         <el-table class="table" :data='currentData'>
             <el-table-column
@@ -36,7 +23,7 @@
             width="250">
             <template slot-scope="scope">
                 <el-button class="darkbutton"
-                @click="handleDownload(scope.$index, scope.row)">下载</el-button>
+                @click="handleDownload( scope.row.id)">下载</el-button>
             </template>
             </el-table-column>
         </el-table>
@@ -59,56 +46,47 @@ export default {
   },
   data () {
     return {
-      years: [{
-          value: 2017,
-          label: '2017~2018学年'
-      },{
-          value: 2018,
-          label: '2018~2019学年'
-      }],
       formSearch: {
-        chosenYear: '',
         keyWord: ''
       },
       currentPage: 1,
       totalSize: 10,
-      currentData: [],
+      currentData: []
 
     }
   },
   mounted () {
-    this.handleCurrentChange()
+    this.handleCurrentChange(1)
   },
   methods: {
-    handleCurrentChange (){
-        this.currentData = [{
-            fileName: 'file1'
-        }, {
-            fileName: 'file2'
-        }, {
-            fileName: 'file2'
-        }, {
-            fileName: 'file2'
-        }, {
-            fileName: 'file2'
-        }, {
-            fileName: 'file2'
-        }, {
-            fileName: 'file2'
-        }, {
-            fileName: 'file2'
-        }, {
-            fileName: 'file2'
-        }, {
-            fileName: 'file2'
-        }]
+    handleCurrentChange (index) {
+      this.currentPage = index
+      this.$ajaxPost(
+        '/api/getInfo/getAllUserTables',
+        {
+          pageIndex: index,
+          pageSize: 10,
+          keyWord: this.formSearch.keyWord
+        }
+      ).then(res => {
+        console.log(res.data)
+        if (res.data.code === 'success') {
+          this.totalSize = res.data.data.total
+          this.currentData = res.data.data.resultList
+        } else {
+          this.$err('系统错误')
+        }
+      }).catch(res => {
+        console.log(res)
+      })
     },
-    handleDownload (index, row) {
-        console.log(row)
+    handleDownload (id) {
+      window.open('/api/download/downloadUserTable?id=' + id)
     },
     onSearch () {
-        console.log(this.formSearch)
+      this.handleCurrentChange(1)
     }
+
   }
 }
 </script>
@@ -205,7 +183,7 @@ export default {
       color:rgba(3, 43, 72, 1);
       font-size: 16px;
     }
-  
+
   .el-pager li{
     color:rgba(103, 143, 172, 0.5);
   }
