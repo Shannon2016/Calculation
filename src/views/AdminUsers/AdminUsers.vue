@@ -6,7 +6,7 @@
       <el-divider></el-divider>
       <el-row class="search"   :gutter='20'>
         <el-col  :span='16'>
-          <el-input v-model='searchWord'><i slot="suffix" class="el-input__icon el-icon-search"></i></el-input>
+          <el-input v-model='searchWord' placeholder="请输入关键词"><i slot="suffix" class="el-input__icon el-icon-search"></i></el-input>
         </el-col>
         <el-col   :span='3'>
           <el-button class="lightbutton" @click='onSearch'>搜索</el-button>
@@ -59,8 +59,6 @@
             <template slot-scope="scope">
               <el-button class="darkbutton"
                 @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-              <el-button class="lightbutton"
-                @click="handleEdit(scope.$index, scope.row)">修改</el-button>
             </template>
           </el-table-column>
       </el-table>
@@ -72,33 +70,6 @@
         :total="totalSize"
         style="justify-content:center; display:flex;margin:3%">
       </el-pagination>
-      <el-dialog title="修改用户信息" :visible.sync="modifyDialog">
-        <el-form label-width="80" :model="formModify">
-          <el-form-item label="用户名">
-            <el-input v-model="formModify.username"></el-input>
-          </el-form-item>
-          <el-form-item label="用户身份">
-            <el-radio-group v-model="formModify.identity">
-              <el-radio label="student">学生</el-radio>
-              <el-radio label="teacher">教师</el-radio>
-              <el-radio label="professor">教学干事</el-radio>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item label="所属学院">
-            <el-select v-model="formModify.college" placeholder="请选择">
-              <el-option
-                v-for="item in collegeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button class="darkbutton" @click="modifyUser">确 认</el-button>
-        </div>
-      </el-dialog>
     </div>
 </template>
 <script>
@@ -114,18 +85,12 @@ export default {
     return {
       searchWord: '',
       addDialog: false,
-      modifyDialog: false,
       currentPage: 1,
       totalSize: 25,
       currentData: [],
       searchKey: '',
       userData: [],
       formAdd: {
-        username: '',
-        identity: -1,
-        college: ''
-      },
-      formModify: {
         username: '',
         identity: -1,
         college: ''
@@ -164,8 +129,9 @@ export default {
       ).then(res => {
         if (res.data.code === 'success') {
           this.handleCurrentChange(this.currentPage)
+          this.$message('添加成功！')
         } else {
-          console.log('添加失败')
+          this.$message.error('添加失败！用户名重复！')
         }
       }
       ).catch(res => {
@@ -173,15 +139,6 @@ export default {
       })
       console.log(this.formAdd)
       this.addDialog = false
-    },
-    modifyUser () {
-      // 待实现
-    },
-    handleEdit (index, row) {
-      this.formModify.username = row.userName
-      this.formModify.identity = row.userType
-      this.formModify.college = row.userDepartment
-      this.modifyDialog = true
     },
     handleDelete (index, row) {
       this.$confirm('确认删除该用户吗？', '确认信息', {

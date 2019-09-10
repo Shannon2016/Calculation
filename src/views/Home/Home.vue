@@ -81,6 +81,8 @@ export default {
         }
       ).then(res => {
         this.$success('密码修改成功')
+        global.token = null
+        this.$store.commit('logout')
       }).catch(res => {
         this.$err()
       })

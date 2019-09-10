@@ -83,11 +83,23 @@ export default {
           label: '计算机学院'
         }
       ],
-      semester: ''
+      semester: '',
+      DialogVisible: false,
+      courseName: '',
+      qualities: []
     }
   },
   mounted () {
-    this.handleCurrentChange(1)
+    // this.handleCurrentChange(1)
+    this.$ajaxPost(
+      '/api/getInfo/semester',
+      {
+        userWorkId: global.workId,
+        userType: global.userType
+      }
+    ).then(res => {
+      console.log(res)
+    })
   },
   methods: {
     handleCurrentChange (val) {
