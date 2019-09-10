@@ -54,18 +54,19 @@ export default {
   },
   data () {
     return {
-      years: [{
-          value: 2017,
-          label: '2017~2018学年'
-      },{
-          value: 2018,
-          label: '2018~2019学年'
-      }],
       keyWord: '',
       currentPage: 1,
       totalSize: 10,
       currentData: [],
-
+      mapType: [
+          '培养方案',
+          '培养方案矩阵',
+          '教师信息列表',
+          '学年课程列表',
+          '学年教师开设课程列表',
+          '学生选课列表',
+          '课程评价列表'
+      ]
     }
   },
   mounted () {
@@ -76,7 +77,7 @@ export default {
         for (let i = 0; i < 10; i++) {
             this.currentData.push({
                 fileName: 'file' + i,
-                fileType: i,
+                fileType: this.mapType[i % 7],
                 time: (i +2010) + '~' + (i + 2011)
             })
         } 
