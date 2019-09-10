@@ -69,8 +69,8 @@ export default {
   methods: {
     modifyInfo () {
       if (this.form.newPassword !== this.form.confirmPassword) {
-         this.$err('新密码不一致，请重新输入') 
-         return
+        this.$err('新密码不一致，请重新输入')
+        return
       }
       this.$ajaxPost(
         '/api/user/updateInfo',

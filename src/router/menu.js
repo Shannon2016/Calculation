@@ -51,6 +51,13 @@ export default {
       title: '查看结果',
       icon: 'el-icon-folder',
       order: 7
+    },
+    {
+      path: '/download',
+      name: 'Download',
+      title: '历史文件下载',
+      icon: 'el-icon-download2',
+      order: 8
     }
   ],
   teacher: [

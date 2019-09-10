@@ -114,7 +114,7 @@ export default {
     return {
       searchWord: '',
       addDialog: false,
-      modifyDialog:false,
+      modifyDialog: false,
       currentPage: 1,
       totalSize: 25,
       currentData: [],
@@ -136,17 +136,16 @@ export default {
   mounted () {
     this.handleCurrentChange(1, 10)
     this.$ajaxPost(
-        '/api/getInfo/departmentInfo',
-        { }
-      ).then(res => {
-        console.log(res)
-        for (let i = 0; i < res.data.data.length; i++) {
-          this.collegeOptions.push({value: res.data.data[i], label: res.data.data[i]})
-        }
+      '/api/getInfo/departmentInfo',
+      { }
+    ).then(res => {
+      console.log(res)
+      for (let i = 0; i < res.data.data.length; i++) {
+        this.collegeOptions.push({value: res.data.data[i], label: res.data.data[i]})
       }
-      ).catch(res => {
-        this.$err('系统错误')
-      })
+    }).catch(res => {
+      this.$err('系统错误')
+    })
   },
   methods: {
     onSearch () {
