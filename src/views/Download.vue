@@ -17,8 +17,12 @@
             label="文件名">
             </el-table-column>
             <el-table-column
-            prop="fileType"
+            prop="status"
             label="文件类型">
+              <template slot-scope="scope">
+                <div class="is_upload" v-if="scope.row.status===3" style="color:rgb(119, 0, 2);font-weight: bolder">未上传</div>
+                <div class="is_upload" v-if="scope.row.status===4"  style="color: rgba(2, 43, 72, 1)">已上传</div>
+              </template>
             </el-table-column>
             <el-table-column
             prop="time"
@@ -92,7 +96,7 @@ export default {
       window.open('/api/download/downloadUserTable?id=' + id)
     },
     onSearch () {
-        console.log(this.formSearch)
+      this.handleCurrentChange(1)
     }
   }
 }
