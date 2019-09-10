@@ -1,48 +1,54 @@
 <template>
-<div>
-      <el-row class='contentTitle'>
-        <el-col :span='24'>历史文件</el-col>
-      </el-row>
-      <el-divider></el-divider>
-      <el-row style='margin-top:20px;' type="flex" align="middle">
-          <el-col :span='4' class='uploadTitle2'>请选择学年：</el-col>
-          <el-col :span='5'>
-            <el-select v-model="chosenYear" placeholder="请选择">
-                <el-option
-                v-for="item in years"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-                </el-option>
-            </el-select>
-          </el-col>
-          <el-col :offset='1' :span='2' class='darkbutton' style='line-height:40px;'>搜索</el-col>
-      </el-row>
-      <el-table class="table" :data='currentData'>
-          <el-table-column
+    <div>
+        <el-row class='contentTitle'>
+            <el-col :span='24'>历史文件</el-col>
+        </el-row>
+        <el-divider></el-divider>
+            <el-row type="flex" align="middle" class='inputForm'>
+                <el-col :span='4' class="formLabel">请输入关键词:</el-col>
+                <el-col :span='7'><el-input v-model="formSearch.keyWord"></el-input></el-col>
+            </el-row>
+            <el-row type="flex" align="middle" class='inputForm'>
+                <el-col :span='4' class="formLabel">请选择学年:</el-col>
+                <el-col :span='5'>
+                    <el-select v-model="formSearch.chosenYear" placeholder="请选择">
+                        <el-option
+                        v-for="item in years"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-col>
+                <el-col :span='2' style="margin-left:30px">
+                    <el-button @click="onSearch" class='darkbutton'>搜索</el-button>
+                </el-col>
+            </el-row>
+        <el-table class="table" :data='currentData'>
+            <el-table-column
             prop="fileName"
             label="文件名">
-          </el-table-column>
-          <el-table-column
+            </el-table-column>
+            <el-table-column
             label="操作"
             align="center"
             header-align="center"
             width="250">
             <template slot-scope="scope">
-              <el-button class="darkbutton"
+                <el-button class="darkbutton"
                 @click="handleDownload(scope.$index, scope.row)">下载</el-button>
             </template>
-          </el-table-column>
-      </el-table>
-      <el-pagination
+            </el-table-column>
+        </el-table>
+        <el-pagination
         @current-change="handleCurrentChange"
         :current-page.sync="currentPage"
         :page-size="10"
         layout="prev, pager, next, jumper"
         :total="totalSize"
         style="justify-content:center; display:flex;margin:3%">
-      </el-pagination>
-    </div>
+        </el-pagination>
+</div>
 </template>
 <script>
 import AppMenu from './../components/menu/AppMenu'
@@ -60,7 +66,10 @@ export default {
           value: 2018,
           label: '2018~2019学年'
       }],
-      chosenYear: '',
+      formSearch: {
+        chosenYear: '',
+        keyWord: ''
+      },
       currentPage: 1,
       totalSize: 10,
       currentData: [],
@@ -96,6 +105,9 @@ export default {
     },
     handleDownload (index, row) {
         console.log(row)
+    },
+    onSearch () {
+        console.log(this.formSearch)
     }
   }
 }
@@ -226,5 +238,12 @@ export default {
         font-size: large;
         color: #032B48;
         font-weight: bold;
+    }
+    .inputForm{
+        margin-top: 20px;
+    }
+    .formLabel{
+        font-weight: bold;
+        color: #032B48;
     }
 </style>>
