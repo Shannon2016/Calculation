@@ -17,6 +17,14 @@
             label="文件名">
             </el-table-column>
             <el-table-column
+            prop="fileType"
+            label="文件类型">
+            </el-table-column>
+            <el-table-column
+            prop="time"
+            label="上传时间">
+            </el-table-column>
+            <el-table-column
             label="操作"
             align="center"
             header-align="center"
@@ -84,9 +92,8 @@ export default {
       window.open('/api/download/downloadUserTable?id=' + id)
     },
     onSearch () {
-      this.handleCurrentChange(1)
+        console.log(this.formSearch)
     }
-
   }
 }
 </script>
