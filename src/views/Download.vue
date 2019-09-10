@@ -4,30 +4,25 @@
             <el-col :span='24'>历史文件</el-col>
         </el-row>
         <el-divider></el-divider>
-            <el-row type="flex" align="middle" class='inputForm'>
-                <el-col :span='4' class="formLabel">请输入关键词:</el-col>
-                <el-col :span='7'><el-input v-model="formSearch.keyWord"></el-input></el-col>
-            </el-row>
-            <el-row type="flex" align="middle" class='inputForm'>
-                <el-col :span='4' class="formLabel">请选择学年:</el-col>
-                <el-col :span='5'>
-                    <el-select v-model="formSearch.chosenYear" placeholder="请选择">
-                        <el-option
-                        v-for="item in years"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-col>
-                <el-col :span='2' style="margin-left:30px">
-                    <el-button @click="onSearch" class='darkbutton'>搜索</el-button>
-                </el-col>
-            </el-row>
-        <el-table class="table" :data='currentData'>
+        <el-row type="flex" align="middle" class='inputForm'>
+            <el-col :span='4' class="formLabel">请输入关键词:</el-col>
+            <el-col :span='7'><el-input v-model="keyWord"></el-input></el-col>
+            <el-col :span='2' style="margin-left:30px">
+                <el-button @click="onSearch" class='darkbutton'>搜索</el-button>
+            </el-col>
+        </el-row>
+        <el-table class="myTable" :data='currentData'>
             <el-table-column
             prop="fileName"
             label="文件名">
+            </el-table-column>
+            <el-table-column
+            prop="fileType"
+            label="文件类型">
+            </el-table-column>
+            <el-table-column
+            prop="time"
+            label="上传时间">
             </el-table-column>
             <el-table-column
             label="操作"
@@ -66,10 +61,7 @@ export default {
           value: 2018,
           label: '2018~2019学年'
       }],
-      formSearch: {
-        chosenYear: '',
-        keyWord: ''
-      },
+      keyWord: '',
       currentPage: 1,
       totalSize: 10,
       currentData: [],
@@ -81,33 +73,19 @@ export default {
   },
   methods: {
     handleCurrentChange (){
-        this.currentData = [{
-            fileName: 'file1'
-        }, {
-            fileName: 'file2'
-        }, {
-            fileName: 'file2'
-        }, {
-            fileName: 'file2'
-        }, {
-            fileName: 'file2'
-        }, {
-            fileName: 'file2'
-        }, {
-            fileName: 'file2'
-        }, {
-            fileName: 'file2'
-        }, {
-            fileName: 'file2'
-        }, {
-            fileName: 'file2'
-        }]
+        for (let i = 0; i < 10; i++) {
+            this.currentData.push({
+                fileName: 'file' + i,
+                fileType: i,
+                time: (i +2010) + '~' + (i + 2011)
+            })
+        } 
     },
     handleDownload (index, row) {
         console.log(row)
     },
     onSearch () {
-        console.log(this.formSearch)
+        console.log(this.keyWord)
     }
   }
 }
@@ -245,5 +223,9 @@ export default {
     .formLabel{
         font-weight: bold;
         color: #032B48;
+        font-size: large;
+    }
+    .myTable{
+        margin-top: 20px;
     }
 </style>>
