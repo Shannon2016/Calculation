@@ -47,8 +47,11 @@
                 action="/upload/cultivateMatrix"
                 :limit="1"
                 :on-exceed="handleExceed"
+                ref="upload2"
+                :http-request="submitUpload2"
                 :file-list="fileList2">
-                <el-button size="small" type="primary">点击上传</el-button>
+                <el-button slot="trigger" size="small" type="primary">点击上传</el-button>
+                <el-button style="margin-left: 10px;" size="small" icon="el-icon-upload2" type="success" @click="hhh2" :loading='loadingFlag2'>提交</el-button>
             </el-upload>
         </div>
         <div class='uploadTips'>
@@ -87,12 +90,16 @@ export default {
         tips: '注：培养实现矩阵包含毕业要求点及每门课程针对各要求点的分数占比。'
       },
       fileList2: [],
-      loadingFlag: false
+      loadingFlag: false,
+      loadingFlag2: false
     }
   },
   mounted () {
   },
   methods: {
+    hhh2 () {
+      this.$refs.upload2.submit()
+    },
     hhh () {
       this.$refs.upload.submit()
     },
@@ -137,6 +144,34 @@ export default {
       }).catch(res => {
         this.$message.error('上传失败！')
         this.loadingFlag = false
+      })
+    },
+    submitUpload2(param){
+      this.loadingFlag2 = true
+      this.$ajaxPostFile(
+        '/api/upload/cultivateMatrix',
+        {
+          fileType: 'category',
+          file: param.file
+        },
+        {
+          onUploadProgress: progressEvent => {
+            console.log(111)
+            let percent=(progressEvent.loaded / progressEvent.total * 100) | 0
+            console.log(this.$refs.upload)
+            console.log(percent)
+            param.onProgress({percent:percent})
+          }
+        }
+      ).then(res => {
+        this.$message({
+          message: '上传成功！',
+          type: 'success'
+        })
+        this.loadingFlag2 = false
+      }).catch(res => {
+        this.$message.error('上传失败！')
+        this.loadingFlag2 = false
       })
     }
   }
