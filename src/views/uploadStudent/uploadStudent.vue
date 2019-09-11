@@ -39,6 +39,7 @@
 <script>
 import uploadStudentFrame from './uploadStudentFrame'
 import AppMenu from './../../components/menu/AppMenu'
+var intervalId = null
 export default {
   name: 'uploadStudent',
   components: {
@@ -73,6 +74,7 @@ export default {
       this.$refs.upload.submit()
     },
     submitUpload (param) {
+      console.log(param)
       let timeStamp = Date.parse(new Date());
       this.loadingFlag = true
       this.$ajaxPostFile(
@@ -91,18 +93,9 @@ export default {
             param.onProgress({percent:percent})
           }
         }
-      ).then(res => {
-        this.$message({
-          message: '上传成功！',
-          type: 'success'
-        })
-        this.loadingFlag = false
-      }).catch(res => {
-        this.$message.error('上传失败！')
-        this.loadingFlag = false
-      })
-
-      let intervalId = setInterval(() => {
+      )
+      clearInterval(intervalId)
+      intervalId = setInterval(() => {
         this.$ajaxGet(
           '/api/upload/queryStatus',
           {
@@ -116,18 +109,26 @@ export default {
               }
               else if (res.data.data === -2) {
                 this.status = ''
-                console.log(1)
+                this.loadingFlag = false
+                this.$message({
+                  message: '上传成功！',
+                  type: 'success'
+                })
                 clearInterval(intervalId)
               }
               else if (res.data.data === -3) {
                 this.status = '处理失败'
+                this.loadingFlag = false
+                this.$message.error('上传失败！')
+                clearInterval(intervalId)
               }
               else {
                 this.status = '已处理' + res.data.data + '条数据，请等待。'
               }
             }
         })
-      }, 1000)
+      }, 3000)
+      param.onSuccess()
     }
   }
 }
