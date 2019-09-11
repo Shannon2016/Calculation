@@ -42,6 +42,7 @@
   </div>
 </template>
 <script>
+import global from './../store/global.js'
 export default {
   name: 'StudentEvaluate',
   components: {
@@ -96,6 +97,18 @@ export default {
       for (let i = (val - 1) * 10; i < val * 10 && i < this.totalSize; i++) {
         this.currentData.push(this.courseData[i])
       }
+      this.$ajaxPost(
+        '/api/getInfo/nowTermPage',
+        {
+          studentWorkId: global.workId,
+          pageIndex: val,
+          pageSize: 10
+        }
+      ).then(res => {
+        console.log(res)
+      }).catch(res => {
+        console.log(res)
+      })
     },
     onUploadClick (index, row) {
       this.$router.push('/studentDetail/1/' + row.name)

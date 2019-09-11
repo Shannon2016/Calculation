@@ -72,6 +72,9 @@ export default {
   },
   mounted () {
     this.setData()
+    // this.$ajaxPost(
+    //   '/api/getInfo/nowCourseIndex'
+    // )
   },
   methods: {
     onSelectionChange () {

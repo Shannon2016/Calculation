@@ -131,6 +131,13 @@ export default {
           title: '往期评价'
         }
       ]
+    },
+    {
+      path: '/download',
+      name: 'Download',
+      title: '历史文件下载',
+      icon: 'el-icon-download2',
+      order: 8
     }
   ],
   student: [
