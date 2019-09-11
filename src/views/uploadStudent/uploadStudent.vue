@@ -23,6 +23,7 @@
                 <el-button style="margin-left:10px;" size="small" icon="el-icon-upload2" type="success" @click="hhh" :loading='loadingFlag'>提交</el-button>
             </el-upload>
         </div>
+        <div :v-if='status!==""' style="margin-top:20px; font-weight:bold;">{{status}}</div>
         <div class='uploadTips'>
             {{upload.tips}}
             <el-button type='text' size='mini' @click='dialogVisible=true'>点此查看</el-button>
@@ -52,7 +53,8 @@ export default {
         tips: '注：学生选课列表包含学生选课的基本信息——学生姓名、学号、课程编号、课程名称等'
       },
       fileList: [],
-      loadingFlag: false
+      loadingFlag: false,
+      status: ''
     }
   },
   mounted () {
@@ -71,12 +73,14 @@ export default {
       this.$refs.upload.submit()
     },
     submitUpload (param) {
+      let timeStamp = Date.parse(new Date());
       this.loadingFlag = true
       this.$ajaxPostFile(
         '/api/upload/studentCourse',
         {
           fileType: 'category',
-          file: param.file
+          file: param.file,
+          id: timeStamp + ''
         },
         {
           onUploadProgress: progressEvent => {
@@ -97,6 +101,33 @@ export default {
         this.$message.error('上传失败！')
         this.loadingFlag = false
       })
+
+      let intervalId = setInterval(() => {
+        this.$ajaxGet(
+          '/api/upload/queryStatus',
+          {
+            id: timeStamp + ''
+          }
+        ).then(res => {
+          console.log(res)
+            if (res.data.code === 'success'){
+              if(res.data.data === -1){
+                this.status = '正在处理'
+              }
+              else if (res.data.data === -2) {
+                this.status = ''
+                console.log(1)
+                clearInterval(intervalId)
+              }
+              else if (res.data.data === -3) {
+                this.status = '处理失败'
+              }
+              else {
+                this.status = '已处理' + res.data.data + '条数据，请等待。'
+              }
+            }
+        })
+      }, 1000)
     }
   }
 }

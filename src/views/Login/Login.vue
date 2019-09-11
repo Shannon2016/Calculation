@@ -30,7 +30,18 @@ export default {
       password: ''
     }
   },
+  created () {
+    this.keyupSubmit()
+  },
   methods: {
+    keyupSubmit(){
+      document.onkeydown=e=>{
+        let _key=window.event.keyCode;
+        if(_key===13){
+          this.onLogin()
+        }
+      }
+    },
     onLogin () {
       // this.$store.commit('login')
       // this.$router.push('/home')
