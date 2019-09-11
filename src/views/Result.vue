@@ -21,34 +21,10 @@
                 </el-option>
             </el-select>
           </el-form-item>
-          <!-- <el-form-item label="请选择认证点:">
-              <el-select v-model="form.number" placeholder="请选择">
-                <el-option
-                v-for="item in points"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-                </el-option>
-            </el-select>
-          </el-form-item> -->
           <el-form-item>
-              <el-button class='darkbutton' @click='onSearchClicked'>查询</el-button>
-              <el-button class='lightbutton'>结果导出</el-button>
+              <el-button class='darkbutton' @click='onSearchClicked'>结果导出</el-button>
           </el-form-item>
       </el-form>
-      <el-tabs v-model="activePointName">
-        <el-tab-pane v-for='(item, index) in points' :key = 'index' :name = 'index+""' :label='item.description'>
-          <el-table :data="tableData">
-            <el-table-column :label='pointDescription'>
-                <el-table-column
-                v-for='(itemRec, indexRec) in rec'
-                :key = 'indexRec'
-                :prop="itemRec.prop"
-                :label="itemRec.label"></el-table-column>
-            </el-table-column>
-          </el-table>
-        </el-tab-pane>
-      </el-tabs>
     </div>
 </template>
 <script>
@@ -71,7 +47,9 @@ export default {
       points: [],
       tableData: [],
       pointDescription: '',
-      rec: []
+      rec: [],
+      currentData: [],
+      tableLabel: []
     }
   },
   mounted () {
@@ -102,53 +80,19 @@ export default {
       console.log('setData')
     },
     onSearchClicked () {
-      this.points = [
-        {
-          description: '工程认证点1'
-        },
-        {
-          description: '工程认证点2'
-        },
-        {
-          description: '工程认证点3'
-        }
-      ]
-      // 加载表格信息
-      // 需要获取该认证点的完整描述，记录在pointDescription中
-      this.pointDescription = '工程认证点五XXXXXX'
-      // 需要先动态获取所有该工程点的子认证点，将内容记录至rec中
-      this.rec = [
-        {
-          prop: 'subpoint1',
-          label: '子认证点1'
-        },
-        {
-          prop: 'subpoint2',
-          label: '子认证点2'
-        },
-        {
-          prop: 'subpoint3',
-          label: '子认证点3'
-        }
-      ]
-      // 再获取各自认证点对应课程的数值,将内容记录在tableData中
-      this.tableData = [
-        {
-          subpoint1: null,
-          subpoint2: 0.5,
-          subpoint3: 0.1
-        },
-        {
-          subpoint1: 1,
-          subpoint2: 0.5,
-          subpoint3: null
-        },
-        {
-          subpoint1: null,
-          subpoint2: 0.6,
-          subpoint3: 0.2
-        }
-      ]
+      // eslint-disable-next-line no-unused-vars
+      var url = ''
+      // eslint-disable-next-line no-unused-vars
+      var data = {}
+      if (this.form.type === 1) {
+        // 按照学年查询
+        url = '/api/getInfo/getIndexYearResult'
+        data = {'schoolYear': this.form.year}
+      } else {
+        // 按年级查询
+        url = '/api/getInfo/getIndexGradeResult'
+        data = {'grade': this.form.year}
+      }
     }
   }
 }
