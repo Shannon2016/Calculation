@@ -20,13 +20,19 @@
             prop="status"
             label="文件类型">
               <template slot-scope="scope">
-                <div class="is_upload" v-if="scope.row.status===3" style="color:rgb(119, 0, 2);font-weight: bolder">未上传</div>
-                <div class="is_upload" v-if="scope.row.status===4"  style="color: rgba(2, 43, 72, 1)">已上传</div>
+                <div class="is_upload" v-if="scope.row.status===1" style="color:rgb(119, 0, 2);font-weight: bolder">培养方案</div>
+                <div class="is_upload" v-if="scope.row.status===2"  style="color: rgba(2, 43, 72, 1)">培养方案矩阵</div>
+                <div class="is_upload" v-if="scope.row.status===3"  style="color: rgba(2, 43, 72, 1)">教师信息列表</div>
+                <div class="is_upload" v-if="scope.row.status===4"  style="color: rgba(2, 43, 72, 1)">学年课程列表</div>
+                <div class="is_upload" v-if="scope.row.status===5"  style="color: rgba(2, 43, 72, 1)">学年教师开设课程列表</div>
+                <div class="is_upload" v-if="scope.row.status===6"  style="color: rgba(2, 43, 72, 1)">学生选课列表</div>
+                <div class="is_upload" v-if="scope.row.status===7"  style="color: rgba(2, 43, 72, 1)">课程评价列表</div>
               </template>
             </el-table-column>
             <el-table-column
-            prop="time"
-            label="上传时间">
+            prop="modifyDate"
+            label="上传时间"
+            :formatter="dateFormat">
             </el-table-column>
             <el-table-column
             label="操作"
@@ -84,6 +90,10 @@ export default {
         console.log(res.data)
         if (res.data.code === 'success') {
           this.totalSize = res.data.data.total
+          for (let i = 0; i < res.data.data.resultList.size; i++) {
+            var data = res.data.data.resultList[i]
+            data.modifyDate = this.formatDate(data.modifyDate)
+          }
           this.currentData = res.data.data.resultList
         } else {
           this.$err('系统错误')
@@ -97,9 +107,24 @@ export default {
     },
     onSearch () {
       this.handleCurrentChange(1)
+    },
+    // 时间戳转换成时间
+    // 使用element table组件中的formatter属性，传入一个函数
+    dateFormat (row, column) {
+      var date = new Date(row.modifyDate) // 时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var Y = date.getFullYear() + '-'
+      var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
+      var D = date.getDate() + ' '
+      var h = date.getHours() + ':'
+      var m = date.getMinutes() + ':'
+      var s = date.getSeconds()
+      return Y + M + D + h + m + s
     }
   }
 }
+
+// eslint-disable-next-line no-unused-vars
+
 </script>
 <style>
    .menubar .title {
