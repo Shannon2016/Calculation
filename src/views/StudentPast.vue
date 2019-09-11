@@ -9,24 +9,24 @@
         <el-col :span='4'>
             <el-select v-model="semester" placeholder="请选择">
                 <el-option
-                v-for="item in collegeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+                v-for="item in yearOptions"
+                :key="item"
+                :label="item"
+                :value="item">
                 </el-option>
             </el-select>
         </el-col>
         <el-col :span='2' :offset='1'>
-            <el-button class='darkbutton'>确认</el-button>
+            <el-button class='darkbutton' @click="handleCurrentChange(1)">确认</el-button>
         </el-col>
       </el-row>
       <el-table class="table" :data='currentData'>
           <el-table-column
-            prop="name"
+            prop="str2"
             label="课程名称">
           </el-table-column>
           <el-table-column
-            prop="state"
+            prop="str3"
             label="状态"
             align="center"
             width="200">
@@ -45,7 +45,7 @@
       <el-pagination
         @current-change="handleCurrentChange"
         :current-page.sync="currentPage"
-        :page-size="10"
+        :page-size="200"
         layout="prev, pager, next, jumper"
         :total="totalSize"
         style="justify-content:center; display:flex;margin:3%">
@@ -71,51 +71,10 @@ export default {
   data () {
     return {
       currentPage: 1,
-      totalSize: 11,
+      totalSize: -1,
       currentData: [],
-      courseData: [{
-        name: '111',
-        state: 1
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 1
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }],
-      collegeOptions: [
-        {
-          value: 1,
-          label: '机械与车辆学院'
-        }, {
-          value: 2,
-          label: '计算机学院'
-        }
-      ],
+      courseData: [],
+      yearOptions: [],
       semester: '',
       courseName: '',
       DialogVisible: false,
@@ -138,13 +97,45 @@ export default {
   },
   mounted () {
     this.handleCurrentChange(1)
+    this.$ajaxGet(
+      '/api/getInfo/semester',
+      {}
+    ).then(res => {
+      console.log(res)
+      if (res.data.code === 'success'){
+        this.yearOptions = res.data.data
+      }
+      else this.$message.error('出错了！')
+    }).catch(res =>{
+      this.$message.error('出错了！')
+    })
   },
   methods: {
     handleCurrentChange (val) {
-      this.currentData = []
-      for (let i = (val - 1) * 10; i < val * 10 && i < this.totalSize; i++) {
-        this.currentData.push(this.courseData[i])
-      }
+      // this.currentData = []
+      // for (let i = (val - 1) * 10; i < val * 10 && i < this.totalSize; i++) {
+      //   this.currentData.push(this.courseData[i])
+      // }
+      this.$ajaxPost(
+        '/api/getInfo/coursePage',
+        {
+          courseSemester: this.semester,
+          pageIndex: val,
+          pageSize: 200
+        }
+      ).then(res => {
+        if (res.data.code === 'success') {
+          console.log(res.data)
+          this.courseData = res.data.data.resultList
+          this.currentData = this.courseData
+          this.totalSize = this.currentData.length
+          console.log(this.courseData)
+        } else {
+          this.$message.error('出错了！')
+        }
+      }).catch(res => {
+        console.log(res)
+      })
     },
     onDetailClicked (index, row) {
       this.courseName = row.name

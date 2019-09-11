@@ -12,7 +12,7 @@
       </el-row>
       <div class='contentTitle'>请根据指标点进行打分，由1~4从高到低，越高代表越符合指标点。</div>
       <div v-for='(item,index) in qualities' :key='index'>
-        <div class='quality'>{{item}}</div>
+        <div class='quality'>{{(index+1) + '、' + item.indexContent}}</div>
         <el-radio-group v-model="scores[index]" class='qualityRadioGroup'>
           <el-radio :label="1">非常满意&emsp;</el-radio>
           <el-radio :label="2">满意&emsp;&emsp;&emsp;</el-radio>
@@ -24,6 +24,7 @@
   </div>
 </template>
 <script>
+import global from '../store/global';
 export default {
   name: 'StudentDetail',
   components: {
@@ -32,24 +33,33 @@ export default {
     return {
       courseName: 'default name',
       scores: [],
-      qualities: [
-        '1、符合工程认证指标点1-工程知识',
-        '2、符合工程认证指标点2-问题分析',
-        '3、符合工程认证指标点3-设计/开发解决方案',
-        '4、符合工程认证指标点4-研究',
-        '5、符合工程认证指标点5-使用现代工具',
-        '6、符合工程认证指标点6-工程与社会',
-        '7、符合工程认证指标点7-环境和可持续发展',
-        '8、符合工程认证指标点8-职业规范',
-        '9、符合工程认证指标点9-个人和团队',
-        '10、符合工程认证指标点10-沟通',
-        '11、符合工程认证指标点11-项目管理',
-        '12、符合工程认证指标点12-终身学习'
-      ]
+      qualities: [],
+      courseId:'',
+      recId:'',
+      str5:''
     }
   },
   mounted () {
     console.log(this.$route.params)
+    this.courseId = this.$route.params.str4
+    this.courseName = this.$route.params.str2
+    this.recId = this.$route.params.str1
+    this.str5 = this.$route.params.str5
+    this.$ajaxPost(
+      'api/getInfo/nowCourseIndex',
+      {
+        courseNumber: this.courseId
+      }
+    ).then(res => {
+      console.log(res)
+      if (res.data.code === 'success') {
+        this.qualities = res.data.data
+      } else {
+        this.$message.error('出错了！')
+      }
+    }).catch(res => {
+      this.$message.error('出错了！')
+    })
     for (let i = 0; i < this.qualities.length; i++) {
       this.scores.push(-1)
     }
@@ -57,7 +67,30 @@ export default {
   methods: {
     onSubmitScores () {
       console.log(this.scores)
-      this.$router.push('/studentEvaluate')
+      if(this.scores.length !== this.qualities.length){
+        this.$message.error('请将评价填写完整！')
+        return
+      }
+      let tmp = []
+      for(let i = 0; i < this.qualities.length; i++) {
+        tmp.push({indexId:this.qualities[i].id, evaluationValue: this.scores[i]})
+      }
+      this.$ajaxPost2(
+        '/api/upload/studentEvaluation',
+        {
+          studentWorkId: global.workId,
+          courseSelectNumber: this.str5,
+          evaluations: tmp,
+          selectID: this.recId
+        }
+      ).then(res => {
+        console.log(res)
+        if(res.data.code ==='success'){
+          this.$router.push('/studentEvaluate')
+        } else {
+          this.$message.error('出错了！')
+        }
+      })
     }
   }
 }

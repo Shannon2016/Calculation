@@ -7,17 +7,17 @@
       <div class='contentTitle'>请您上传如下课程的课程评价</div>
       <el-table class="table" :data='currentData'>
           <el-table-column
-            prop="courseName"
+            prop="str2"
             label="课程名称">
           </el-table-column>
           <el-table-column
-            prop="status"
+            prop="str3"
             label="状态"
             align="center"
             width="200">
              <template slot-scope="scope">
-                 <div class="is_upload" v-if="scope.row.status===3" style="color:rgb(119, 0, 2);font-weight: bolder">未上传</div>
-                 <div class="is_upload" v-if="scope.row.status===4"  style="color: rgba(2, 43, 72, 1)">已上传</div>
+                 <div class="is_upload" v-if="scope.row.str3==='3'" style="color:rgb(119, 0, 2);font-weight: bolder">未上传</div>
+                 <div class="is_upload" v-if="scope.row.str3==='4'"  style="color: rgba(2, 43, 72, 1)">已上传</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -26,8 +26,8 @@
             header-align="center"
             width="250">
              <template slot-scope="scope">
-                 <el-button v-if="scope.row.status===3" @click='prepareUpload(scope.row.id)' class="darkbutton">上传</el-button>
-                 <el-button v-if="scope.row.status===4" class="lightbutton" @click='prepareUpload(scope.row.id)'>修改</el-button>
+                 <el-button v-if="scope.row.str3==='3'" @click='prepareUpload(scope.row.id)' class="darkbutton">上传</el-button>
+                 <el-button v-if="scope.row.str3==='4'" class="lightbutton" @click='prepareUpload(scope.row.id)'>修改</el-button>
             </template>
           </el-table-column>
       </el-table>
@@ -51,7 +51,7 @@
       <el-pagination
         @current-change="handleCurrentChange"
         :current-page.sync="currentPage"
-        :page-size="10"
+        :page-size="200"
         layout="prev, pager, next, jumper"
         :total="totalSize"
         style="justify-content:center; display:flex;margin:3%">
@@ -83,25 +83,44 @@ export default {
       this.classId = id
     },
     handleCurrentChange (index) {
-      this.currentPage = index
       this.$ajaxPost(
-        '/api/getInfo/teacherEvaluation',
+        '/api/getInfo/coursePage',
         {
           pageIndex: index,
-          pageSize: 10
+          pageSize: 200
         }
       ).then(res => {
-        console.log(res.data)
         if (res.data.code === 'success') {
-          this.totalSize = res.data.data.total
-          this.currentData = res.data.data.resultList
+          console.log(res.data)
+          this.courseData = res.data.data.resultList
+          this.currentData = this.courseData
+          console.log(this.courseData)
         } else {
-          this.$err('系统错误')
+          this.$message.error('出错了！')
         }
       }).catch(res => {
         console.log(res)
       })
-    },
+    }
+      // this.currentPage = index
+      // this.$ajaxPost(
+      //   '/api/getInfo/teacherEvaluation',
+      //   {
+      //     pageIndex: index,
+      //     pageSize: 10
+      //   }
+      // ).then(res => {
+      //   console.log(res.data)
+      //   if (res.data.code === 'success') {
+      //     this.totalSize = res.data.data.total
+      //     this.currentData = res.data.data.resultList
+      //   } else {
+      //     this.$err('系统错误')
+      //   }
+      // }).catch(res => {
+      //   console.log(res)
+      // })
+    ,
     onUploadClick () {
       //
     },
@@ -130,7 +149,8 @@ export default {
         if (res.code === 'success') {
           this.$alert('上传成功！')
           this.handleCurrentChange(1)
-        } else {
+        }
+        else{
           this.$message.error('上传失败！')
         }
       }).catch(res => {
