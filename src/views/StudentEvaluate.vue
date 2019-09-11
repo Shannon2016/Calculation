@@ -93,6 +93,15 @@ export default {
   methods: {
     handleCurrentChange (val) {
       this.currentData = []
+      this.$ajaxPost(
+        '/api/getInfo/coursePage',
+        {
+          pageIndex: 1,
+          pageSize: 200
+        }
+      ).then(res => {
+        
+      })
       for (let i = (val - 1) * 10; i < val * 10 && i < this.totalSize; i++) {
         this.currentData.push(this.courseData[i])
       }
