@@ -21,7 +21,7 @@
                 </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="请选择认证点:">
+          <!-- <el-form-item label="请选择认证点:">
               <el-select v-model="form.number" placeholder="请选择">
                 <el-option
                 v-for="item in points"
@@ -30,21 +30,25 @@
                 :value="item.value">
                 </el-option>
             </el-select>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item>
               <el-button class='darkbutton' @click='onSearchClicked'>查询</el-button>
               <el-button class='lightbutton'>结果导出</el-button>
           </el-form-item>
       </el-form>
-      <el-table :data="tableData">
-        <el-table-column :label='pointDescription'>
-            <el-table-column
-            v-for='(item, index) in rec'
-            :key = 'index'
-            :prop="item.prop"
-            :label="item.label"></el-table-column>
-        </el-table-column>
-      </el-table>
+      <el-tabs v-model="activePointName">
+        <el-tab-pane v-for='(item, index) in points' :key = 'index' :name = 'index+""' :label='item.description'>
+          <el-table :data="tableData">
+            <el-table-column :label='pointDescription'>
+                <el-table-column
+                v-for='(itemRec, indexRec) in rec'
+                :key = 'indexRec'
+                :prop="itemRec.prop"
+                :label="itemRec.label"></el-table-column>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+      </el-tabs>
     </div>
 </template>
 <script>
@@ -58,16 +62,16 @@ export default {
     return {
       form: {
         type: -1,
-        year: '',
-        number: ''
+        year: ''
       },
       yearsByGrade: [], // 按年级
       yearsByTime: [], // 按学年
       years: [],
+      activePointName: '',
       points: [],
       tableData: [],
-      rec: [], // 用来记录第i列在tableData中对应的key及其对应的中文含义
-      pointDescription: ''
+      pointDescription: '',
+      rec: []
     }
   },
   mounted () {
@@ -98,6 +102,17 @@ export default {
       console.log('setData')
     },
     onSearchClicked () {
+      this.points = [
+        {
+          description: '工程认证点1'
+        },
+        {
+          description: '工程认证点2'
+        },
+        {
+          description: '工程认证点3'
+        }
+      ]
       // 加载表格信息
       // 需要获取该认证点的完整描述，记录在pointDescription中
       this.pointDescription = '工程认证点五XXXXXX'
@@ -134,7 +149,6 @@ export default {
           subpoint3: 0.2
         }
       ]
-      // console.log(this.tableData[1][this.rec[1].prop])
     }
   }
 }
@@ -183,8 +197,14 @@ export default {
     .pic .el-dialog{
       width:80%;
     }
+    .is-active, .el-tabs__item:hover,.is-checked+{
+      color: rgba(58, 100, 115, 1) !important;
+    }
+    .el-tabs__active-bar{
+      background-color: rgba(58, 100, 115, 1) !important;
+    }
 </style>
-<style  scoped>
+<style>
     .formStyle{
       width: 500px;
     }

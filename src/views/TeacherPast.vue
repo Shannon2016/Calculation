@@ -9,24 +9,24 @@
         <el-col :span='4'>
             <el-select v-model="semester" placeholder="请选择">
                 <el-option
-                v-for="item in collegeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+                v-for="item in yearOptions"
+                :key="item"
+                :label="item"
+                :value="item">
                 </el-option>
             </el-select>
         </el-col>
         <el-col :span='2' :offset='1'>
-            <el-button class='darkbutton'>确认</el-button>
+            <el-button class='darkbutton' @click='handleCurrentChange(1)'>确认</el-button>
         </el-col>
       </el-row>
       <el-table class="table" :data='currentData'>
           <el-table-column
-            prop="courseName"
+            prop="str2"
             label="课程名称">
           </el-table-column>
           <el-table-column
-            prop="status"
+            prop="str3"
             label="状态"
             align="center"
             width="200">
@@ -45,7 +45,7 @@
       <el-pagination
         @current-change="handleCurrentChange"
         :current-page.sync="currentPage"
-        :page-size="10"
+        :page-size="200"
         layout="prev, pager, next, jumper"
         :total="totalSize"
         style="justify-content:center; display:flex;margin:3%">
@@ -71,18 +71,10 @@ export default {
   data () {
     return {
       currentPage: 1,
-      totalSize: 11,
+      totalSize: 200,
       currentData: [],
       courseData: [],
-      collegeOptions: [
-        {
-          value: 1,
-          label: '机械与车辆学院'
-        }, {
-          value: 2,
-          label: '计算机学院'
-        }
-      ],
+      yearOptions: [],
       semester: '',
       DialogVisible: false,
       courseName: '',
@@ -91,36 +83,59 @@ export default {
   },
   mounted () {
     // this.handleCurrentChange(1)
-    this.$ajaxPost(
+    this.$ajaxGet(
       '/api/getInfo/semester',
-      {
-        userWorkId: global.workId,
-        userType: global.userType
-      }
+      {}
     ).then(res => {
       console.log(res)
+      if (res.data.code === 'success'){
+        this.yearOptions = res.data.data
+      }
+      else this.$message.error('出错了！')
+    }).catch(res =>{
+      this.$message.error('出错了！')
     })
   },
   methods: {
     handleCurrentChange (val) {
-      this.currentPage = val
       this.$ajaxPost(
-        '/api/getInfo/oldTeacherEvaluation',
+        '/api/getInfo/coursePage',
         {
+          courseSemester: this.semester,
           pageIndex: val,
-          pageSize: 10
+          pageSize: 200
         }
       ).then(res => {
-        console.log(res.data)
         if (res.data.code === 'success') {
-          this.totalSize = res.data.data.total
-          this.currentData = res.data.data.resultList
+          console.log(res.data)
+          this.courseData = res.data.data.resultList
+          this.currentData = this.courseData
+          this.totalSize = this.currentData.length
+          console.log(this.courseData)
         } else {
-          this.$err('系统错误')
+          this.$message.error('出错了！')
         }
       }).catch(res => {
         console.log(res)
       })
+      // this.currentPage = val
+      // this.$ajaxPost(
+      //   '/api/getInfo/oldTeacherEvaluation',
+      //   {
+      //     pageIndex: val,
+      //     pageSize: 10
+      //   }
+      // ).then(res => {
+      //   console.log(res.data)
+      //   if (res.data.code === 'success') {
+      //     this.totalSize = res.data.data.total
+      //     this.currentData = res.data.data.resultList
+      //   } else {
+      //     this.$err('系统错误')
+      //   }
+      // }).catch(res => {
+      //   console.log(res)
+      // })
     },
     onDetailClicked (id) {
       window.open('/api/download/downOldTeacherEvaluation?id=' + id)

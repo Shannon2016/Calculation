@@ -7,7 +7,7 @@
       <div class='contentTitle'>请为本学期如下课程填写您的评价</div>
       <el-table class="table" :data='currentData'>
           <el-table-column
-            prop="name"
+            prop="str2"
             label="课程名称">
           </el-table-column>
           <el-table-column
@@ -16,7 +16,7 @@
             align="center"
             width="200">
              <template slot-scope="scope">
-                 <div class="is_upload" v-if="scope.row.state===1" style="color:rgb(119, 0, 2);font-weight: bolder">未上传</div>
+                 <div class="is_upload" v-if="scope.row.str3==='0'" style="color:rgb(119, 0, 2);font-weight: bolder">未上传</div>
                  <div class="is_upload" v-else  style="color: rgba(2, 43, 72, 1)">已上传</div>
             </template>
           </el-table-column>
@@ -26,7 +26,7 @@
             header-align="center"
             width="250">
              <template slot-scope="scope">
-                 <el-button v-if="scope.row.state===1" @click='onUploadClick(scope.$index, scope.row)' class="darkbutton">上传</el-button>
+                 <el-button v-if="scope.row.str3==='0'" @click='onUploadClick(scope.$index, scope.row)' class="darkbutton">上传</el-button>
                  <el-button v-else class="lightbutton" @click='onModifyClick(scope.$index, scope.row)'>修改</el-button>
             </template>
           </el-table-column>
@@ -34,7 +34,7 @@
       <el-pagination
         @current-change="handleCurrentChange"
         :current-page.sync="currentPage"
-        :page-size="10"
+        :page-size="200"
         layout="prev, pager, next, jumper"
         :total="totalSize"
         style="justify-content:center; display:flex;margin:3%">
@@ -52,40 +52,7 @@ export default {
       currentPage: 1,
       totalSize: 11,
       currentData: [],
-      courseData: [{
-        name: '111',
-        state: 1
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 1
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }, {
-        name: '111',
-        state: 0
-      }]
+      courseData: []
     }
   },
   mounted () {
@@ -93,37 +60,33 @@ export default {
   },
   methods: {
     handleCurrentChange (val) {
-      this.currentData = []
+      // this.currentData = []
+      // for (let i = (val - 1) * 10; i < val * 10 && i < this.totalSize; i++) {
+      //   this.currentData.push(this.courseData[i])
+      // }
       this.$ajaxPost(
         '/api/getInfo/coursePage',
         {
-          pageIndex: 1,
+          pageIndex: val,
           pageSize: 200
         }
       ).then(res => {
-        
-      })
-      for (let i = (val - 1) * 10; i < val * 10 && i < this.totalSize; i++) {
-        this.currentData.push(this.courseData[i])
-      }
-      this.$ajaxPost(
-        '/api/getInfo/nowTermPage',
-        {
-          studentWorkId: global.workId,
-          pageIndex: val,
-          pageSize: 10
+        if (res.data.code === 'success') {
+          this.courseData = res.data.data.resultList
+          this.currentData = this.courseData
+          console.log(this.courseData)
+        } else {
+          this.$message.error('出错了！')
         }
-      ).then(res => {
-        console.log(res)
       }).catch(res => {
         console.log(res)
       })
     },
     onUploadClick (index, row) {
-      this.$router.push('/studentDetail/1/' + row.name)
+      this.$router.push('/studentDetail/'+row.str2+'/' + row.str4+'/' + row.str1+'/' + row.str5)
     },
     onModifyClick (index, row) {
-      this.$router.push('/studentDetail/2/' + row.name)// :flag=1 upload flag=2 modify :id
+      this.$router.push('/studentDetail/'+row.str2+'/' + row.str4+'/' + row.str1+'/' + row.str5)
     }
   }
 }
