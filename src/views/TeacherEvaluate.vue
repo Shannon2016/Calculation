@@ -145,14 +145,15 @@ export default {
           'classId': this.classId
         }
       ).then(res => {
-        if (res.code === 'success') {
+        if (res.data.code === 'success') {
           this.$alert('上传成功！')
           this.handleCurrentChange(1)
         } else {
-          this.$alert('上传成功！')
+          this.$alert('上传失败！')
         }
+        // this.handleCurrentChange(1)
       }).catch(res => {
-        this.$alert('上传成功！')
+        this.$alert('上传失败！')
       })
       this.dialogVisible = false
       this.fileList = []
