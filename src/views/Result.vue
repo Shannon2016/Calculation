@@ -57,7 +57,9 @@ export default {
       points: [],
       tableData: [],
       pointDescription: '',
-      rec: []
+      rec: [],
+      currentData: [],
+      tableLabel: []
     }
   },
   mounted () {
