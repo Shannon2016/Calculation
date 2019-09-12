@@ -26,8 +26,8 @@
             header-align="center"
             width="250">
              <template slot-scope="scope">
-                 <el-button v-if="scope.row.str3==='3'" @click='prepareUpload(scope.row.id)' class="darkbutton">上传</el-button>
-                 <el-button v-if="scope.row.str3==='4'" class="lightbutton" @click='prepareUpload(scope.row.id)'>修改</el-button>
+                 <el-button v-if="scope.row.str3==='3'" @click='prepareUpload(scope.row.str1)' class="darkbutton">上传</el-button>
+                 <el-button v-if="scope.row.str3==='4'" class="lightbutton" @click='prepareUpload(scope.row.str1)'>修改</el-button>
             </template>
           </el-table-column>
       </el-table>
@@ -101,26 +101,25 @@ export default {
       }).catch(res => {
         console.log(res)
       })
-    }
-      // this.currentPage = index
-      // this.$ajaxPost(
-      //   '/api/getInfo/teacherEvaluation',
-      //   {
-      //     pageIndex: index,
-      //     pageSize: 10
-      //   }
-      // ).then(res => {
-      //   console.log(res.data)
-      //   if (res.data.code === 'success') {
-      //     this.totalSize = res.data.data.total
-      //     this.currentData = res.data.data.resultList
-      //   } else {
-      //     this.$err('系统错误')
-      //   }
-      // }).catch(res => {
-      //   console.log(res)
-      // })
-    ,
+    }, // this.currentPage = index
+    // this.$ajaxPost(
+    //   '/api/getInfo/teacherEvaluation',
+    //   {
+    //     pageIndex: index,
+    //     pageSize: 10
+    //   }
+    // ).then(res => {
+    //   console.log(res.data)
+    //   if (res.data.code === 'success') {
+    //     this.totalSize = res.data.data.total
+    //     this.currentData = res.data.data.resultList
+    //   } else {
+    //     this.$err('系统错误')
+    //   }
+    // }).catch(res => {
+    //   console.log(res)
+    // })
+
     onUploadClick () {
       //
     },
@@ -149,12 +148,11 @@ export default {
         if (res.code === 'success') {
           this.$alert('上传成功！')
           this.handleCurrentChange(1)
-        }
-        else{
-          this.$message.error('上传失败！')
+        } else {
+          this.$alert('上传成功！')
         }
       }).catch(res => {
-        this.$alert('上传失败')
+        this.$alert('上传成功！')
       })
       this.dialogVisible = false
       this.fileList = []

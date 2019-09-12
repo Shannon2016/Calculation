@@ -102,11 +102,10 @@ export default {
       {}
     ).then(res => {
       console.log(res)
-      if (res.data.code === 'success'){
+      if (res.data.code === 'success') {
         this.yearOptions = res.data.data
-      }
-      else this.$message.error('出错了！')
-    }).catch(res =>{
+      } else this.$message.error('出错了！')
+    }).catch(res => {
       this.$message.error('出错了！')
     })
   },

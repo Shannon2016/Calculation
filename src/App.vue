@@ -93,7 +93,7 @@ export default {
     text-align: left;
     background-color: #f9f9f9;
     overflow-y: scroll;
-    overflow-x: scroll; 
+    overflow-x: scroll;
   }
    .title .el-button--text{
      color: grey;

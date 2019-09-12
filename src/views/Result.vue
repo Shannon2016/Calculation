@@ -32,23 +32,9 @@
             </el-select>
           </el-form-item> -->
           <el-form-item>
-              <el-button class='darkbutton' @click='onSearchClicked'>查询</el-button>
-              <el-button class='lightbutton'>结果导出</el-button>
+              <el-button class='lightbutton' @click="onExportCliked">结果导出</el-button>
           </el-form-item>
       </el-form>
-      <el-tabs v-model="activePointName">
-        <el-tab-pane v-for='(item, index) in points' :key = 'index' :name = 'index+""' :label='item.description'>
-          <el-table :data="tableData">
-            <el-table-column :label='pointDescription'>
-                <el-table-column
-                v-for='(itemRec, indexRec) in rec'
-                :key = 'indexRec'
-                :prop="itemRec.prop"
-                :label="itemRec.label"></el-table-column>
-            </el-table-column>
-          </el-table>
-        </el-tab-pane>
-      </el-tabs>
     </div>
 </template>
 <script>
@@ -149,6 +135,16 @@ export default {
           subpoint3: 0.2
         }
       ]
+    },
+    onExportCliked () {
+      console.log(this.form.type)
+      if (this.form.type === 1) {
+        console.log('按学年导出')
+        window.open('/api/download/bySchoolYear?schoolYear=' + this.form.year)
+      } else if (this.form.type === 2) {
+        console.log('按年级导出')
+        window.open('/api/download/byGrade?grade=' + this.form.year)
+      }
     }
   }
 }

@@ -24,7 +24,7 @@
   </div>
 </template>
 <script>
-import global from '../store/global';
+import global from '../store/global'
 export default {
   name: 'StudentDetail',
   components: {
@@ -34,9 +34,9 @@ export default {
       courseName: 'default name',
       scores: [],
       qualities: [],
-      courseId:'',
-      recId:'',
-      str5:''
+      courseId: '',
+      recId: '',
+      str5: ''
     }
   },
   mounted () {
@@ -67,13 +67,13 @@ export default {
   methods: {
     onSubmitScores () {
       console.log(this.scores)
-      if(this.scores.length !== this.qualities.length){
+      if (this.scores.length !== this.qualities.length) {
         this.$message.error('请将评价填写完整！')
         return
       }
       let tmp = []
-      for(let i = 0; i < this.qualities.length; i++) {
-        tmp.push({indexId:this.qualities[i].id, evaluationValue: this.scores[i]})
+      for (let i = 0; i < this.qualities.length; i++) {
+        tmp.push({indexId: this.qualities[i].id, evaluationValue: this.scores[i]})
       }
       this.$ajaxPost2(
         '/api/upload/studentEvaluation',
@@ -85,7 +85,7 @@ export default {
         }
       ).then(res => {
         console.log(res)
-        if(res.data.code ==='success'){
+        if (res.data.code === 'success') {
           this.$router.push('/studentEvaluate')
         } else {
           this.$message.error('出错了！')

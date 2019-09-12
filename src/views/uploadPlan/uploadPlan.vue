@@ -129,11 +129,11 @@ export default {
         {
           onUploadProgress: progressEvent => {
             console.log(111)
-            let percent=(progressEvent.loaded / progressEvent.total * 100) | 0
+            let percent = (progressEvent.loaded / progressEvent.total * 100) | 0
             console.log(this.$refs.upload)
             console.log(percent)
-            param.onProgress({percent:percent})
-          }
+            param.onProgress({percent: percent})
+          }
         }
       ).then(res => {
         this.$message({
@@ -146,7 +146,7 @@ export default {
         this.loadingFlag = false
       })
     },
-    submitUpload2(param){
+    submitUpload2 (param) {
       this.loadingFlag2 = true
       this.$ajaxPostFile(
         '/api/upload/cultivateMatrix',
@@ -157,11 +157,11 @@ export default {
         {
           onUploadProgress: progressEvent => {
             console.log(111)
-            let percent=(progressEvent.loaded / progressEvent.total * 100) | 0
+            let percent = (progressEvent.loaded / progressEvent.total * 100) | 0
             console.log(this.$refs.upload)
             console.log(percent)
-            param.onProgress({percent:percent})
-          }
+            param.onProgress({percent: percent})
+          }
         }
       ).then(res => {
         this.$message({

@@ -131,11 +131,11 @@ export default {
         {
           onUploadProgress: progressEvent => {
             console.log(111)
-            let percent=(progressEvent.loaded / progressEvent.total * 100) | 0
+            let percent = (progressEvent.loaded / progressEvent.total * 100) | 0
             console.log(this.$refs.upload)
             console.log(percent)
-            param.onProgress({percent:percent})
-          }
+            param.onProgress({percent: percent})
+          }
         }
       ).then(res => {
         this.$message({
@@ -179,11 +179,11 @@ export default {
         {
           onUploadProgress: progressEvent => {
             console.log(111)
-            let percent=(progressEvent.loaded / progressEvent.total * 100) | 0
+            let percent = (progressEvent.loaded / progressEvent.total * 100) | 0
             console.log(this.$refs.upload)
             console.log(percent)
-            param.onProgress({percent:percent})
-          }
+            param.onProgress({percent: percent})
+          }
         }
       ).then(res => {
         this.$message({

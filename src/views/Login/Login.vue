@@ -34,10 +34,10 @@ export default {
     this.keyupSubmit()
   },
   methods: {
-    keyupSubmit(){
-      document.onkeydown=e=>{
-        let _key=window.event.keyCode;
-        if(_key===13){
+    keyupSubmit () {
+      document.onkeydown = e => {
+        let _key = window.event.keyCode
+        if (_key === 13) {
           this.onLogin()
         }
       }
@@ -69,7 +69,7 @@ export default {
           global.workId = res.data.workId
           global.userType = res.data.userType
           console.log(global)
-          
+
           this.$store.commit('login')
           this.$router.push('/home')
           console.log(global.userId)

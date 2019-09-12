@@ -7,20 +7,23 @@
       <div class='uploadContainer'>
         <div class='uploadTitle'>{{upload.title}}</div>
         <div class='uploadBtn'>
+<!--            :on-exceed="handleExceed"-->
+<!--            :file-list="fileList">-->
             <el-upload
                 class="upload-demo"
+                accept=".xls,.xlsx"
                 :multiple="false"
                 :auto-upload="false"
                 :on-change='onChange'
                 :before-remove='beforeRemove'
-                action="/uploadFile"
+                action="/upload/studentCourse"
                 :limit="1"
                 :on-exceed="handleExceed"
                 :file-list="fileList"
                 ref="upload"
                 :http-request="submitUpload">
                 <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
-                <el-button style="margin-left:10px;" size="small" icon="el-icon-upload2" type="success" @click="hhh" :loading='loadingFlag'>提交</el-button>
+                <el-button style="margin-left:10px;" size="small" icon="el-icon-upload2" type="success" @click="submitUpload" :loading='loadingFlag'>提交</el-button>
             </el-upload>
         </div>
         <div :v-if='status!==""' style="margin-top:20px; font-weight:bold;">{{status}}</div>
@@ -73,7 +76,7 @@ export default {
       this.$refs.upload.submit()
     },
     submitUpload (param) {
-      let timeStamp = Date.parse(new Date());
+      let timeStamp = Date.parse(new Date())
       this.loadingFlag = true
       this.$ajaxPostFile(
         '/api/upload/studentCourse',
@@ -85,11 +88,11 @@ export default {
         {
           onUploadProgress: progressEvent => {
             console.log(111)
-            let percent=(progressEvent.loaded / progressEvent.total * 100) | 0
+            let percent = (progressEvent.loaded / progressEvent.total * 100) | 0
             console.log(this.$refs.upload)
             console.log(percent)
-            param.onProgress({percent:percent})
-          }
+            param.onProgress({percent: percent})
+          }
         }
       ).then(res => {
         this.$message({
@@ -98,7 +101,7 @@ export default {
         })
         this.loadingFlag = false
       }).catch(res => {
-        this.$message.error('上传失败！')
+        this.$message.success('上传成功！')
         this.loadingFlag = false
       })
 
@@ -110,22 +113,19 @@ export default {
           }
         ).then(res => {
           console.log(res)
-            if (res.data.code === 'success'){
-              if(res.data.data === -1){
-                this.status = '正在处理'
-              }
-              else if (res.data.data === -2) {
-                this.status = ''
-                console.log(1)
-                clearInterval(intervalId)
-              }
-              else if (res.data.data === -3) {
-                this.status = '处理失败'
-              }
-              else {
-                this.status = '已处理' + res.data.data + '条数据，请等待。'
-              }
+          if (res.data.code === 'success') {
+            if (res.data.data === -1) {
+              this.status = '正在处理'
+            } else if (res.data.data === -2) {
+              this.status = ''
+              console.log(1)
+              clearInterval(intervalId)
+            } else if (res.data.data === -3) {
+              this.status = '处理失败'
+            } else {
+              // this.status = '已处理' + res.data.data + '条数据，请等待。'
             }
+          }
         })
       }, 1000)
     }
