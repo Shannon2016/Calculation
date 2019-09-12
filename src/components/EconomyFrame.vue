@@ -70,7 +70,7 @@
   margin-right: 20px;
 }
 .col-flex3 {
-  
+
   margin-left: 20px;
 }
 .col-flex1 > div:nth-child(3),

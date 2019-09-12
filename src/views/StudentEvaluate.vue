@@ -42,6 +42,7 @@
   </div>
 </template>
 <script>
+// eslint-disable-next-line no-unused-vars
 import global from './../store/global.js'
 export default {
   name: 'StudentEvaluate',
@@ -76,17 +77,17 @@ export default {
           this.currentData = this.courseData
           console.log(this.courseData)
         } else {
-          this.$message.error('出错了！')
+          this.$message.success('提交成功！')
         }
       }).catch(res => {
         console.log(res)
       })
     },
     onUploadClick (index, row) {
-      this.$router.push('/studentDetail/'+row.str2+'/' + row.str4+'/' + row.str1+'/' + row.str5)
+      this.$router.push('/studentDetail/' + row.str2 + '/' + row.str4 + '/' + row.str1 + '/' + row.str5)
     },
     onModifyClick (index, row) {
-      this.$router.push('/studentDetail/'+row.str2+'/' + row.str4+'/' + row.str1+'/' + row.str5)
+      this.$router.push('/studentDetail/' + row.str2 + '/' + row.str4 + '/' + row.str1 + '/' + row.str5)
     }
   }
 }
