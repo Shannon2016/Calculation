@@ -34,21 +34,19 @@ export default {
       courseName: 'default name',
       scores: [],
       qualities: [],
-      courseId: '',
-      recId: '',
-      str5: ''
+      courseSemester:'',
+      courseNumber:''
     }
   },
   mounted () {
     console.log(this.$route.params)
-    this.courseId = this.$route.params.str4
-    this.courseName = this.$route.params.str2
-    this.recId = this.$route.params.str1
-    this.str5 = this.$route.params.str5
+    this.courseName = this.$route.params.courseName
+    this.courseSemester = this.$route.params.courseSemester
+    this.courseNumber = this.$route.params.courseNumber
     this.$ajaxPost(
       'api/getInfo/nowCourseIndex',
       {
-        courseNumber: this.courseId
+        courseNumber: this.courseNumber
       }
     ).then(res => {
       console.log(res)
@@ -75,13 +73,13 @@ export default {
       for (let i = 0; i < this.qualities.length; i++) {
         tmp.push({indexId: this.qualities[i].id, evaluationValue: this.scores[i]})
       }
+      console.log(tmp)
       this.$ajaxPost2(
         '/api/upload/studentEvaluation',
         {
-          studentWorkId: global.workId,
-          courseSelectNumber: this.str5,
-          evaluations: tmp,
-          selectID: this.recId
+          courseNumber: this.courseNumber,
+          courseSemester: this.courseSemester,
+          evaluations: tmp
         }
       ).then(res => {
         console.log(res)

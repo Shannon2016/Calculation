@@ -141,10 +141,12 @@ export default {
     onExportCliked () {
       console.log(this.form.type)
       if (this.form.type === 1) {
+        console.log(this.form.year+'-'+(this.form.year+2))
         console.log('按学年导出')
         window.open('/api/download/bySchoolYear?schoolYear=' + this.form.year+'-'+(this.form.year+2))
       } else if (this.form.type === 2) {
         console.log('按年级导出')
+        console.log(this.form.year)
         window.open('/api/download/byGrade?grade=' + this.form.year)
       }
     }

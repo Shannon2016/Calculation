@@ -34,7 +34,7 @@ export default new Router({
     name: 'StudentEvaluate',
     component: () => import(`@/views/StudentEvaluate`)
   }, {
-    path: '/studentDetail/:str2/:str4/:str1/:str5',
+    path: '/studentDetail/:courseName/:courseNumber/:courseSemester',
     name: 'StudentDetail',
     component: () => import(`@/views/StudentDetail`)
   }, {

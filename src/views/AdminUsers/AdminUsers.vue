@@ -44,7 +44,7 @@
       </el-dialog>
       <el-table class="table" :data='currentData'>
           <el-table-column
-            prop="userName"
+            prop="workId"
             label="用户名">
           </el-table-column>
           <el-table-column

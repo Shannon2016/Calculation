@@ -13,13 +13,13 @@
             </el-row>
         <el-table class="table" :data='currentData'>
             <el-table-column
-            prop="fileName"
+            prop="filename"
             label="文件名">
             </el-table-column>
             <el-table-column
-            prop="status"
+            prop="type"
             label="文件类型">
-              <template slot-scope="scope">
+              <!-- <template slot-scope="scope">
                 <div class="is_upload" v-if="scope.row.status===1" style="color:rgb(119, 0, 2);font-weight: bolder">培养方案</div>
                 <div class="is_upload" v-if="scope.row.status===2"  style="color: rgba(2, 43, 72, 1)">培养方案矩阵</div>
                 <div class="is_upload" v-if="scope.row.status===3"  style="color: rgba(2, 43, 72, 1)">教师信息列表</div>
@@ -27,7 +27,7 @@
                 <div class="is_upload" v-if="scope.row.status===5"  style="color: rgba(2, 43, 72, 1)">学年教师开设课程列表</div>
                 <div class="is_upload" v-if="scope.row.status===6"  style="color: rgba(2, 43, 72, 1)">学生选课列表</div>
                 <div class="is_upload" v-if="scope.row.status===7"  style="color: rgba(2, 43, 72, 1)">课程评价列表</div>
-              </template>
+              </template> -->
             </el-table-column>
             <el-table-column
             prop="modifyDate"
@@ -82,12 +82,12 @@ export default {
       this.$ajaxPost(
         '/api/getInfo/getAllUserTables',
         {
-          pageIndex: index,
+          pageIndex: index - 1,
           pageSize: 10,
           keyWord: this.formSearch.keyWord
         }
       ).then(res => {
-        console.log(res.data)
+        console.log(res)
         if (res.data.code === 'success') {
           this.totalSize = res.data.data.total
           for (let i = 0; i < res.data.data.resultList.size; i++) {

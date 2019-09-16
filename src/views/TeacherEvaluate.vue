@@ -7,8 +7,16 @@
       <div class='contentTitle'>请您上传如下课程的课程评价</div>
       <el-table class="table" :data='currentData'>
           <el-table-column
-            prop="str2"
+            prop="courseName"
             label="课程名称">
+          </el-table-column>
+          <el-table-column
+            prop="courseNumber"
+            label="课程编号">
+          </el-table-column>
+          <el-table-column
+            prop="courseCredit"
+            label="学分">
           </el-table-column>
           <el-table-column
             prop="str3"

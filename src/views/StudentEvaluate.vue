@@ -7,8 +7,16 @@
       <div class='contentTitle'>请为本学期如下课程填写您的评价</div>
       <el-table class="table" :data='currentData'>
           <el-table-column
-            prop="str2"
+            prop="courseName"
             label="课程名称">
+          </el-table-column>
+          <el-table-column
+            prop="courseNumber"
+            label="课程编码">
+          </el-table-column>
+          <el-table-column
+            prop="totalGrade"
+            label="成绩">
           </el-table-column>
           <el-table-column
             prop="state"
@@ -84,10 +92,11 @@ export default {
       })
     },
     onUploadClick (index, row) {
-      this.$router.push('/studentDetail/' + row.str2 + '/' + row.str4 + '/' + row.str1 + '/' + row.str5)
+      // :courseName/:courseNumber/:courseSemester
+      this.$router.push('/studentDetail/' + row.courseName + '/' + row.courseNumber + '/' + row.courseSemester)
     },
     onModifyClick (index, row) {
-      this.$router.push('/studentDetail/' + row.str2 + '/' + row.str4 + '/' + row.str1 + '/' + row.str5)
+      this.$router.push('/studentDetail/' + row.courseName + '/' + row.courseNumber + '/' + row.courseSemester)
     }
   }
 }
