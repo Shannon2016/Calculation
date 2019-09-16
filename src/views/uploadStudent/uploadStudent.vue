@@ -23,7 +23,7 @@
                 ref="upload"
                 :http-request="submitUpload">
                 <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
-                <el-button style="margin-left:10px;" size="small" icon="el-icon-upload2" type="success" @click="submitUpload" :loading='loadingFlag'>提交</el-button>
+                <el-button style="margin-left:10px;" size="small" icon="el-icon-upload2" type="success" @click="hhh" :loading='loadingFlag'>提交</el-button>
             </el-upload>
         </div>
         <div :v-if='status!==""' style="margin-top:20px; font-weight:bold;">{{status}}</div>

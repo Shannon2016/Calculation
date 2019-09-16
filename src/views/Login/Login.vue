@@ -57,22 +57,14 @@ export default {
         this.$ajaxGet(
           '/api/user'
         ).then(res => {
-          console.log(res)
           if (res.data.userName === 'admin') {
             global.authorities = ['teacher', 'student', 'admin', 'professor']
           } else {
             global.authorities = [res.data.userType]
           }
-          console.log(res.data.userType)
-          console.log(global.authorities)
           global.userId = res.data.id
           global.workId = res.data.workId
           global.userType = res.data.userType
-          console.log(global)
-
-          this.$store.commit('login')
-          this.$router.push('/home')
-          console.log(global.userId)
           this.$store.commit('login')
           this.$router.push('/home')
         }).catch(res => {
