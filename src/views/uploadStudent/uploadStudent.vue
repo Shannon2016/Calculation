@@ -122,8 +122,8 @@ export default {
               clearInterval(intervalId)
             } else if (res.data.data === -3) {
               this.status = '处理失败'
-            } else {
-              // this.status = '已处理' + res.data.data + '条数据，请等待。'
+            } else if (res.data.data > 0){
+              this.status = '已处理' + res.data.data + '条数据，请等待。'
             }
           }
         })
