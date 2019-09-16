@@ -123,7 +123,6 @@ export default {
       this.$ajaxPostFile(
         '/api/upload/cultivatePlan',
         {
-          fileType: 'category',
           file: param.file
         },
         {
@@ -136,10 +135,15 @@ export default {
           }
         }
       ).then(res => {
-        this.$message({
-          message: '上传成功！',
-          type: 'success'
-        })
+        console.log(res)
+        if(res.data.code !== 'error'){
+          this.$message({
+            message: '上传成功！',
+            type: 'success'
+          })
+        } else {
+          this.$message.error('上传失败！')
+        }
         this.loadingFlag = false
       }).catch(res => {
         this.$message.error('上传失败！')
@@ -151,7 +155,6 @@ export default {
       this.$ajaxPostFile(
         '/api/upload/cultivateMatrix',
         {
-          fileType: 'category',
           file: param.file
         },
         {
@@ -164,10 +167,15 @@ export default {
           }
         }
       ).then(res => {
-        this.$message({
-          message: '上传成功！',
-          type: 'success'
-        })
+        console.log(res)
+        if(res.data.code !== 'error'){
+          this.$message({
+            message: '上传成功！',
+            type: 'success'
+          })
+        } else {
+          this.$message.error('上传失败！')
+        }
         this.loadingFlag2 = false
       }).catch(res => {
         this.$message.error('上传失败！')
