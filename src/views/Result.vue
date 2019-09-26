@@ -78,11 +78,13 @@ export default {
     },
     setData () {
       // 为下拉框动态添加信息
-      for (let i = 0; i < 10; i++) {
-        let str1 = (i + 2010) + '~' + (i + 2012)
-        let str2 = (i + 2010) + '级'
-        this.yearsByGrade.push({label: str2, value: i + 2010})
-        this.yearsByTime.push({label: str1, value: i + 2010})
+      let date = new Date()
+      let year = date.getFullYear()
+      for (let i = 1997; i <= year; i++) {
+        let str1 = i + '~' + (i + 2)
+        let str2 = i + '级'
+        this.yearsByGrade.push({label: str2, value:  i+''})
+        this.yearsByTime.push({label: str1, value:i+'-'+(i+1)})
       }
       for (let i = 0; i < 10; i++) {
         this.points.push({label: '工程点' + (i + 1), value: i + 1})
@@ -141,13 +143,13 @@ export default {
     onExportCliked () {
       console.log(this.form.type)
       if (this.form.type === 1) {
-        console.log(this.form.year+'-'+(this.form.year+2))
+        console.log(this.form.year)
         console.log('按学年导出')
-        window.open('/api/download/bySchoolYear?schoolYear=' + this.form.year+'-'+(this.form.year+2))
+        window.open(`/api/compute/year/${this.form.year}`)
       } else if (this.form.type === 2) {
         console.log('按年级导出')
         console.log(this.form.year)
-        window.open('/api/download/byGrade?grade=' + this.form.year)
+        window.open(`/api/compute/grade/${this.form.year}`)
       }
     }
   }
