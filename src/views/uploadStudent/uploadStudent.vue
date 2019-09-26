@@ -57,7 +57,7 @@
             width="250">
             <template slot-scope="scope">
               <el-button class="darkbutton"
-                @click="deleteTeacherCourse(scope.$index, scope.row)">删除</el-button>
+                @click="deleteStudent(scope.$index, scope.row)">删除</el-button>
             </template>
           </el-table-column>
       </el-table>
@@ -115,17 +115,30 @@ export default {
     beforeRemove (file, fileList) {
       this.fileList = fileList
     },
-    hhh () {
-      this.$refs.upload.submit()
+   hhh () {
+      this.$confirm('是否允许覆盖？', '确认信息', {
+        distinguishCancelAndClose: true,
+        confirmButtonText: '是',
+        cancelButtonText: '否'
+      }).then(() => {
+        this.allowCover = true
+        this.$refs.upload.submit()
+      }).catch(action => {
+        if(action !== 'cancel'){
+          return
+        }
+        this.allowCover = false
+        this.$refs.upload.submit()
+      })
     },
     submitUpload (param) {
-      let timeStamp = Date.parse(new Date())
+      console.log(1)
       this.loadingFlag = true
       this.$ajaxPostFile(
         '/api//student/upload',
         {
           file: param.file,
-          allowCover:true
+          allowCover:this.allowCover
         },
         {
           onUploadProgress: progressEvent => {
@@ -176,7 +189,7 @@ export default {
         console.log(res)
       })
     },
-    deleteTeacherCourse(index, row) {
+    deleteStudent(index, row) {
       console.log(row)
       this.$confirm('确认删除该学生选课信息表吗？', '确认信息', {
         distinguishCancelAndClose: true,
