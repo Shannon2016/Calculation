@@ -35,6 +35,10 @@ export default {
           name: 'uploadTeacher',
           title: '上传教师信息'
         }, {
+          path: '/uploadTeacherCourse',
+          name: 'uploadTeacherCourse',
+          title: '上传教师开课信息'
+        }, {
           path: '/uploadCourse',
           name: 'uploadCourse',
           title: '上传课程信息'
@@ -79,6 +83,10 @@ export default {
           path: '/uploadTeacher',
           name: 'uploadTeacher',
           title: '上传教师信息'
+        }, {
+          path: '/uploadTeacherCourse',
+          name: 'uploadTeacherCourse',
+          title: '上传教师开课信息'
         }, {
           path: '/uploadCourse',
           name: 'uploadCourse',

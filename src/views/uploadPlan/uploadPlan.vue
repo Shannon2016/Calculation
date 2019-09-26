@@ -11,7 +11,7 @@
       </el-row>
       <div class='uploadContainer'>
         <div class='uploadTitle'>{{upload1.title}}</div>
-        <!-- <div class='uploadBtn'>
+        <div class='uploadBtn'>
             <el-upload
                 class="upload-demo"
                 accept=".xls,.xlsx"
@@ -21,14 +21,13 @@
                 :auto-upload="false"
                 :on-change='onChange1'
                 :before-remove='beforeRemove1'
-                :http-request="submitUpload"
+                :http-request="submitUpload2"
                 action="/upload/cultivatePlan"
                 :on-exceed="handleExceed"
                 :file-list="fileList1">
                 <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
-                <el-button style="margin-left: 10px;" size="small" icon="el-icon-upload2" type="success" @click="hhh" :loading='loadingFlag'>提交</el-button>
             </el-upload>
-        </div> -->
+        </div>
         <div class='uploadTips'>
             {{upload1.tips}}
             <el-button type='text' size='mini' @click='dialog1Visible=true'>点此查看</el-button>
@@ -53,7 +52,7 @@
                 :on-change='onChange2'
                 :before-remove='beforeRemove2'
                 action="/upload/cultivateMatrix"
-                :limit="2"
+                :limit="1"
                 :on-exceed="handleExceed"
                 ref="upload2"
                 :http-request="submitUpload2"
@@ -148,46 +147,16 @@ export default {
   },
   methods: {
     hhh2 () {
+      this.uploadBuf = []
+      this.$refs.upload.submit()
       this.$refs.upload2.submit()
-    },
-    // hhh () {
-    //   this.$refs.upload.submit()
-    // },
-    handleExceed (files, fileList) {
-      this.$message.warning(`当前限制选择 2 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
-    },
-    // onChange1 (file, fileList) {
-    //   this.fileList1 = fileList
-    // },
-    // beforeRemove1 (file, fileList) {
-    //   this.fileList1 = fileList
-    // },
-    onChange2 (file, fileList) {
-      this.fileList2 = fileList
-    },
-    beforeRemove2 (file, fileList) {
-      this.fileList2 = fileList
-    },
-    submitUpload2 (param) {
-      if(this.uploadBuf.length === 2){
-        this.uploadBuf = []
-      }
-      this.uploadBuf.push(param)
-      if(this.uploadBuf.length === 1){
-        return
-      }
-      if(this.grade === ''){
-        this.$err('请将信息填写完整')
-        return
-      }
-      console.log(this.grade)
       this.loadingFlag2 = true
       this.$ajaxPostFile(
          '/api/plan/upload',
         {
           grade: parseInt(this.grade),
-          matrix: this.uploadBuf[0].file,
-          plan: this.uploadBuf[1].file
+          matrix: this.uploadBuf[1].file,
+          plan: this.uploadBuf[0].file
         },
         {
           onUploadProgress: progressEvent => {
@@ -215,6 +184,27 @@ export default {
         this.$message.error('上传失败！')
         this.loadingFlag2 = false
       })
+    },
+    // hhh () {
+      // this.$refs.upload.submit()
+    // },
+    handleExceed (files, fileList) {
+      this.$message.warning(`当前限制选择 2 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+    },
+    onChange1 (file, fileList) {
+      this.fileList1 = fileList
+    },
+    beforeRemove1 (file, fileList) {
+      this.fileList1 = fileList
+    },
+    onChange2 (file, fileList) {
+      this.fileList2 = fileList
+    },
+    beforeRemove2 (file, fileList) {
+      this.fileList2 = fileList
+    },
+    submitUpload2 (param) {
+      this.uploadBuf.push(param)
     },
     handleCurrentChange (index) {
       this.currentPage = index

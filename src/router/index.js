@@ -30,6 +30,10 @@ export default new Router({
     name: 'uploadCourse',
     component: () => import(`@/views/uploadCourse/uploadCourse`)
   }, {
+    path: '/uploadTeacherCourse',
+    name: 'uploadTeacherCourse',
+    component: () => import(`@/views/uploadCourse/uploadTeacherCourse`)
+  }, {
     path: '/studentEvaluate',
     name: 'StudentEvaluate',
     component: () => import(`@/views/StudentEvaluate`)
