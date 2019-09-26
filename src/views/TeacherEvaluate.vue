@@ -15,11 +15,7 @@
             label="课程编号">
           </el-table-column>
           <el-table-column
-            prop="courseCredit"
-            label="学分">
-          </el-table-column>
-          <el-table-column
-            prop="str3"
+            prop="statuz"
             label="状态"
             align="center"
             width="200">
@@ -49,9 +45,11 @@
                 action="/uploadFile"
                 :limit="1"
                 :on-exceed="handleExceed"
+                :http-request = "submitUpload"
+                ref="upload"
                 :file-list="fileList">
                 <el-button slot="trigger" class='darkbutton'>选取文件</el-button>
-                <el-button style="margin-left: 10px;" class='lightbutton' @click="submitUpload">上传到服务器</el-button>
+                <el-button style="margin-left: 10px;" class='lightbutton' @click="hhh">上传到服务器</el-button>
             </el-upload>
             <div class='uploadTips' style="margin:30px 0 15px;">注：课程评价包含学生成绩、涉及到的工程认证指标点及学生在该指标点
                 获得的真实成绩平均分和该指标点的评价值。</div>
@@ -91,15 +89,15 @@ export default {
       this.classId = id
     },
     handleCurrentChange (index) {
-      this.$ajaxPost(
-        '/api/getInfo/coursePage',
+      this.$ajaxGet(
+        '/api/teacher/evaluation/page',
         {
           pageIndex: index,
           pageSize: 200
         }
       ).then(res => {
-        if (res.data.code === 'success') {
-          console.log(res.data)
+        if (res.data.code === 0) {
+          console.log(res)
           this.courseData = res.data.data.resultList
           this.currentData = this.courseData
           console.log(this.courseData)
@@ -134,30 +132,35 @@ export default {
     onModifyClick () {
     //   this.
     },
-    submitUpload () {
-      let list = document.getElementsByClassName('el-upload-list__item is-ready')
-      if (list.length === 0) {
-        this.$message({
-          type: 'warning',
-          message: '请选择需要导入的模板！'
-        })
-        return
-      }
-      var fileValue = document.querySelector('.el-upload .el-upload__input')
+    hhh(){
+      this.$refs.upload.submit()
+    },
+    submitUpload (param) {
+      // let list = document.getElementsByClassName('el-upload-list__item is-ready')
+      // if (list.length === 0) {
+      //   this.$message({
+      //     type: 'warning',
+      //     message: '请选择需要导入的模板！'
+      //   })
+      //   return
+      // }
+      // var fileValue = document.querySelector('.el-upload .el-upload__input')
       // eslint-disable-next-line no-undef
       this.$ajaxPost(
-        '/api/upload/uploadTeacherCom',
+        '/api/teacher/evaluation/evaluate',
         {
-          'fileType': 'category',
-          'file': fileValue.files[0],
-          'classId': this.classId
+          file: param.file,
+          classId: this.classId
         }
       ).then(res => {
-        if (res.data.code === 'success') {
-          this.$alert('上传成功！')
+        if (res.data.code === 0) {
+          this.$message({
+          message: '上传成功！',
+          type: 'success'
+        })
           this.handleCurrentChange(1)
         } else {
-          this.$alert('上传失败！')
+          this.$message.error('上传失败！')
         }
         // this.handleCurrentChange(1)
       }).catch(res => {
