@@ -37,6 +37,42 @@
         :visible.sync="dialogVisible">
         <img src="./../../assets/学生选课列表.png" style='width:100%;'>
       </el-dialog>
+
+ <el-table class="table" :data='currentData'>
+          <el-table-column
+            prop="uploadTime"
+            label="上传时间">
+          </el-table-column>
+          <el-table-column
+            prop="planFilename"
+            label="培养方案">
+            <template slot-scope="scope">
+              <a :href="'/api/file/download/'+scope.row.id">{{scope.row.filename}}</a>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="操作"
+            align="center"
+            header-align="center"
+            width="250">
+            <template slot-scope="scope">
+              <el-button class="darkbutton"
+                @click="deleteTeacherCourse(scope.$index, scope.row)">删除</el-button>
+            </template>
+          </el-table-column>
+      </el-table>
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :current-page.sync="currentPage"
+        :page-size="10"
+        layout="prev, pager, next, jumper"
+        :total="totalSize"
+        style="justify-content:center; display:flex;margin:3%">
+      </el-pagination>
+
+
+
+
   </div>
 </template>
 <script>
@@ -57,11 +93,17 @@ export default {
         tips: '注：学生选课列表包含学生选课的基本信息——学生姓名、学号、课程编号、课程名称等'
       },
       fileList: [],
+      loadingFlag2: false,
+      currentData:[],
+      currentPage: 1,
+      totalSize: 25,
       loadingFlag: false,
-      status: ''
+      status: '',
+      allowCover:true
     }
   },
   mounted () {
+    this.handleCurrentChange(1)
   },
   methods: {
     handleExceed (files, fileList) {
@@ -80,11 +122,10 @@ export default {
       let timeStamp = Date.parse(new Date())
       this.loadingFlag = true
       this.$ajaxPostFile(
-        '/api/upload/studentCourse',
+        '/api//student/upload',
         {
-          fileType: 'category',
           file: param.file,
-          id: timeStamp + ''
+          allowCover:true
         },
         {
           onUploadProgress: progressEvent => {
@@ -96,40 +137,80 @@ export default {
           }
         }
       ).then(res => {
+        if(res.data.code===0){
         this.$message({
           message: '上传成功！',
           type: 'success'
         })
         this.loadingFlag = false
+        this.handleCurrentChange(1)
+        }
+        else{
+          this.$err('上传失败')
+        }
       }).catch(res => {
-        this.$message.success('上传成功！')
+        this.$message.error('上传失败！')
         this.loadingFlag = false
       })
-      let intervalId = setInterval(() => {
-        this.$ajaxGet(
-          '/api/upload/queryStatus',
+    },
+     handleCurrentChange (index) {
+      this.currentPage = index
+      this.$ajaxGet(
+        '/api/student/page',
+        {
+          pageIndex: index,
+          pageSize: 10
+        }
+      ).then(res => {
+        console.log(res.data)
+        if (res.data.code === 0) {
+          this.totalSize = res.data.data.total
+          this.currentData = res.data.data.resultList
+          for(let i = 0; i < this.currentData.length; i++) {
+            this.currentData[i].uploadTime = this.currentData[i].createDate.substring(0,10)
+          }
+        } else {
+          this.$err('系统错误')
+        }
+      }).catch(res => {
+        console.log(res)
+      })
+    },
+    deleteTeacherCourse(index, row) {
+      console.log(row)
+      this.$confirm('确认删除该学生选课信息表吗？', '确认信息', {
+        distinguishCancelAndClose: true,
+        confirmButtonText: '确认',
+        cancelButtonText: '取消'
+      }).then(() => {
+        this.$ajaxPost(
+          '/api/student/delete',
           {
-            id: timeStamp + ''
+            fileId: row.id
           }
         ).then(res => {
-          console.log(res)
-          if (res.data.code === 'success') {
-            if (res.data.data === -1) {
-              this.status = '正在处理'
-            } else if (res.data.data === -2) {
-              this.status = ''
-              console.log(1)
-              clearInterval(intervalId)
-            } else if (res.data.data === -3) {
-              this.status = '处理失败'
-            } else if (res.data.data > 0){
-              this.status = '已处理' + res.data.data + '条数据，请等待。'
-            }
+          if (res.data.code === 0) {
+            this.$message({
+            type: 'success',
+            message: '已删除！'
+          })
+          this.handleCurrentChange(this.currentPage)
+          } else {
+            this.$err('删除失败！')
           }
+        }).catch(res => {
+          console.log(res)
         })
-      }, 3000)
-      param.onSuccess()
+      }).catch(action => {
+        this.$message({
+          type: 'error',
+          message: action === 'cancel'
+            ? '取消修改'
+            : '停留在当前页面'
+        })
+      })
     }
+
   }
 }
 </script>
@@ -155,6 +236,9 @@ export default {
     }
     .pic .el-dialog{
       width:80%;
+    }
+     a{
+      color: rgba(2, 43, 72, 1);
     }
 </style>
 

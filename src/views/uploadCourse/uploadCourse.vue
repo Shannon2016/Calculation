@@ -312,6 +312,9 @@ export default {
     .pic .el-dialog{
       width:80%;
     }
+     a{
+      color: rgba(2, 43, 72, 1);
+    }
 </style>
 <style scoped>
     .uploadContainer{
