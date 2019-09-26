@@ -6,6 +6,10 @@
       <el-divider></el-divider>
       <div class='uploadContainer'>
         <div class='uploadTitle'>{{upload1.title}}</div>
+        <el-row type='flex' align="middle" class='uploadContainer'>
+        <el-col :span='5' class='uploadTitle' style='margin-top:0;'>课程信息对应年份：</el-col>
+        <el-col :span='7'><el-input v-model="year" ></el-input></el-col>
+      </el-row>
         <div class='uploadBtn'>
             <el-upload
                 class="upload-demo"
@@ -34,38 +38,38 @@
         :visible.sync="dialog1Visible">
         <img src="./../../assets/本学年课程列表.png" style='width:100%;'>
       </el-dialog>
-      <div class='uploadContainer'>
-        <div class='uploadTitle'>{{upload2.title}}</div>
-        <div class='uploadBtn'>
-            <el-upload
-                id="upload2"
-                class="upload-demo"
-                accept=".xls,.xlsx"
-                :multiple="false"
-                :auto-upload="false"
-                :on-change='onChange2'
-                :before-remove='beforeRemove2'
-                action="/uploadFile"
-                :http-request = "submitUpload1"
-                ref="upload2"
-                :limit="1"
-                :on-exceed="handleExceed"
-                :file-list="fileList2">
-                <el-button slot="trigger" size="small" type="primary">点击上传</el-button>
-                <el-button style="margin-left: 10px;" size="small" icon="el-icon-upload2" type="success" @click="hhh2" :loading="loadingFlag2">提交</el-button>
 
-            </el-upload>
-        </div>
-        <div class='uploadTips'>
-            {{upload2.tips}}
-            <el-button type='text' size='mini' @click='dialog2Visible=true'>点此查看</el-button>
-        </div>
-      </div>
-      <el-dialog
-        title="示例"
-        :visible.sync="dialog2Visible">
-        <img src="./../../assets/本学年教师开设课程列表.png" style='width:100%;'>
-      </el-dialog>
+        <el-table class="table" :data='currentData'>
+          <el-table-column
+            prop="uploadTime"
+            label="上传时间">
+          </el-table-column>
+          <el-table-column
+            prop="planFilename"
+            label="培养方案">
+            <template slot-scope="scope">
+              <a :href="'/api/file/download/'+scope.row.id">{{scope.row.filename}}</a>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="操作"
+            align="center"
+            header-align="center"
+            width="250">
+            <template slot-scope="scope">
+              <el-button class="darkbutton"
+                @click="deleteTeacherCourse(scope.$index, scope.row)">删除</el-button>
+            </template>
+          </el-table-column>
+      </el-table>
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :current-page.sync="currentPage"
+        :page-size="10"
+        layout="prev, pager, next, jumper"
+        :total="totalSize"
+        style="justify-content:center; display:flex;margin:3%">
+      </el-pagination>
     </div>
 </template>
 <script>
@@ -93,10 +97,15 @@ export default {
       },
       fileList2: [],
       loadingFlag: false,
-      loadingFlag2: false
+      loadingFlag2: false,
+      currentData:[],
+      currentPage: 1,
+      totalSize: 25,
+      year:''
     }
   },
   mounted () {
+    this.handleCurrentChange(1)
   },
   methods: {
     hhh () {
@@ -105,7 +114,7 @@ export default {
     hhh2 () {
       this.$refs.upload2.submit()
     },
-    handleExceed (files, fileList) {
+      handleExceed (files, fileList) {
       this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
     },
     onChange1 (file, fileList) {
@@ -123,9 +132,9 @@ export default {
     submitUpload (param) {
       this.loadingFlag = true
       this.$ajaxPostFile(
-        '/api/upload/courseUpload',
+        '/api/course/upload',
         {
-          fileType: 'category',
+          year: this.year,
           file: param.file
         },
         {
@@ -138,11 +147,17 @@ export default {
           }
         }
       ).then(res => {
-        this.$message({
-          message: '上传成功！',
-          type: 'success'
-        })
-        this.loadingFlag = false
+        if(res.data.code === 0){
+          this.$message({
+            message: '上传成功！',
+            type: 'success'
+          })
+          this.loadingFlag = false
+          this.handleCurrentChange(1)
+        }
+        else {
+          this.$err('上传失败')
+        }
       }).catch(res => {
         this.$message.error('上传失败！')
         this.loadingFlag = false
@@ -217,6 +232,63 @@ export default {
       // }).catch(res => {
       //   this.$alert('上传失败')
       // })
+    },
+     handleCurrentChange (index) {
+      this.currentPage = index
+      this.$ajaxGet(
+        '/api/course/page',
+        {
+          pageIndex: index,
+          pageSize: 10
+        }
+      ).then(res => {
+        console.log(res.data)
+        if (res.data.code === 0) {
+          this.totalSize = res.data.data.total
+          this.currentData = res.data.data.resultList
+          for(let i = 0; i < this.currentData.length; i++) {
+            this.currentData[i].uploadTime = this.currentData[i].createDate.substring(0,10)
+          }
+        } else {
+          this.$err('系统错误')
+        }
+      }).catch(res => {
+        console.log(res)
+      })
+    },
+    deleteTeacherCourse(index, row) {
+      console.log(row)
+      this.$confirm('确认删除该教师开课信息表吗？', '确认信息', {
+        distinguishCancelAndClose: true,
+        confirmButtonText: '确认',
+        cancelButtonText: '取消'
+      }).then(() => {
+        this.$ajaxPost(
+          '/api/course/delete',
+          {
+            fileId: row.id
+          }
+        ).then(res => {
+          if (res.data.code === 0) {
+            this.$message({
+            type: 'success',
+            message: '已删除！'
+          })
+          this.handleCurrentChange(this.currentPage)
+          } else {
+            this.$err('删除失败！')
+          }
+        }).catch(res => {
+          console.log(res)
+        })
+      }).catch(action => {
+        this.$message({
+          type: 'error',
+          message: action === 'cancel'
+            ? '取消修改'
+            : '停留在当前页面'
+        })
+      })
     }
   }
 }
