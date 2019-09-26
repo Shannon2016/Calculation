@@ -221,12 +221,16 @@ export default {
           }
         }
       ).then(res => {
+        if(res.data.code === 0){
         this.$message({
           message: '上传成功！',
           type: 'success'
         })
         this.loadingFlag2 = false
         this.handleCurrentChange(1)
+        } else {
+          this.$err('上传失败')
+        }
       }).catch(res => {
         this.$message.error('上传失败！')
         this.loadingFlag2 = false
