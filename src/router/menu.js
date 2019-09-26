@@ -55,13 +55,6 @@ export default {
       title: '查看结果',
       icon: 'el-icon-folder',
       order: 7
-    },
-    {
-      path: '/download',
-      name: 'Download',
-      title: '历史文件下载',
-      icon: 'el-icon-download2',
-      order: 8
     }
   ],
   admin: [
@@ -104,13 +97,6 @@ export default {
       title: '查看结果',
       icon: 'el-icon-folder',
       order: 7
-    },
-    {
-      path: '/download',
-      name: 'Download',
-      title: '历史文件下载',
-      icon: 'el-icon-download2',
-      order: 8
     }
   ],
   teacher: [
@@ -119,26 +105,7 @@ export default {
       name: 'TeacherEvaluate',
       title: '教师评价',
       icon: 'el-icon-chat-dot-square',
-      order: 5,
-      child: [
-        {
-          path: '/teacherEvaluate',
-          name: 'TeacherEvaluate',
-          title: '本期评价'
-        },
-        {
-          path: '/teacherPast',
-          name: 'TeacherPast',
-          title: '往期评价'
-        }
-      ]
-    },
-    {
-      path: '/download',
-      name: 'Download',
-      title: '历史文件下载',
-      icon: 'el-icon-download2',
-      order: 8
+      order: 5
     }
   ],
   student: [

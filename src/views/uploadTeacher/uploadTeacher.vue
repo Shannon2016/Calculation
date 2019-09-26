@@ -34,7 +34,7 @@
         :visible.sync="dialogVisible">
         <img src="./../../assets/教师信息表.png" style='width:100%;'>
       </el-dialog>
-      <div class='uploadTitle' >往期教师信息</div>
+        <div class='uploadTitle' >往期教师信息</div>
       <el-table class="table" :data='currentData'>
           <el-table-column
             prop="uploadTime"
@@ -88,7 +88,8 @@ export default {
       loadingFlag: false,
       currentData:[],
       currentPage: 1,
-      totalSize: 25
+      totalSize: 25,
+      allowCover: true
     }
   },
   mounted () {
@@ -96,7 +97,20 @@ export default {
   },
   methods: {
     hhh () {
-      this.$refs.upload.submit()
+      this.$confirm('是否允许覆盖？', '确认信息', {
+        distinguishCancelAndClose: true,
+        confirmButtonText: '是',
+        cancelButtonText: '否'
+      }).then(() => {
+        this.allowCover = true
+        this.$refs.upload.submit()
+      }).catch(action => {
+        if(action !== 'cancel'){
+          return
+        }
+        this.allowCover = false
+        this.$refs.upload.submit()
+      })
     },
     handleExceed (files, fileList) {
       this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
@@ -112,6 +126,7 @@ export default {
       this.$ajaxPostFile(
         '/api/teacher/upload',
         {
+          allowCover: this.allowCover,
           file: param.file
         },
         {
