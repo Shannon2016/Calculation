@@ -61,7 +61,7 @@ export default {
     ).then(res => {
       console.log(res)
       this.username = res.data.data.realName
-      this.number = res.data.data.workId
+      this.number = res.data.data.username
     }).catch(res => {
       console.log(res)
     })

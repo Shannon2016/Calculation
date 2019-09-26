@@ -44,7 +44,7 @@
       </el-dialog>
       <el-table class="table" :data='currentData'>
           <el-table-column
-            prop="workId"
+            prop="username"
             label="用户名">
           </el-table-column>
           <el-table-column
@@ -100,17 +100,18 @@ export default {
   },
   mounted () {
     this.handleCurrentChange(1, 10)
-    this.$ajaxPost(
-      '/api/getInfo/departmentInfo',
-      { }
-    ).then(res => {
-      console.log(res)
-      for (let i = 0; i < res.data.data.length; i++) {
-        this.collegeOptions.push({value: res.data.data[i], label: res.data.data[i]})
-      }
-    }).catch(res => {
-      this.$err('系统错误')
-    })
+    this.collegeOptions.push({value: "计算机学院", label: "计算机学院"})
+    // this.$ajaxPost(
+    //   '/api/getInfo/departmentInfo',
+    //   { }
+    // ).then(res => {
+    //   console.log(res)
+    //   for (let i = 0; i < res.data.data.length; i++) {
+    //     this.collegeOptions.push({value: res.data.data[i], label: res.data.data[i]})
+    //   }
+    // }).catch(res => {
+    //   this.$err('系统错误')
+    // })
   },
   methods: {
     onSearch () {
@@ -122,12 +123,12 @@ export default {
       this.$ajaxPost(
         '/api/user/addNew',
         {
-          userName: this.formAdd.username,
-          userType: this.formAdd.identity,
-          departmentName: this.formAdd.college
+          username: this.formAdd.username,
+          role: this.formAdd.identity,
+          department: this.formAdd.college
         }
       ).then(res => {
-        if (res.data.code === 'success') {
+        if (res.data.code === 0) {
           this.handleCurrentChange(this.currentPage)
           this.$message('添加成功！')
         } else {
@@ -171,7 +172,7 @@ export default {
     handleCurrentChange (index) {
       this.currentPage = index
       this.$ajaxPost(
-        '/api/user/getAll',
+        '/api/user/page',
         {
           pageIndex: index,
           pageSize: 10,
@@ -179,7 +180,7 @@ export default {
         }
       ).then(res => {
         console.log(res.data)
-        if (res.data.code === 'success') {
+        if (res.data.code === 0) {
           this.totalSize = res.data.data.total
           this.currentData = res.data.data.resultList
         } else {

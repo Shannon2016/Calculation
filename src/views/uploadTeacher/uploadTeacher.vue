@@ -34,6 +34,38 @@
         :visible.sync="dialogVisible">
         <img src="./../../assets/教师信息表.png" style='width:100%;'>
       </el-dialog>
+      <div class='uploadTitle' >往期教师信息</div>
+      <el-table class="table" :data='currentData'>
+          <el-table-column
+            prop="uploadTime"
+            label="上传时间">
+          </el-table-column>
+          <el-table-column
+            prop="planFilename"
+            label="培养方案">
+            <template slot-scope="scope">
+              <a :href="'/api/file/download/'+scope.row.id">{{scope.row.filename}}</a>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="操作"
+            align="center"
+            header-align="center"
+            width="250">
+            <template slot-scope="scope">
+              <el-button class="darkbutton"
+                @click="deleteTeacher(scope.$index, scope.row)">删除</el-button>
+            </template>
+          </el-table-column>
+      </el-table>
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :current-page.sync="currentPage"
+        :page-size="10"
+        layout="prev, pager, next, jumper"
+        :total="totalSize"
+        style="justify-content:center; display:flex;margin:3%">
+      </el-pagination>
     </div>
 </template>
 <script>
@@ -53,10 +85,14 @@ export default {
         tips: '注：教师信息列表包含教师的基本信息——姓名、工号等。'
       },
       fileList: [],
-      loadingFlag: false
+      loadingFlag: false,
+      currentData:[],
+      currentPage: 1,
+      totalSize: 25
     }
   },
   mounted () {
+    this.handleCurrentChange(1)
   },
   methods: {
     hhh () {
@@ -74,7 +110,7 @@ export default {
     submitUpload (param) {
       this.loadingFlag = true
       this.$ajaxPostFile(
-        '/api/upload/teacherInfo',
+        '/api/teacher/upload',
         {
           file: param.file
         },
@@ -94,6 +130,7 @@ export default {
             message: '上传成功！',
             type: 'success'
           })
+          this.handleCurrentChange(1)
         } else {
           this.$message.error('上传失败！')
         }
@@ -101,6 +138,63 @@ export default {
       }).catch(res => {
         this.$message.error('上传失败！')
         this.loadingFlag = false
+      })
+    },
+    handleCurrentChange (index) {
+      this.currentPage = index
+      this.$ajaxGet(
+        '/api/teacher/page',
+        {
+          pageIndex: index,
+          pageSize: 10
+        }
+      ).then(res => {
+        console.log(res.data)
+        if (res.data.code === 0) {
+          this.totalSize = res.data.data.total
+          this.currentData = res.data.data.resultList
+          for(let i = 0; i < this.currentData.length; i++) {
+            this.currentData[i].uploadTime = this.currentData[i].createDate.substring(0,10)
+          }
+        } else {
+          this.$err('系统错误')
+        }
+      }).catch(res => {
+        console.log(res)
+      })
+    },
+    deleteTeacher(index, row){
+      console.log(row)
+      this.$confirm('确认删除该教师信息表吗？', '确认信息', {
+        distinguishCancelAndClose: true,
+        confirmButtonText: '确认',
+        cancelButtonText: '取消'
+      }).then(() => {
+        this.$ajaxPost(
+          '/api/teacher/delete',
+          {
+            fileId: row.id
+          }
+        ).then(res => {
+          if (res.data.code === 0) {
+            this.$message({
+            type: 'success',
+            message: '已删除！'
+          })
+          this.handleCurrentChange(this.currentPage)
+          } else {
+            this.$err('删除失败！')
+          }
+        }).catch(res => {
+          console.log(res)
+        })
+      }).catch(action => {
+        this.$message({
+          type: 'error',
+          message: action === 'cancel'
+            ? '取消修改'
+            : '停留在当前页面'
+        })
       })
     }
   }

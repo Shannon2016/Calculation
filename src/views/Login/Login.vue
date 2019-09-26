@@ -45,6 +45,7 @@ export default {
     onLogin () {
       // this.$store.commit('login')
       // this.$router.push('/home')
+      // global.authorities = ['teacher', 'student', 'admin', 'professor']
       this.$ajaxPost(
         '/api/auth',
         {
@@ -57,14 +58,14 @@ export default {
         this.$ajaxGet(
           '/api/user'
         ).then(res => {
-          if (res.data.userName === 'admin') {
+          if (res.data.username === 'admin') {
             global.authorities = ['teacher', 'student', 'admin', 'professor']
           } else {
-            global.authorities = [res.data.userType]
+            global.authorities = [res.data.role]
           }
           global.userId = res.data.id
-          global.workId = res.data.workId
-          global.userType = res.data.userType
+          global.workId = res.data.username
+          global.userType = res.data.role
           this.$store.commit('login')
           this.$router.push('/home')
         }).catch(res => {
