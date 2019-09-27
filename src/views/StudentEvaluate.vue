@@ -15,8 +15,8 @@
             label="课程编码">
           </el-table-column>
           <el-table-column
-            prop="totalGrade"
-            label="成绩">
+            prop="semester"
+            label="学期">
           </el-table-column>
           <el-table-column
             prop="state"
@@ -73,16 +73,22 @@ export default {
       // for (let i = (val - 1) * 10; i < val * 10 && i < this.totalSize; i++) {
       //   this.currentData.push(this.courseData[i])
       // }
-      this.$ajaxPost(
-        '/api/getInfo/coursePage',
+      this.$ajaxGet(
+        '/api/student/evaluation/page',
         {
           pageIndex: val,
-          pageSize: 200
+          pageSize:10
         }
       ).then(res => {
-        if (res.data.code === 'success') {
+        console.log(res)
+        if (res.data.code === 0) {
           this.courseData = res.data.data.resultList
           this.currentData = this.courseData
+          this.totalSize = res.data.data.total
+          this.currentData = res.data.data.resultList.map(i => {
+            i.semester = i.courseSemester + '-' + i.subCourseSemester
+            return i
+          })
           console.log(this.courseData)
         } else {
           this.$message.success('提交成功！')
@@ -93,10 +99,11 @@ export default {
     },
     onUploadClick (index, row) {
       // :courseName/:courseNumber/:courseSemester
-      this.$router.push('/studentDetail/' + row.courseName + '/' + row.courseNumber + '/' + row.courseSemester)
+      // console.log(row)
+      this.$router.push('/studentDetail/' + row.courseName + '/' + row.courseNumber + '/' + row.courseSemester + '/' + row.id)
     },
     onModifyClick (index, row) {
-      this.$router.push('/studentDetail/' + row.courseName + '/' + row.courseNumber + '/' + row.courseSemester)
+      this.$router.push('/studentDetail/' + row.courseName + '/' + row.courseNumber + '/' + row.courseSemester + '/' + row.id)
     }
   }
 }

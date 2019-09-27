@@ -114,19 +114,7 @@ export default {
       name: 'StudentEvaluate',
       title: '学生评价',
       order: 6,
-      icon: 'el-icon-chat-dot-square',
-      child: [
-        {
-          path: '/studentEvaluate',
-          name: 'studentEvaluate',
-          title: '本期评价'
-        },
-        {
-          path: '/studentPast',
-          name: 'StudentPast',
-          title: '往期评价'
-        }
-      ]
+      icon: 'el-icon-chat-dot-square'
     }
   ]
 }

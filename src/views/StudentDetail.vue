@@ -10,14 +10,14 @@
           <el-button @click="onSubmitScores" class='darkbutton'>提交</el-button>
         </el-col>
       </el-row>
-      <div class='contentTitle'>请根据指标点进行打分，由1~4从高到低，越高代表越符合指标点。</div>
+      <div class='contentTitle'>请根据指标点选择您的满意程度。注意只可评价一次，之后不可再修改。</div>
       <div v-for='(item,index) in qualities' :key='index'>
-        <div class='quality'>{{(index+1) + '、' + item.indexContent}}</div>
+        <div class='quality'>{{(index+1) + '、' + item.content}}</div>
         <el-radio-group v-model="scores[index]" class='qualityRadioGroup'>
-          <el-radio :label="1">非常满意&emsp;</el-radio>
-          <el-radio :label="2">满意&emsp;&emsp;&emsp;</el-radio>
-          <el-radio :label="3">不满意&emsp;&emsp;</el-radio>
-          <el-radio :label="4">非常不满意</el-radio>
+          <el-radio :label="4">非常满意&emsp;</el-radio>
+          <el-radio :label="3">满意&emsp;&emsp;&emsp;</el-radio>
+          <el-radio :label="2">不满意&emsp;&emsp;</el-radio>
+          <el-radio :label="1">非常不满意</el-radio>
         </el-radio-group>
       </div>
       <div style="height:50px;"></div>
@@ -35,7 +35,8 @@ export default {
       scores: [],
       qualities: [],
       courseSemester:'',
-      courseNumber:''
+      courseNumber:'',
+      courseId:''
     }
   },
   mounted () {
@@ -43,14 +44,14 @@ export default {
     this.courseName = this.$route.params.courseName
     this.courseSemester = this.$route.params.courseSemester
     this.courseNumber = this.$route.params.courseNumber
-    this.$ajaxPost(
-      'api/getInfo/nowCourseIndex',
+    this.courseId = this.$route.params.courseId
+    this.$ajaxGet(
+      `api/student/evaluation/points/${this.courseId}`,
       {
-        courseNumber: this.courseNumber
       }
     ).then(res => {
       console.log(res)
-      if (res.data.code === 'success') {
+      if (res.data.code === 0) {
         this.qualities = res.data.data
       } else {
         this.$message.error('出错了！')
@@ -75,7 +76,7 @@ export default {
       }
       console.log(tmp)
       this.$ajaxPost2(
-        '/api/upload/studentEvaluation',
+        '/api/student/evaluation/evaluate',
         {
           courseNumber: this.courseNumber,
           courseSemester: this.courseSemester,
@@ -83,7 +84,7 @@ export default {
         }
       ).then(res => {
         console.log(res)
-        if (res.data.code === 'success') {
+        if (res.data.code === 0) {
           this.$router.push('/studentEvaluate')
         } else {
           this.$message.error('出错了！')

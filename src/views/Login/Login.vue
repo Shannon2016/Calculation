@@ -58,6 +58,7 @@ export default {
         this.$ajaxGet(
           '/api/user'
         ).then(res => {
+          console.log(res)
           if (res.data.username === 'admin') {
             global.authorities = ['teacher', 'student', 'admin', 'professor']
           } else {
